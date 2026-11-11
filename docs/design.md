@@ -85,7 +85,7 @@ Add a family only if a whole group of new concepts needs one; keep it muted and 
 
 ## Motion
 
-- Dive: the page zooms towards the clicked piece and fades (230ms), the new layer grows out of the same point (280ms).
+- Dive: a short, subtle zoom (about 10%) towards the clicked piece with a fade (170ms), and the new layer settles in from the same point (220ms). Keep it subtle: big zooms read as gimmicky.
   Back up is the reverse, and the piece you came from is briefly highlighted.
 - First formula on a page draws itself in (staggered fade-and-rise, ~0.5s).
 - Big visuals may animate. Nothing else moves.

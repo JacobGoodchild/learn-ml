@@ -100,9 +100,9 @@ async function route() {
     if (dir === 'in') {
       const piece = pieceAt(article, next.stack[prev.stack.length].from);
       originPoint = piece ? centre(piece) : null;
-      await play(article, [{ transform: 'scale(1)', opacity: 1 }, { transform: 'scale(1.7)', opacity: 0 }], 230, originPoint);
+      await play(article, [{ transform: 'scale(1)', opacity: 1 }, { transform: 'scale(1.12)', opacity: 0 }], 170, originPoint);
     } else {
-      await play(article, [{ transform: 'scale(1)', opacity: 1 }, { transform: 'scale(.82)', opacity: 0 }], 200, null);
+      await play(article, [{ transform: 'scale(1)', opacity: 1 }, { transform: 'scale(.96)', opacity: 0 }], 150, null);
     }
   }
 
@@ -120,12 +120,12 @@ async function route() {
       window.scrollTo(0, scrolls.get(routeKey(next)) || 0);
       const piece = pieceAt(fresh, prev.stack[next.stack.length].from);
       if (piece) { piece.classList.add('is-lit'); setTimeout(() => piece.classList.remove('is-lit'), 1200); }
-      if (animate) await play(fresh, [{ transform: 'scale(1.7)', opacity: 0 }, { transform: 'scale(1)', opacity: 1 }], 260, piece ? centre(piece) : null);
+      if (animate) await play(fresh, [{ transform: 'scale(1.08)', opacity: 0 }, { transform: 'scale(1)', opacity: 1 }], 200, piece ? centre(piece) : null);
       if (piece) piece.focus({ preventScroll: true });
     } else {
       const sec = next.stack.at(-1).section;
       window.scrollTo(0, dir === 'none' ? (scrolls.get(routeKey(next)) || 0) : 0);
-      if (animate) await play(fresh, [{ transform: 'scale(.6)', opacity: 0 }, { transform: 'scale(1)', opacity: 1 }], 280, originPoint);
+      if (animate) await play(fresh, [{ transform: 'scale(.94)', opacity: 0 }, { transform: 'scale(1)', opacity: 1 }], 220, originPoint);
       if (sec) openSection(fresh, sec);
       if (dir === 'in') fresh.querySelector('h1').focus({ preventScroll: true });
     }
@@ -569,8 +569,8 @@ function renderLadder(slideId) {
   }).join('');
   const nu = nextUp(site.nodes, sl.id);
   main.innerHTML = `<div class="page">
-    <h1>${inline(sl.title)}: every idea behind it</h1>
-    <p class="lede">From what you already know at the top to the slide at the bottom. Each idea only uses the ones above it.</p>
+    <h1>Ladder</h1>
+    <p class="lede">Every idea behind <a href="${diveHash([{ id: sl.id, from: null }])}">${inline(sl.title)}</a>, from what you already know at the top. Each idea only uses the ones above it.</p>
     ${slides.length > 1 ? `<p>Other slides: ${slides.filter(s => s !== sl).map(s => `<a href="#/ladder/${s.id}">${inline(s.title)}</a>`).join(', ')}</p>` : ''}
     ${bar(c)}<span class="bar-label">${c.understood} of ${c.total} understood, ${c.remembered} remembered</span>
     ${nu ? nextUpBox(nu, sl) : '<p>Everything under this slide is understood.</p>'}
