@@ -28,6 +28,31 @@ transcriptions are in `slides.md`; the papers are in `papers.md`.
 - Progress in `localStorage` (wrapped in try/catch). No gamification.
 - Work on `main`, commit and push often. Don't spawn subagents.
 
+## Jacob's design rules (from his reviews, 2026-11-11). These override anything older in this file or the docs.
+
+1. **This is a site that teaches ML, not a write-up of a lecture.** The slides in `slides.md` are only a
+   reference for what to build. Never mention slides, slide numbers, "the lecture", "the speaker" or "the paper says"
+   in the site's text or UI. Pages are **topics** with teaching titles ("Adding noise to a picture").
+   (Internal ids like `slide-19` and the file folder name can stay; they never show.)
+2. **Intuitive teaching, not an academic homepage.** Say what a formula is *for* and what it *does* before
+   anything else. Short, clear, concise sentences that actually mean something. No repetition: never show the
+   same formula twice, never restate the summary. If a sentence does not teach, cut it. Text overload is a bug.
+3. **Textbook bands.** Formulas, key points, examples, notation and visuals sit in bands with a word on the
+   side ("Formula", "Key point", "Example", "Notation", "Try it"). A formula band has a plain title saying what
+   the formula is, the formula, one line "In words", and a symbol list right underneath it. Symbol
+   definitions go **next to the formula they belong to**, never in a table at the bottom of the page.
+4. **Top of every page:** title, a one-line summary, and two small progress bars: *Understood* and *Remembered*.
+   Nothing else. No status sentences, no duplicate bars, no progress text in the header.
+5. **Sidebar:** only "On this page", listing the bands and sections by meaningful names
+   ("One step of noise", "Watch a picture dissolve"). The layer path is the breadcrumb above the title.
+6. **Practice questions are compact and sit at the end, just above Sources.** Recall questions are not shown
+   on the page; they live in Review.
+7. **Look:** white background (tinted backgrounds only inside big 3D visuals). No small grey uppercase labels,
+   no tiny helper text explaining the UI, no pill chips, no coloured side stripes, no boxed formulas. Minimum
+   text size about 0.875rem, secondary text dark enough to read easily. Wikipedia-style blue links and page
+   previews (title, one-line summary, "Open").
+8. **Diving should feel like an encyclopaedia:** breadcrumb trail, plain links, a short and subtle zoom.
+
 ## Key decisions
 
 - **Content format:** one Markdown file per concept with a small YAML-subset front-matter, plus
@@ -77,6 +102,7 @@ transcriptions are in `slides.md`; the papers are in `papers.md`.
 - [x] Update CLAUDE.md for a cold start; summary for Jacob
 
 ### Phase 1 — Path 1 polish (Fable)
+- [ ] Text-cutting pass on all 33 Path 1 concept pages under Jacob's design rule 2 (half the words; titled formula bands)
 - [ ] Re-read every Path 1 page against DDPM paper once; fix anything off
 - [ ] Big visual V1 (noising real images) and V2 (bell curve / sampling) built to spec in `docs/visuals.md`
 - [ ] Jacob's feedback round on slide 19 (see Ask Jacob)
@@ -169,5 +195,12 @@ transcriptions are in `slides.md`; the papers are in `papers.md`.
   recursion). Redesigned: white page, darker/larger secondary text, no eyebrows/pills/stripes, formulas unboxed,
   Wikipedia-style breadcrumb above titles, plain "Your path" rail, minimal preview card, no slide numbers, plainer
   headings, home lists finished slides first. Rules recorded in `docs/design.md` ("Lessons from Jacob's first review").
-- **Next session:** start Phase 1 (Path 1 polish), then Phase 2 from "Write slide 31 file". Run `sh tests/run-all.sh`
-  before every push. To preview locally: `python3 -m http.server` in the repo root, open http://localhost:8000.
+- 14:45–15:15: Jacob's second review: stop referencing slides, teach instead; textbook bands; two bars at the top;
+  contents-only sidebar; practice at the end; far less text. Did: rules above; every slide mention removed from all
+  39 concept pages and the UI ("Topics" not "Slides"; topic titles in `course.json`); formula bands with titles,
+  "In words" and symbol lists (new `formula` fence syntax, see `docs/content-format.md`); `keypoint`, `example`, `note`
+  bands; older concept pages are merged automatically (formula + "In words" + "Piece by piece" become one band, so no
+  formula is shown twice); recall hidden from pages; noise topic rewritten in about a third of the words.
+- **Next session:** first, a text-cutting pass over every concept page under rule 2 (most are still too long:
+  aim for half the words, give every formula band a title). Then Phase 1 (Path 1 polish), then Phase 2 from
+  "Write slide 31 file". Run `sh tests/run-all.sh` before every push. To preview locally: `python3 -m http.server` in the repo root, open http://localhost:8000.

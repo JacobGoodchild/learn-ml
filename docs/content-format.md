@@ -88,15 +88,28 @@ Rules for pieces:
 
 ### Fenced blocks
 
-**Formula** (display maths in a panel; the first formula on a page draws itself in). Optional label after the word:
+**Formula band.** The main building block. Title after the word `formula` (say what the formula *is*, in plain
+words). Then the LaTeX. Then, after `---`, one line "In words: …" (any line without `::`) and the symbol list,
+one `symbol :: meaning` line per symbol. The symbols are shown right under the formula.
 
 ````
-```formula The whole noising process, as one chain
-q(x_0,\dots,x_N) = …
+```formula One step of noise
+\p{diffusion-step}{q(x_n\mid x_{n-1})} = \mathcal N(\sqrt{\alpha_n}\,x_{n-1},\ \beta_n I)
+---
+In words: shrink the picture very slightly, then add a little noise to every pixel.
+$\p{x-n-ddpm}{x_{n-1}}$ :: the picture so far
+$\p{beta-n-ddpm}{\beta_n}$ :: how much noise this step adds
 ```
 ````
 
-**Breakdown** (the formula, then one row per piece; hovering a row highlights that piece). Rows are
+**Other bands:** ```` ```keypoint Title ````, ```` ```example Title ````, ```` ```note Title ```` with ordinary Markdown inside.
+```` ```visual name Title ```` is shown as a "Try it" band. ```` ```notation Title ```` is a symbol list band.
+Bands with a title appear in the "On this page" sidebar.
+
+Older pages that use "## In words {#aloud}" and "## Piece by piece {#breakdown}" after a formula are merged
+automatically into one formula band (`restructure` in `js/content.js`). New pages should use the band syntax directly.
+
+**Breakdown** (older syntax, still supported; prefer the formula band's symbol list). Rows are
 `concept-id | latex of the piece | explanation (Markdown)`:
 
 ````
@@ -168,6 +181,8 @@ The engine adds these to every page, so do not write them by hand:
 - **Sources** — from `sources`, collapsed.
 
 ## Page recipe (a toolkit, not a checklist)
+
+Follow Jacob's design rules at the top of `CLAUDE.md` first: teach, be brief, never mention slides.
 
 Use the sections a concept needs, usually in this order, with these heading ids so entry points stay predictable:
 `formula` (the key formula), `aloud` (read it aloud), `breakdown`, the idea sections, `example` (a worked example
