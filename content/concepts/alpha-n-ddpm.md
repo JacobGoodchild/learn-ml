@@ -24,7 +24,7 @@ sources:
 
 ## Which $\alpha$ is this? {#which}
 
-The letter $\alpha$ means different things on different slides. **Here** (slides 19, 31 and 42) $\alpha_n$ is about **one** step. On slide 54 (DPM-Solver), $\alpha_t$ is the *total* signal scale after many steps, which in this page's terms is $\sqrt{\bar\alpha_n}$. They are different ideas with the same letter.
+Different authors use the letter $\alpha$ for different things. **Here** $\alpha_n$ is about **one** step. In the fast-sampling methods (DPM-Solver), $\alpha_t$ means the *total* signal scale after many steps, which in this page's terms is $\sqrt{\bar\alpha_n}$. Same letter, different idea.
 
 ## Why one minus beta {#idea}
 
@@ -32,7 +32,7 @@ Each step does two things: it shrinks the old picture a little, and it adds a li
 
 ## Why the square root {#root}
 
-The slide multiplies the old picture by $\sqrt{\alpha_n}$, not $\alpha_n$. Multiplying a random variable by $a$ multiplies its variance by $a^2$ ([scaling rule](c:scaling-and-adding)). So multiplying by $\sqrt{\alpha_n}$ multiplies the variance by exactly $\alpha_n$.
+The step multiplies the old picture by $\sqrt{\alpha_n}$, not $\alpha_n$. Multiplying a random variable by $a$ multiplies its variance by $a^2$ ([scaling rule](c:scaling-and-adding)). So multiplying by $\sqrt{\alpha_n}$ multiplies the variance by exactly $\alpha_n$.
 
 ## Example {#example}
 
@@ -46,16 +46,16 @@ At step 1 of the DDPM schedule, $\beta_1 = 0.0001$, so $\alpha_1 = 0.9999$ and $
 wrong: First $\alpha_n = 1 - \beta_n$, then take its square root.
 hint: $\sqrt{1 - 0.19}$.
 answer: $\alpha_n = 0.81$, and $\sqrt{0.81} = 0.9$.
-? On slide 54, $\alpha_t$ appears again. Is it the same thing?
-- [ ] Yes, same letter, same meaning :: The slides reuse the letter for a different idea.
-- [x] No: there it is the total signal scale after many steps :: Right. In slide 19's terms it is $\sqrt{\bar\alpha_n}$, not $\alpha_n$.
+? In DPM-Solver, $\alpha_t$ appears. Is it the same thing as $\alpha_n$ here?
+- [ ] Yes, same letter, same meaning :: The letter is reused for a different idea.
+- [x] No: there it is the total signal scale after many steps :: Right. In this page's terms it is $\sqrt{\bar\alpha_n}$, not $\alpha_n$.
 hint: Look at the "Which α is this?" section.
-answer: No. On slide 54, $\alpha_t$ is the overall scale of the clean picture inside $x_t$, which is $\sqrt{\bar\alpha_n}$ here.
+answer: No. In DPM-Solver, $\alpha_t$ is the overall scale of the clean picture inside $x_t$, which is $\sqrt{\bar\alpha_n}$ here.
 ```
 
 ```recall
-? What is $\alpha_n$ on slide 19, and why is the old picture multiplied by $\sqrt{\alpha_n}$?
+? What is $\alpha_n$ in the noising process, and why is the old picture multiplied by $\sqrt{\alpha_n}$?
 $\alpha_n = 1 - \beta_n$, the share of variance kept from the previous picture. Multiplying by $\sqrt{\alpha_n}$ multiplies the variance by exactly $\alpha_n$.
-? Why must you be careful with $\alpha$ when moving from slide 19 to slide 54?
-On slide 54, $\alpha_t$ is the total signal scale over many steps (like $\sqrt{\bar\alpha_n}$), not the one-step $\alpha_n$.
+? Why must you be careful with $\alpha$ when reading about DPM-Solver?
+There, $\alpha_t$ is the total signal scale over many steps (like $\sqrt{\bar\alpha_n}$), not the one-step $\alpha_n$.
 ```

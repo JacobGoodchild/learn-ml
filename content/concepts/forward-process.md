@@ -23,13 +23,13 @@ sources:
 
 ## The idea {#idea}
 
-This is the first line of slide 19. It packs the whole destroying process into one formula, and it works because the process is a [Markov chain](c:markov-chain): each step only needs the previous picture.
+It packs the whole destroying process into one formula, and it works because the process is a [Markov chain](c:markov-chain): each step only needs the previous picture.
 
 To *sample* from it, you do exactly what it says from left to right: pick a real picture ($q(x_0)$), then apply the [noising step](c:diffusion-step) $N$ times.
 
 ## Forward and backward {#direction}
 
-This is called the **forward process** because it runs from data to noise. Everything about it is chosen by hand: there is nothing to learn. The interesting part of a diffusion model is a second chain, $p$, that runs the other way, from noise back to pictures. Training makes $p$ match $q$ (slide 31), and once it does, you can start from fresh static and walk backwards to a brand new picture.
+This is called the **forward process** because it runs from data to noise. Everything about it is chosen by hand: there is nothing to learn. The interesting part of a diffusion model is a second chain, $p$, that runs the other way, from noise back to pictures. Training makes $p$ match $q$, and once it does, you can start from fresh static and walk backwards to a brand new picture.
 
 The reason for using so many tiny steps is that each tiny step is easy to reverse. One giant leap from picture to static would be impossible to undo; a thousand small nudges can each be undone one at a time.
 

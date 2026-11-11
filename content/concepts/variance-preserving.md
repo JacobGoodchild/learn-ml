@@ -27,7 +27,7 @@ Start from the [recipe](c:diffusion-step): $x_n = \sqrt{\alpha_n}\,x_{n-1} + \sq
 
 $$\mathrm{Var}(x_n) = (\sqrt{\alpha_n})^2\,\mathrm{Var}(x_{n-1}) + (\sqrt{\beta_n})^2 \times 1 = \alpha_n\,\mathrm{Var}(x_{n-1}) + \beta_n$$
 
-Put in $\mathrm{Var}(x_{n-1}) = 1$ and use $\alpha_n = 1 - \beta_n$: you get exactly 1. This is why the slide insists $\alpha_n = 1 - \beta_n$. People call this design **variance preserving**.
+Put in $\mathrm{Var}(x_{n-1}) = 1$ and use $\alpha_n = 1 - \beta_n$: you get exactly 1. This is why the formula insists $\alpha_n = 1 - \beta_n$. People call this design **variance preserving**.
 
 Real pixels, scaled to the range $-1$ to $1$, have a variance of at most 1, not exactly 1. That is fine: the same formula shows a variance below 1 creeps *up* towards 1 a little at each step (question 3 below), and never overshoots. So the pictures along the chain never blow up or shrink away, and the end point is a bell curve with spread exactly 1.
 

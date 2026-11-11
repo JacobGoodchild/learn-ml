@@ -37,7 +37,7 @@ Two dice games can have the same average but feel completely different: one alwa
 
 ## Why square {#why-square}
 
-If we just averaged $X - \mu$, the values above and below the mean would cancel and we would always get 0. Squaring makes every distance positive. It also makes variances behave very nicely when you [add independent random variables](c:scaling-and-adding): they simply add up. That property is exactly what the diffusion slides rely on.
+If we just averaged $X - \mu$, the values above and below the mean would cancel and we would always get 0. Squaring makes every distance positive. It also makes variances behave very nicely when you [add independent random variables](c:scaling-and-adding): they simply add up. Diffusion models rely on exactly this.
 
 The downside is units: if $X$ is in centimetres, the variance is in centimetres squared. Taking the square root fixes this, giving the [standard deviation](c:standard-deviation).
 

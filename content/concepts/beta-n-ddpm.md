@@ -45,14 +45,14 @@ wrong: $\beta_n$ is a variance. Take its square root.
 hint: $\sqrt{0.0004}$.
 answer: $\sqrt{0.0004} = 0.02$.
 ? Is the noise schedule learned during training?
-- [ ] Yes, the network learns the best $\beta_n$ :: In the setting of slide 19 the schedule is fixed in advance.
-- [x] No, it is chosen by hand before training :: Right. On slide 19 the forward process has nothing to learn.
-hint: Slide 19 is the forward process. Is there a model in it?
+- [ ] Yes, the network learns the best $\beta_n$ :: In the noising process the schedule is fixed in advance.
+- [x] No, it is chosen by hand before training :: Right. The noising process has nothing to learn.
+hint: Is there a model anywhere in the noising process?
 answer: No. It is a fixed design choice. The forward process $q$ has nothing learned in it.
 ```
 
 ```recall
-? What does $\beta_n$ mean on slide 19, and is it a variance or a standard deviation?
+? What does $\beta_n$ mean in the noising process, and is it a variance or a standard deviation?
 It is the variance of the fresh noise added at step $n$. Its square root is the standard deviation.
 ? Why does the DDPM schedule start with tiny $\beta$ and grow?
 Early steps act on detailed pictures, so small changes are easier to undo; once the picture is mostly noise, bigger steps cost nothing.

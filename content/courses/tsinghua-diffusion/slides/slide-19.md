@@ -1,51 +1,49 @@
 ---
 id: slide-19
-title: Diffusion probabilistic models: adding noise
+title: Adding noise to a picture
 number: 19
-summary: A diffusion model starts by destroying pictures. It adds a little noise, again and again, until only static is left. This slide writes that process down.
+summary: Before a model can turn noise into pictures, we need a precise way of turning pictures into noise.
 sources:
   - title: Denoising Diffusion Probabilistic Models
     authors: Ho, Jain and Abbeel, NeurIPS 2020
     url: https://arxiv.org/abs/2006.11239
-    note: The forward process and the noise schedule used in the visual (β from 0.0001 to 0.02 over 1000 steps)
   - title: Score-Based Generative Modeling through Stochastic Differential Equations
     authors: Song, Sohl-Dickstein, Kingma, Kumar, Ermon and Poole, ICLR 2021
     url: https://arxiv.org/abs/2011.13456
-    note: The slide's demo images come from this paper; they are not reproduced here
 ---
 
-The slide makes one claim: the [diffusion process](c:forward-process) gradually adds noise to data, and it is described by a [Markov chain](c:markov-chain). Click any part of a formula to open the idea behind it.
+Take a picture and add a tiny amount of random noise. Do it again, a thousand times. The picture slowly dissolves into static.
 
-```formula The whole noising process, as one chain
+```formula One step of noise
+\p{diffusion-step}{q(x_n\mid x_{n-1})} = \p{isotropic-gaussian}{\mathcal{N}}\!\left(\p{alpha-n-ddpm}{\sqrt{\alpha_n}}\,\p{x-n-ddpm}{x_{n-1}},\ \p{beta-n-ddpm}{\beta_n}\, \p{identity-matrix}{I}\right)
+---
+In words: shrink the picture very slightly, then add a little noise to every pixel.
+$\p{x-n-ddpm}{x_{n-1}}$ :: the picture so far
+$\p{x-n-ddpm}{x_n}$ :: the next picture, slightly noisier
+$\p{beta-n-ddpm}{\beta_n}$ :: how much noise this step adds, e.g. $0.01$
+$\p{alpha-n-ddpm}{\alpha_n}$ :: how much of the picture this step keeps: $\alpha_n = 1 - \beta_n$
+$\p{identity-matrix}{I}$ :: the same amount of noise on every pixel, independently
+```
+
+```visual noising Watch a picture dissolve
+```
+
+```formula The whole run, step by step
 \p{forward-process}{q(x_0,\dots,x_N)} = \p{probability-distribution}{q(x_0)}\,\p{diffusion-step}{q(x_1\mid x_0)}\cdots \p{diffusion-step}{q(x_N\mid x_{N-1})}
+---
+$\p{probability-distribution}{q(x_0)}$ :: how likely each real, clean picture is
+$N$ :: the number of steps, usually $1000$
 ```
 
-```formula One step of noise (the "transition")
-\p{diffusion-step}{q(x_n\mid x_{n-1})} = \p{isotropic-gaussian}{\mathcal{N}}\!\left(\p{alpha-n-ddpm}{\sqrt{\alpha_n}}\,\p{x-n-ddpm}{x_{n-1}},\ \p{beta-n-ddpm}{\beta_n}\, \p{identity-matrix}{I}\right), \qquad \p{alpha-n-ddpm}{\alpha_n = 1-\beta_n}
-```
+Each step only looks at the picture just before it, so the whole run is a [Markov chain](c:markov-chain): one simple step, repeated.
 
 ```formula Where it ends up
 \p{x-n-ddpm}{x_N} \approx \p{pure-noise-endpoint}{\mathcal{N}(0, I)}
+---
+$\p{x-n-ddpm}{x_N}$ :: the last picture
+$\p{pure-noise-endpoint}{\mathcal{N}(0, I)}$ :: pure static: every pixel a fresh bell-curve value with mean 0 and variance 1
 ```
 
-## What the slide is saying {#reading}
-
-Take a clean picture, $\p{x-n-ddpm}{x_0}$. Make a slightly noisier copy, $x_1$. Make a slightly noisier copy of *that*, $x_2$, and so on for $N$ steps. Each copy only depends on the one just before it, which is what makes this a [Markov chain](c:markov-chain). After enough steps the picture is gone and what is left looks like a draw from a standard bell curve for every pixel.
-
-The model's real job comes later: learning to run this chain **backwards**, turning static into pictures. That is slide 31. This slide is only the forward, destroying half, which has no learning in it at all.
-
-```visual noising
-```
-
-## Which meaning each symbol has here {#notation}
-
-Some of these letters mean something different on later slides. On this slide:
-
-```notation
-$n$ :: the step number, counting $0, 1, 2, \dots, N$. Later slides (25, 54, 56) use continuous time $t$ instead.
-$N$ :: the total number of steps. In the original paper $N = 1000$.
-$\alpha_n$ :: how much of the previous picture one step keeps (as a variance). Not the $\alpha_t$ of slide 54, which is a total over many steps.
-$\beta_n$ :: how much new noise one step adds (as a variance).
-$q$ :: the noising process we chose. The model, $p$, appears on slide 31.
-$I$ :: the identity matrix: every pixel gets its own independent noise of the same size.
+```keypoint Why destroy pictures
+Every picture ends up as the same kind of static. So if a model learns to undo one small step, it can start from fresh static and work backwards to a brand new picture.
 ```

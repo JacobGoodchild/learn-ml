@@ -1,28 +1,110 @@
 {
-  "title": "Diffusion models: the Tsinghua summer school lecture",
-  "short": "Tsinghua diffusion lecture",
-  "description": "A three-hour postgraduate lecture from the Tsinghua University International Summer School on Generative AI, July 2025, on how diffusion models work and the lab's own work on making them faster and better. Each slide is rebuilt here so that every symbol can be opened, all the way down to A-level maths.",
-  "slides": ["slide-19"],
+  "title": "Diffusion models",
+  "short": "Diffusion models",
+  "description": "How image generators turn random noise into pictures, built up from A-level maths. Click any symbol in a formula to open the idea behind it.",
+  "slides": [
+    "slide-19"
+  ],
   "outline": [
-    { "id": "slide-a", "number": "A", "title": "Variational auto-encoders", "part": "Deep generative models" },
-    { "id": "slide-b", "number": "B", "title": "Auto-regressive models", "part": "Deep generative models" },
-    { "id": "slide-19", "number": "19", "title": "Diffusion probabilistic models: adding noise", "part": "Diffusion basics" },
-    { "id": "slide-25", "number": "25", "title": "Diffusion SDEs and diffusion ODEs", "part": "Diffusion basics" },
-    { "id": "slide-31", "number": "31", "title": "Training a diffusion model", "part": "Diffusion basics" },
-    { "id": "slide-42", "number": "42", "title": "The optimal variance (Analytic-DPM)", "part": "Analytic-DPM" },
-    { "id": "slide-43", "number": "43", "title": "Analytic-DPM extensions: results", "part": "Analytic-DPM" },
-    { "id": "slide-54", "number": "54", "title": "Simplifying with log-SNR", "part": "DPM-Solver" },
-    { "id": "slide-56", "number": "56", "title": "High-order solvers for diffusion ODEs", "part": "DPM-Solver" },
-    { "id": "slide-78", "number": "78", "title": "DPM-Solver in the Diffusers library", "part": "DPM-Solver" },
-    { "id": "slide-119", "number": "119", "title": "Variational score distillation", "part": "ProlificDreamer" },
-    { "id": "slide-eegsde", "number": "~125", "title": "Equivariant energy-guided SDE", "part": "Molecules" },
-    { "id": "slide-154", "number": "154", "title": "Summary", "part": "Summary" }
+    {
+      "id": "slide-a",
+      "title": "Variational auto-encoders",
+      "part": "Deep generative models"
+    },
+    {
+      "id": "slide-b",
+      "title": "Generating one piece at a time",
+      "part": "Deep generative models"
+    },
+    {
+      "id": "slide-19",
+      "title": "Adding noise to a picture",
+      "part": "Diffusion basics"
+    },
+    {
+      "id": "slide-25",
+      "title": "Noise as a smooth flow: SDEs and ODEs",
+      "part": "Diffusion basics"
+    },
+    {
+      "id": "slide-31",
+      "title": "Training a model to remove noise",
+      "part": "Diffusion basics"
+    },
+    {
+      "id": "slide-42",
+      "title": "Getting the variance right",
+      "part": "Analytic-DPM"
+    },
+    {
+      "id": "slide-43",
+      "title": "Fewer steps, same quality",
+      "part": "Analytic-DPM"
+    },
+    {
+      "id": "slide-54",
+      "title": "A better clock: log-SNR",
+      "part": "DPM-Solver"
+    },
+    {
+      "id": "slide-56",
+      "title": "Faster solvers",
+      "part": "DPM-Solver"
+    },
+    {
+      "id": "slide-78",
+      "title": "Using a fast solver in practice",
+      "part": "DPM-Solver"
+    },
+    {
+      "id": "slide-119",
+      "title": "From pictures to 3D scenes",
+      "part": "ProlificDreamer"
+    },
+    {
+      "id": "slide-eegsde",
+      "title": "Designing molecules",
+      "part": "Molecules"
+    },
+    {
+      "id": "slide-154",
+      "title": "The big picture",
+      "part": "Summary"
+    }
   ],
   "concepts": [
-    "probability-basics", "conditional-probability", "vectors", "matrices", "identity-matrix", "integration", "exponential-function", "subscripts",
-    "random-variable", "probability-distribution", "probability-density", "expectation", "variance", "standard-deviation",
-    "independence", "scaling-and-adding", "normal-distribution", "standard-normal", "image-as-vector", "isotropic-gaussian",
-    "conditional-distribution", "joint-distribution", "product-notation", "chain-rule-of-probability", "markov-chain",
-    "x-n-ddpm", "beta-n-ddpm", "alpha-n-ddpm", "diffusion-step", "variance-preserving", "alpha-bar-n", "forward-process", "pure-noise-endpoint"
+    "probability-basics",
+    "conditional-probability",
+    "vectors",
+    "matrices",
+    "identity-matrix",
+    "integration",
+    "exponential-function",
+    "subscripts",
+    "random-variable",
+    "probability-distribution",
+    "probability-density",
+    "expectation",
+    "variance",
+    "standard-deviation",
+    "independence",
+    "scaling-and-adding",
+    "normal-distribution",
+    "standard-normal",
+    "image-as-vector",
+    "isotropic-gaussian",
+    "conditional-distribution",
+    "joint-distribution",
+    "product-notation",
+    "chain-rule-of-probability",
+    "markov-chain",
+    "x-n-ddpm",
+    "beta-n-ddpm",
+    "alpha-n-ddpm",
+    "diffusion-step",
+    "variance-preserving",
+    "alpha-bar-n",
+    "forward-process",
+    "pure-noise-endpoint"
   ]
 }

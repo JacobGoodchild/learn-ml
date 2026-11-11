@@ -23,7 +23,7 @@ Examples: the score on a dice, tomorrow's rainfall in millimetres, the brightnes
 
 Statistics books write the random variable in capitals, $X$, and a particular value it took in lower case, $x$. So "$P(X = 4)$" means "the probability that the dice shows 4".
 
-The diffusion slides drop this habit: they write $x_n$ both for the random noisy picture and for one particular noisy picture. The meaning is always clear from context. When you see $x_n \sim \dots$ or $q(x_n)$, it is being treated as random.
+Diffusion papers drop this habit: they write $x_n$ both for the random noisy picture and for one particular noisy picture. The meaning is always clear from context. When you see $x_n \sim \dots$ or $q(x_n)$, it is being treated as random.
 
 ## Example {#example}
 
@@ -48,6 +48,6 @@ answer: Yes. The clean value is fixed, but the noise changes each time, so the n
 ```recall
 ? In your own words, what is a random variable?
 A number whose value depends on chance: each time you run the experiment you get a value, and you know which values are possible and how likely each is.
-? Why do the slides happily write $x_n$ for both a random picture and a particular one?
+? Why do diffusion papers happily write $x_n$ for both a random picture and a particular one?
 It saves notation. Whether $x_n$ is random or a particular value is clear from how it is used, for example inside $q(x_n)$ or after $\sim$ it is random.
 ```

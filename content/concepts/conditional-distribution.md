@@ -29,7 +29,7 @@ This is [conditional probability](c:conditional-probability) from A-level, but f
 
 A helpful way to read $q(y \mid x)$: it is a **recipe** for producing a random $y$, and the recipe needs $x$ as an ingredient. Give it a different $x$ and you get a different distribution for $y$.
 
-On slide 19, $q(x_n \mid x_{n-1})$ is the recipe "given the picture after $n-1$ steps, here is how to make the picture after $n$ steps": shrink it slightly and add a little noise.
+In the noising process, $q(x_n \mid x_{n-1})$ is the recipe "given the picture after $n-1$ steps, here is how to make the picture after $n$ steps": shrink it slightly and add a little noise.
 
 ## Example {#example}
 

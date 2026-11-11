@@ -70,9 +70,9 @@ answer: $\sqrt{\alpha_n}\,x_{n-1}$: the slightly shrunk previous picture.
 ? Why does the recipe use $\sqrt{\beta_n}\,\epsilon_n$ rather than $\beta_n\,\epsilon_n$?
 - [x] Because $\epsilon_n$ has variance 1, and multiplying by $\sqrt{\beta_n}$ gives variance $\beta_n$ :: Right: the variance gets multiplied by the square of the scale.
 - [ ] To make the noise bigger :: For $\beta_n < 1$, $\sqrt{\beta_n} > \beta_n$, but that is a side effect, not the reason.
-- [ ] It is a typo on the slide :: It is correct; the slide writes the variance $\beta_n$ inside $\mathcal N$.
+- [ ] It is a typo :: It is correct; the formula puts the variance $\beta_n$ inside $\mathcal N$.
 hint: Scaling rule for variances.
-answer: The slide asks for noise with *variance* $\beta_n$. Since $\epsilon_n$ has variance 1, scaling by $\sqrt{\beta_n}$ gives variance $(\sqrt{\beta_n})^2 = \beta_n$.
+answer: The formula asks for noise with *variance* $\beta_n$. Since $\epsilon_n$ has variance 1, scaling by $\sqrt{\beta_n}$ gives variance $(\sqrt{\beta_n})^2 = \beta_n$.
 ```
 
 ```recall

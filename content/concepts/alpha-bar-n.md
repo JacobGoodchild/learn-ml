@@ -19,14 +19,14 @@ sources:
   - title: Analytic-DPM
     authors: Bao, Li, Zhu and Zhang, ICLR 2022
     url: https://arxiv.org/abs/2201.06503
-    note: Writes β̄_n = 1 − ᾱ_n, the notation slide 31 uses
+    note: Writes β̄_n = 1 − ᾱ_n
 ---
 
 ```formula
 \bar\alpha_n = \p{product-notation}{\prod_{i=1}^{n}} \p{alpha-n-ddpm}{\alpha_i}, \qquad q(x_n \mid x_0) = \p{isotropic-gaussian}{\mathcal N}\big(\sqrt{\bar\alpha_n}\,x_0,\ (1-\bar\alpha_n)\,I\big)
 ```
 
-This does not appear on slide 19 itself, but it is the key to understanding why $x_N \approx \mathcal N(0, I)$, and slides 31 and 42 use it constantly.
+This is the key to understanding why the last picture is pure noise, and it comes back constantly when we train a model to undo the noise.
 
 ## In words {#aloud}
 
@@ -46,9 +46,9 @@ So you never need to run the steps one by one. To get the picture after 600 step
 
 $$x_n = \sqrt{\bar\alpha_n}\,x_0 + \sqrt{1 - \bar\alpha_n}\,\epsilon, \qquad \epsilon \sim \mathcal N(0, I)$$
 
-This is how the noising visual on slide 19 works, and it is what makes training fast: pick a random $n$, jump straight there.
+This is how the noising visual works, and it is what makes training fast: pick a random $n$, jump straight there.
 
-Notice the two shares again: $\bar\alpha_n$ of the variance is picture, $1 - \bar\alpha_n$ is noise. They add to 1, as the [variance-preserving](c:variance-preserving) design promised. Slide 31 gives the noise share its own name: $\bar\beta_n = 1 - \bar\alpha_n$.
+Notice the two shares again: $\bar\alpha_n$ of the variance is picture, $1 - \bar\alpha_n$ is noise. They add to 1, as the [variance-preserving](c:variance-preserving) design promised. The noise share gets its own name later on: $\bar\beta_n = 1 - \bar\alpha_n$.
 
 ## How fast the picture fades {#fade}
 

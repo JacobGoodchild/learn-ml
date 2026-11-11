@@ -430,3 +430,42 @@ a.concept-link { color: var(--accent); text-decoration-color: color-mix(in srgb,
 @media (max-width: 760px) { .toc, .toc + *, .rail-title { display: none; } .rail:not(:has(ol)) { display: none; } }
 .breakdown li { grid-template-columns: 6rem 1fr; }
 @media (max-width: 760px) { .breakdown li { grid-template-columns: 1fr; } }
+
+/* ===== Revision 3: textbook bands, two progress bars, practice at the end ===== */
+.layer-body > p, .band-body > p { max-width: var(--measure); }
+.band { display: grid; grid-template-columns: 6.5rem minmax(0, 1fr); border-top: 2px solid var(--ink); border-bottom: 1px solid var(--rule); margin: 1.8rem 0; scroll-margin-top: 4.5rem; }
+.band-tag { font-family: var(--sans); font-size: .9rem; font-weight: 700; color: var(--ink); padding: .9rem .8rem .9rem 0; }
+.band-body { padding: .8rem 0 1rem; min-width: 0; }
+.band-title { font-size: 1.15em; margin: 0 0 .3rem; }
+.band .formula { margin: .6rem 0; padding: .2rem 0; }
+.band .reading { margin: .2rem 0 .8rem; }
+.band-formula { border-top-color: var(--accent); }
+.band-formula .band-tag { color: var(--accent); }
+.band-key-point { border-top-color: var(--good); }
+.band-key-point .band-tag { color: var(--good); }
+.band-try-it { border-top-color: var(--c-calculus); }
+.band-try-it .band-tag { color: var(--c-calculus); }
+.band .visual { border: 0; padding: 0; margin: .4rem 0 0; background: none; }
+.where { margin: .4rem 0 0; display: grid; gap: .35rem; }
+.where > div { display: grid; grid-template-columns: minmax(3.5rem, max-content) 1fr; gap: 1rem; align-items: baseline; }
+.where dt { text-align: right; min-width: 3.5rem; }
+.where dd { margin: 0; }
+.bars { display: flex; flex-wrap: wrap; gap: .5rem 2rem; margin-top: 1rem; font-family: var(--sans); font-size: .9rem; }
+.bar-pair { display: grid; grid-template-columns: auto 8rem auto; gap: .6rem; align-items: center; color: var(--ink); text-decoration: none; }
+.bar-pair:hover .bar-name { text-decoration: underline; }
+.bar-pair .bar .u { background: var(--accent); }
+.bar-num { color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.link-list { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: .3rem 1.4rem; }
+.link-list li { margin: 0; }
+.practice { margin-top: 3rem; border-top: 1px solid var(--rule); }
+.practice .check { padding: .7rem .9rem; margin: .6rem 0; }
+.practice .options { gap: .3rem; }
+.practice .option { padding: .35rem .65rem; }
+.header-progress:empty { display: none; }
+@media (max-width: 760px) {
+  .band { grid-template-columns: 1fr; }
+  .band-tag { padding: .6rem 0 0; }
+  .where > div { grid-template-columns: minmax(2.5rem, max-content) 1fr; gap: .7rem; }
+  .bar-pair { grid-template-columns: 6.5rem 1fr auto; width: 100%; }
+}
+.settings { margin-left: auto; }

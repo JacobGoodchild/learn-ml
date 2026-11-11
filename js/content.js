@@ -122,6 +122,34 @@ export function parseBody(body) {
   return blocks;
 }
 
+// Tidy older pages into textbook bands: a formula followed by "In words" and "Piece by piece" becomes
+// one Formula band with its reading and a symbol list, instead of showing the same formula twice.
+const stripP = l => l.replace(/\\p\{[\w-]+\}/g, '').replace(/[\s{}]/g, '');
+export function restructure(blocks) {
+  const out = [];
+  for (let i = 0; i < blocks.length; i++) {
+    const b = blocks[i];
+    if (b.type === 'heading' && (b.id === 'aloud' || b.id === 'breakdown')) {
+      const target = [...out].reverse().find(x => x.type === 'formula');
+      const next = blocks[i + 1];
+      if (b.id === 'aloud' && target && next && next.type === 'para') { target.reading = next.text; i++; continue; }
+      if (b.id === 'breakdown' && next && next.type === 'breakdown') {
+        const where = next.items.map(it => [it.sym ? `$${it.sym}$` : '', it.text]);
+        if (target && stripP(target.latex) === stripP(next.latex)) {
+          const links = l => (l.match(/\\p\{/g) || []).length;
+          if (links(next.latex) > links(target.latex)) target.latex = next.latex;
+          target.where = where;
+        } else {
+          out.push({ type: 'formula', latex: next.latex, label: '', where });
+        }
+        i++; continue;
+      }
+    }
+    out.push(b);
+  }
+  return out;
+}
+
 export function slug(s) {
   return s.toLowerCase().replace(/\$[^$]*\$/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 }
@@ -129,14 +157,22 @@ export function slug(s) {
 function fenced(kind, arg, text) {
   switch (kind) {
     case 'formula': {
-      const label = arg.trim();
-      return { type: 'formula', latex: text.trim(), label };
+      // ```formula Title, then the LaTeX, then optionally '---' and 'symbol :: meaning' lines
+      const [f, rest = ''] = text.split(/\n---\n/);
+      const lines = rest.split('\n');
+      const where = lines.filter(l => l.includes('::')).map(l => l.split('::').map(x => x.trim()));
+      // Any other text after '---' is the formula in plain words, shown under it.
+      const reading = lines.filter(l => l.trim() && !l.includes('::')).join(' ').trim();
+      return { type: 'formula', latex: f.trim(), label: arg.trim(), where, reading };
     }
+    case 'keypoint': return { type: 'band', tag: 'Key point', title: arg.trim(), blocks: parseBody(text) };
+    case 'example': return { type: 'band', tag: 'Example', title: arg.trim(), blocks: parseBody(text) };
+    case 'note': return { type: 'band', tag: 'Note', title: arg.trim(), blocks: parseBody(text) };
     case 'check': return { type: 'check', questions: parseCheck(text) };
     case 'recall': return { type: 'recall', questions: parseRecall(text) };
     case 'visual': return { type: 'visual', name: arg.trim().split(/\s+/)[0], opts: parseOpts(text), caption: arg.trim().split(/\s+/).slice(1).join(' ') };
     case 'breakdown': return parseBreakdown(text);
-    case 'notation': return { type: 'notation', rows: text.split('\n').filter(l => l.includes('::')).map(l => l.split('::').map(s => s.trim())) };
+    case 'notation': return { type: 'notation', title: arg.trim(), rows: text.split('\n').filter(l => l.includes('::')).map(l => l.split('::').map(s => s.trim())) };
     default: return { type: 'code', lang: kind, text };
   }
 }
@@ -203,7 +239,7 @@ export async function loadNodeFile(url, kind) {
   if (cache.has(url)) return cache.get(url);
   const text = await fetchText(url);
   const { meta, body } = splitFile(text);
-  const blocks = parseBody(body);
+  const blocks = restructure(parseBody(body));
   const node = {
     kind,
     id: meta.id,
@@ -234,7 +270,9 @@ export function collectPieces(blocks) {
     for (const m of s.matchAll(/\]\(c:([\w-]+)\)/g)) ids.add(m[1]);
   };
   for (const b of blocks) {
-    scan(b.latex); scan(b.text);
+    scan(b.latex); scan(b.text); scan(b.reading);
+    if (b.where) b.where.forEach(r => r.forEach(scan));
+    if (b.blocks) collectPieces(b.blocks).forEach(id => ids.add(id));
     if (b.items) b.items.forEach(it => { scan(typeof it === 'string' ? it : it.text); if (it.id) ids.add(it.id); scan(it.sym); });
     if (b.rows) b.rows.forEach(r => r.forEach(scan));
   }

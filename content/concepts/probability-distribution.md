@@ -19,7 +19,7 @@ A **probability distribution** describes a random variable completely: every val
 
 ## The letters $p$ and $q$ {#letters}
 
-The slides name distributions with lower-case letters. $q(x)$ means "the distribution $q$, and specifically how likely the value $x$ is under it". On the diffusion slides:
+Diffusion papers name distributions with lower-case letters. $q(x)$ means "the distribution $q$, and specifically how likely the value $x$ is under it". In diffusion models:
 
 - $q$ is always the **noising process** we choose, the one that destroys pictures.
 - $p$ is always the **model** we train to undo it.
@@ -38,7 +38,7 @@ Roll two dice and add them. The total can be 2 to 12. There are 36 equally likel
 wrong: The probabilities of all the possible values must add up to exactly 1.
 hint: What must all the probabilities add up to?
 answer: $0.2 + 0.5 + p = 1$, so $p = 0.3$.
-? On the diffusion slides, what does $q(x_0)$ describe?
+? In diffusion models, what does $q(x_0)$ describe?
 - [x] How likely each possible clean picture is :: Right. $x_0$ is a clean picture and $q$ is the data side of things.
 - [ ] The model's guess at a clean picture :: The model is always called $p$.
 - [ ] One particular photo :: $q(x_0)$ is a whole distribution over pictures, not one picture.
@@ -49,6 +49,6 @@ answer: The distribution of real clean pictures: how likely each picture is to a
 ```recall
 ? What two things does a probability distribution tell you about a random variable?
 Every value it can take, and how likely each value is. The probabilities add up to 1.
-? On the diffusion slides, what is the difference between $q$ and $p$?
+? In diffusion models, what is the difference between $q$ and $p$?
 $q$ is the noising process we design (and the real data); $p$ is the model we train to reverse it.
 ```

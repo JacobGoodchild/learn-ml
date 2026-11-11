@@ -10,12 +10,12 @@ sources:
   - title: Denoising Diffusion Probabilistic Models
     authors: Ho, Jain and Abbeel, NeurIPS 2020
     url: https://arxiv.org/abs/2006.11239
-    note: The paper writes T for the number of steps and t for the step; slide 19 writes N and n
+    note: The paper writes T for the number of steps and t for the step; this site writes N and n
 ---
 
 ## The idea {#idea}
 
-Every $x$ on slide 19 is a whole picture, stored as a [vector](c:image-as-vector). The subscript says how many noising steps it has been through.
+Every $x$ in the noising process is a whole picture, stored as a [vector](c:image-as-vector). The subscript says how many noising steps it has been through.
 
 ```notation
 $x_0$ :: a clean picture, drawn from the real data (photos of dogs, say). Its distribution, $q(x_0)$, is "what real pictures look like".
@@ -36,7 +36,7 @@ In the original paper, $N = 1000$. That sounds like a lot, but each step is tiny
 ## Check yourself {#check}
 
 ```check
-? On slide 19, what is $x_{n-1}$?
+? In the noising process, what is $x_{n-1}$?
 - [x] The picture one noising step before $x_n$ :: Right: one step less noisy.
 - [ ] The picture with one pixel removed :: The subscript counts steps, not pixels.
 - [ ] A clean picture :: Only $x_0$ is clean.
@@ -50,7 +50,7 @@ answer: $1000 + 1 = 1001$: the clean picture plus one for each step.
 ```
 
 ```recall
-? On slide 19, what are $x_0$, $x_n$ and $x_N$?
+? In the noising process, what are $x_0$, $x_n$ and $x_N$?
 $x_0$ is a clean picture from the data; $x_n$ is it after $n$ noising steps; $x_N$ is the final picture after all $N$ steps, which is essentially pure noise.
 ? Each step of noise is tiny. Why does the picture still disappear completely by $x_N$?
 Because there are many steps ($N = 1000$ in the paper). Each one shrinks the picture a little and adds a little noise, and the effect builds up until nothing of the picture is left.

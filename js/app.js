@@ -176,7 +176,7 @@ function updateHeader() {
   const c = counts(site.nodes, ids);
   const due = P.dueRecall(site.nodes).length;
   const el = document.querySelector('.header-progress');
-  el.textContent = `${c.understood} of ${c.total} concepts understood · ${c.remembered} remembered` + (due ? ` · ${due} review${due === 1 ? '' : 's'} due` : '');
+  el.textContent = '';
   const dc = document.querySelector('.due-count');
   dc.hidden = !due;
   dc.textContent = due;
@@ -279,18 +279,12 @@ function renderDive(stack) {
       const label = t ? inline(t.title) : esc(l.id);
       return k === depth - 1 ? `<li aria-current="page">${label}</li>` : `<li><a href="${diveHash(stack.slice(0, k + 1))}">${label}</a></li>`;
     }).join('')}</ol></nav>` : '';
-  const meta = n.kind === 'slide' ? slideProgress(n)
-    : isFloor(n) ? '<p class="meta">A reminder of something from A-level.</p>'
-    : `<p class="meta" data-status>${statusDot(st, n)} ${statusSentence(st)}</p>`;
-  const contents = n.entryPoints.length ? `<p class="contents">Jump to: ${n.entryPoints.map(e =>
-      `<a href="${diveHash([...stack.slice(0, -1), { ...top, section: e.section }])}">${inline(e.label)}</a>`).join(', ')}</p>` : '';
   art.innerHTML = `
     ${crumbs}
     <div class="layer-head">
       <h1 tabindex="-1">${inline(n.title)}</h1>
       ${n.summary ? `<p class="summary">${inline(n.summary)}</p>` : ''}
-      ${meta}
-      ${contents}
+      ${isFloor(n) ? '' : `<div class="bars" data-bars>${twoBars(n)}</div>`}
     </div>
     <div class="layer-body"></div>`;
   mainCol.appendChild(art);
@@ -298,17 +292,28 @@ function renderDive(stack) {
   const ctx = {
     node: n, nodes: site.nodes,
     onUnderstood: () => {
-      const pill = art.querySelector('[data-status]');
-      if (pill) pill.innerHTML = `${statusDot('understood', n)} Understood`;
+      const bars = art.querySelector('[data-bars]');
+      if (bars) bars.innerHTML = twoBars(n);
       const note = document.createElement('p');
       note.className = 'check-summary';
-      note.textContent = 'All correct. You will see review questions on this tomorrow.';
+      note.textContent = 'All correct. Review questions on this start tomorrow.';
       art.querySelector('.checks:last-of-type')?.appendChild(note);
       renderRail(rail, stack);
     },
   };
-  renderBlocks(body, n.blocks, ctx);
-  appendAuto(body, n, stack);
+  const isPractice = b => b.type === 'check' || b.type === 'recall';
+  renderBlocks(body, n.blocks.filter(b => !isPractice(b) && !(b.type === 'heading' && b.id === 'check')), ctx);
+  appendAuto(body, n, stack, false);
+  const practice = n.blocks.filter(b => b.type === 'check');
+  if (practice.length) {
+    const sec = document.createElement('section');
+    sec.className = 'practice';
+    sec.id = 'sec-practice';
+    sec.innerHTML = '<h2>Practice</h2>';
+    renderBlocks(sec, practice, ctx);
+    body.appendChild(sec);
+  }
+  appendSources(body, n);
   wirePieces(art, stack);
   renderRail(rail, stack);
 }
@@ -325,9 +330,19 @@ function statusDot(st, n) {
   return `<span class="dot ${st === 'floor' ? 'understood' : st}" style="--cc:${st === 'floor' ? 'var(--rule-2)' : colourOf(n)}" aria-hidden="true"></span>`;
 }
 
+// "Understood" and "Remembered" bars for this idea and everything underneath it.
+function twoBars(n) {
+  const ids = new Set(treeOf(site.nodes, n.id));
+  if (n.kind === 'concept') ids.add(n.id);
+  const c = counts(site.nodes, ids);
+  const one = (label, k) => `<a class="bar-pair" href="#/ladder/${n.kind === 'slide' ? n.id : ''}">
+      <span class="bar-name">${label}</span>${bar({ total: c.total, understood: k, remembered: 0 })}<span class="bar-num">${k}/${c.total}</span></a>`;
+  return one('Understood', c.understood) + one('Remembered', c.remembered);
+}
+
 function slideProgress(n) {
   const c = counts(site.nodes, treeOf(site.nodes, n.id));
-  return `<a class="bar-link" href="#/ladder/${n.id}" style="min-width:14rem" title="See this slide's tree">${bar(c)}<span class="bar-label">${c.understood} of ${c.total} ideas behind this slide understood</span></a>`;
+  return `<a class="bar-link" href="#/ladder/${n.id}" style="min-width:14rem" title="See every idea in this topic">${bar(c)}<span class="bar-label">${c.understood} of ${c.total} ideas behind this slide understood</span></a>`;
 }
 
 function bar(c) {
@@ -336,30 +351,38 @@ function bar(c) {
 }
 
 // "Built on", "What this unlocks" and "Sources" are generated from the map, so they are always right.
-function appendAuto(body, n, stack) {
+function appendSources(body, n) {
+  if (!n.sources.length) return;
+  const d = document.createElement('div');
+  d.innerHTML = `<details class="sources"><summary>Sources</summary><ul>${n.sources.map(s =>
+    `<li>${s.url ? `<a href="${esc(s.url)}" target="_blank" rel="noopener">${inline(s.title)}</a>` : inline(s.title)}${s.authors ? `, ${inline(s.authors)}` : ''}</li>`).join('')}</ul></details>`;
+  body.append(...d.childNodes);
+}
+
+function appendAuto(body, n, stack, withSources = true) {
   const html = [];
   const needs = n.needs.filter(id => id);
   if (needs.length) {
-    html.push(`<h2 id="sec-built-on" tabindex="-1">Built on</h2><ul>${needs.map(id => {
+    html.push(`<h2 id="sec-built-on" tabindex="-1">Built on</h2><ul class="link-list">${needs.map(id => {
       const t = node(id);
-      return `<li><a class="concept-link" href="#" data-c="${id}">${t ? inline(t.title) : esc(id)}</a>${t && t.summary ? ` <span class="muted">— ${inline(t.summary)}</span>` : ''}</li>`;
+      return `<li><a class="concept-link" href="#" data-c="${id}">${t ? inline(t.title) : esc(id)}</a></li>`;
     }).join('')}</ul>`);
   }
   const ups = (n.usedBy || []).map(node).filter(Boolean);
   if (ups.length) {
-    html.push(`<h2 id="sec-unlocks" tabindex="-1">Used in</h2><ul>${ups.map(u => {
+    html.push(`<h2 id="sec-unlocks" tabindex="-1">Leads to</h2><ul class="link-list">${ups.map(u => {
       const k = stack.findIndex(l => l.id === u.id);
       const href = k >= 0 ? diveHash(stack.slice(0, k + 1)) : diveHash([{ id: u.id, from: null }]);
       return `<li><a href="${href}">${inline(u.title)}</a></li>`;
     }).join('')}</ul>`);
   }
   if (n.related.length) {
-    html.push(`<h2 id="sec-related" tabindex="-1">Worth comparing</h2><ul>${n.related.map(id => {
+    html.push(`<h2 id="sec-related" tabindex="-1">Compare with</h2><ul class="link-list">${n.related.map(id => {
       const t = node(id);
       return `<li><a class="concept-link" href="#" data-c="${id}">${t ? inline(t.title) : esc(id)}</a></li>`;
     }).join('')}</ul>`);
   }
-  if (n.sources.length) {
+  if (withSources && n.sources.length) {
     html.push(`<details class="sources"><summary>Sources</summary><ul>${n.sources.map(s =>
       `<li>${s.url ? `<a href="${esc(s.url)}" target="_blank" rel="noopener">${inline(s.title)}</a>` : inline(s.title)}${s.authors ? `, ${inline(s.authors)}` : ''}${s.note ? `. <span class="muted">${inline(s.note)}</span>` : ''}</li>`).join('')}</ul></details>`);
   }
@@ -465,10 +488,13 @@ function renderRail(rail, stack) {
       ? `<div class="rail-card current" style="--cc:${colour}" aria-current="location">${inner}</div>`
       : `<a class="rail-card" style="--cc:${colour}; text-decoration:none" href="${diveHash(stack.slice(0, k + 1))}">${inner}</a>`}</li>`;
   });
-  const heads = [...main.querySelectorAll('.layer-body h2[id]')];
-  const toc = heads.length ? `<p class="rail-title">On this page</p><ul class="toc">${heads.map(h =>
-    `<li><a href="${diveHash([...stack.slice(0, -1), { ...stack.at(-1), section: h.id.replace(/^sec-/, '') }])}">${h.innerHTML}</a></li>`).join('')}</ul>` : '';
-  rail.innerHTML = (stack.length > 1 ? `<p class="rail-title">Your path</p><ol>${cards.join('')}</ol>` : '') + toc;
+  const secs = [...main.querySelectorAll('.layer-body > .band, .layer-body > h2, .layer-body > section.practice')];
+  secs.forEach((el, i) => { if (!el.id) el.id = `sec-part-${i + 1}`; });
+  const label = el => el.matches('.band') ? (el.querySelector('.band-title')?.innerHTML || el.dataset.toc)
+    : el.matches('.practice') ? 'Practice' : el.innerHTML;
+  const toc = secs.filter(el => !['sec-built-on', 'sec-unlocks', 'sec-related'].includes(el.id) && !(el.matches('.band') && !el.querySelector('.band-title')));
+  rail.innerHTML = toc.length ? `<p class="rail-title">On this page</p><ul class="toc">${toc.map(el =>
+    `<li><a href="${diveHash([...stack.slice(0, -1), { ...stack.at(-1), section: el.id.replace(/^sec-/, '') }])}">${label(el)}</a></li>`).join('')}</ul>` : '';
   rail.querySelectorAll('.f[data-hl]').forEach(f => {
     const p = f.querySelectorAll('[data-c]')[Number(f.dataset.hl)];
     f.querySelectorAll('[data-c]').forEach(x => { x.style.cursor = 'inherit'; });
@@ -539,8 +565,7 @@ function renderHome() {
       <h1>${inline(course.title)}</h1>
       <p class="lede">${inline(course.description)}</p>
       ${nu ? nextUpBox(nu, sl) : ''}
-      <h2>The slides</h2>
-      <p>Click any part of a formula to open the idea behind it.</p>
+      <h2>Topics</h2>
       <ul class="slide-list">${rows}</ul>
     </section>`;
   }).join('');
@@ -573,7 +598,7 @@ function renderLadder(slideId) {
     <p class="lede">Every idea behind <a href="${diveHash([{ id: sl.id, from: null }])}">${inline(sl.title)}</a>, from what you already know at the top. Each idea only uses the ones above it.</p>
     ${slides.length > 1 ? `<p>Other slides: ${slides.filter(s => s !== sl).map(s => `<a href="#/ladder/${s.id}">${inline(s.title)}</a>`).join(', ')}</p>` : ''}
     ${bar(c)}<span class="bar-label">${c.understood} of ${c.total} understood, ${c.remembered} remembered</span>
-    ${nu ? nextUpBox(nu, sl) : '<p>Everything under this slide is understood.</p>'}
+    ${nu ? nextUpBox(nu, sl) : '<p>Everything in this topic is understood.</p>'}
     <div class="legend"><span><span class="dot" style="--cc:var(--ink-3)"></span>not started</span><span><span class="dot seen" style="--cc:var(--ink-3)"></span>seen</span><span><span class="dot understood" style="--cc:var(--ink-3)"></span>understood</span><span><span class="dot remembered" style="--cc:var(--ink-3)"></span>remembered</span><span><span class="dot understood" style="--cc:var(--rule-2)"></span>floor (already known)</span></div>
     <ol class="ladder">${rows}</ol></div>`;
 }

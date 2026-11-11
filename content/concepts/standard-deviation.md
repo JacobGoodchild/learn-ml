@@ -20,7 +20,7 @@ On a bell curve, one standard deviation either side of the mean catches about 68
 
 ## Where you will see each one {#where}
 
-Variances are easier to calculate with; standard deviations are easier to picture. The slides write variances inside $\mathcal N(\cdot,\cdot)$ and standard deviations as *multipliers*. For example a noising step keeps $\sqrt{\alpha_n}$ of the old picture: that square root is turning a variance into a standard deviation.
+Variances are easier to calculate with; standard deviations are easier to picture. Diffusion formulas write variances inside $\mathcal N(\cdot,\cdot)$ and standard deviations as *multipliers*. For example a noising step keeps $\sqrt{\alpha_n}$ of the old picture: that square root is turning a variance into a standard deviation.
 
 ## Example {#example}
 

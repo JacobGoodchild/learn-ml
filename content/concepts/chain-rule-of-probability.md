@@ -28,7 +28,7 @@ This rule is *always* true. It does not depend on anything special about the var
 
 Draw two cards without replacement. $P(\text{both aces}) = P(\text{first ace}) \times P(\text{second ace} \mid \text{first ace}) = \frac{4}{52} \times \frac{3}{51} = \frac{1}{221}$.
 
-The auto-regressive slide (slide B) uses exactly this rule to write the probability of a sentence word by word.
+Language models use exactly this rule to write the probability of a sentence word by word.
 
 ## Check yourself {#check}
 

@@ -37,14 +37,14 @@ For a Markov chain, every condition collapses to just the previous step:
 
 $$q(x_0, \dots, x_N) = q(x_0)\, q(x_1 \mid x_0)\, q(x_2 \mid x_1) \cdots q(x_N \mid x_{N-1})$$
 
-That is the first line of slide 19. Each factor is one small step, so the whole process is described by one simple recipe used $N$ times.
+That is exactly the formula for the noising process. Each factor is one small step, so the whole process is described by one simple recipe used $N$ times.
 
 ## Check yourself {#check}
 
 ```check
 ? Which of these is a Markov chain?
 - [x] Your position in a board game after each turn :: Right: the next square depends only on the current square and a fresh dice roll.
-- [ ] The words in a sentence, if each word depends on all the words before it :: That uses the whole history, which is the auto-regressive set-up on slide B.
+- [ ] The words in a sentence, if each word depends on all the words before it :: That uses the whole history, which is how language models work instead.
 - [ ] The results of separate coin flips, as a list :: Those are fully independent, which is a special (and boring) case: each step does not even depend on the last.
 hint: Does the next step need anything except the current one?
 answer: The board game. Each move needs only the current square and a dice roll.
@@ -59,6 +59,6 @@ answer: $q(x_3 \mid x_2)$.
 ```recall
 ? What makes a sequence a Markov chain?
 Each step depends only on the step just before it, not on the rest of the history.
-? How does the Markov property turn the chain rule into the first line of slide 19?
+? How does the Markov property turn the chain rule into the formula for the noising process?
 Every factor $q(x_n \mid x_0, \dots, x_{n-1})$ becomes $q(x_n \mid x_{n-1})$, so the joint distribution is $q(x_0)$ times one simple step after another.
 ```

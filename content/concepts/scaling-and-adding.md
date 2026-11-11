@@ -17,13 +17,13 @@ entryPoints:
 \mathrm{Var}(aX) = a^2\,\p{variance}{\mathrm{Var}(X)}, \qquad \mathrm{Var}(X + Y) = \mathrm{Var}(X) + \mathrm{Var}(Y)\ \ \text{if } X, Y \text{ are } \p{independence}{\text{independent}}
 ```
 
-These two rules do most of the work on slide 19.
+These two rules do most of the work when adding noise.
 
 ## Scaling by a number {#scaling}
 
 Multiply every value by $a$ and every distance from the mean is multiplied by $a$ too. Variance is built from *squared* distances, so it is multiplied by $a^2$. The standard deviation is multiplied by $|a|$.
 
-So to multiply a variance by $\alpha$, you multiply the variable by $\sqrt{\alpha}$. That is exactly why slide 19 has $\sqrt{\alpha_n}\,x_{n-1}$ rather than $\alpha_n x_{n-1}$.
+So to multiply a variance by $\alpha$, you multiply the variable by $\sqrt{\alpha}$. That is exactly why the noising step uses $\sqrt{\alpha_n}\,x_{n-1}$ rather than $\alpha_n x_{n-1}$.
 
 ## Adding independent noise {#adding}
 

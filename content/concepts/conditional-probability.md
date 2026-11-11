@@ -15,4 +15,4 @@ Knowing $B$ shrinks the world to just the cases where $B$ happened, and asks wha
 
 **Example.** A card is drawn from a normal pack. $P(\text{king}) = \frac{4}{52}$. But $P(\text{king} \mid \text{picture card}) = \frac{4}{12}$, because once you know it is a picture card there are only 12 cards it could be.
 
-The diffusion slides use the same bar for whole distributions, such as $q(x_1 \mid x_0)$. That idea is one step up: [conditional distributions](c:conditional-distribution).
+Diffusion models use the same bar for whole distributions, such as $q(x_1 \mid x_0)$. That idea is one step up: [conditional distributions](c:conditional-distribution).

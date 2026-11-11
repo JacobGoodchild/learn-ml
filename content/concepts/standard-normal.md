@@ -20,7 +20,7 @@ related: [isotropic-gaussian]
 
 The **standard normal** is the simplest bell curve: centred at 0, with spread 1. You can make any other normal distribution from it: stretch by $\sigma$ (which [multiplies the variance](c:scaling-and-adding) by $\sigma^2$), then shift by $\mu$.
 
-This is how computers make noise. They produce standard normal numbers, then scale and shift them. The slides always call these raw noise numbers $\epsilon$ (Greek "epsilon"), and later slides train a network to guess $\epsilon$.
+This is how computers make noise. They produce standard normal numbers, then scale and shift them. Diffusion papers always call these raw noise numbers $\epsilon$ (Greek "epsilon"), and a diffusion model is trained to guess $\epsilon$.
 
 ## Example {#example}
 
@@ -45,6 +45,6 @@ answer: $\mathcal N(0, \beta)$. This is exactly how a noising step makes noise o
 ```recall
 ? How do you turn a standard normal draw $\epsilon$ into a draw from $\mathcal N(\mu, \sigma^2)$?
 Multiply by the standard deviation $\sigma$, then add the mean $\mu$: $\mu + \sigma\epsilon$.
-? What do the diffusion slides usually call a standard normal noise sample?
+? What do diffusion papers usually call a standard normal noise sample?
 $\epsilon$ (epsilon).
 ```

@@ -23,7 +23,7 @@ x \sim \p{normal-distribution}{\mathcal N}\big(\p{expectation}{\mu},\ \p{varianc
 
 ## One bell curve per pixel {#idea}
 
-When $x$ is a picture, the mean $\mu$ is a whole picture too: the "centre" each pixel is pulled towards. Every pixel then gets its own independent wobble of the same size $\sigma^2$. Noise like this has no pattern; it is the fine static you see in the noising visual on slide 19.
+When $x$ is a picture, the mean $\mu$ is a whole picture too: the "centre" each pixel is pulled towards. Every pixel then gets its own independent wobble of the same size $\sigma^2$. Noise like this has no pattern; it is the fine static you see in the noising visual.
 
 The word **isotropic** means "the same in every direction": the noise has no favourite pixel and no favourite direction.
 
@@ -34,7 +34,7 @@ For a vector, the spread is described by a matrix called the **covariance matrix
 - the diagonal is all $\sigma^2$: every pixel has variance $\sigma^2$;
 - everything else is 0: no two pixels move together, so they are [independent](c:independence).
 
-The covariance matrix gets its own page in Path 2 (slide 42 uses a more general one). For slide 19 you only need the $\sigma^2 I$ case.
+The general covariance matrix gets its own page later. For adding noise you only need the $\sigma^2 I$ case.
 
 ## Example {#example}
 

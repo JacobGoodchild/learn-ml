@@ -57,24 +57,35 @@ export function renderBlocks(el, blocks, ctx) {
         d.innerHTML = `<${tag}>${b.items.map(t => `<li>${inline(t)}</li>`).join('')}</${tag}>`;
         break;
       }
-      case 'formula':
-        d.innerHTML = (b.label ? `<div class="formula-label">${inline(b.label)}</div>` : '') + displayMath(b.latex, firstFormula ? 'draw' : '');
+      case 'formula': {
+        // A textbook band: a word on the side, a plain title saying what the formula is for,
+        // the formula, what it says in words, and what each symbol means, all together.
+        const where = (b.where || []).length ? `<dl class="where">${b.where.map(([sym, txt]) =>
+          `<div><dt>${inline(sym)}</dt><dd>${inline(txt)}</dd></div>`).join('')}</dl>` : '';
+        d.innerHTML = band('Formula', b.label, displayMath(b.latex, firstFormula ? 'draw' : '') +
+          (b.reading ? `<p class="reading">${inline(b.reading)}</p>` : '') + where);
         firstFormula = false;
         break;
+      }
+      case 'band': {
+        d.innerHTML = band(b.tag, b.title, '');
+        renderBlocks(d.querySelector('.band-body'), b.blocks, ctx);
+        break;
+      }
       case 'breakdown': d.appendChild(breakdown(b)); break;
       case 'notation':
-        d.innerHTML = `<div class="notation"><table>${b.rows.map(([sym, txt]) => `<tr><td>${inline(sym)}</td><td>${inline(txt)}</td></tr>`).join('')}</table></div>`;
+        d.innerHTML = band('Notation', b.title, `<dl class="where">${b.rows.map(([sym, txt]) =>
+          `<div><dt>${inline(sym)}</dt><dd>${inline(txt)}</dd></div>`).join('')}</dl>`);
         break;
       case 'check': d.appendChild(checkBlock(b, ctx)); break;
       case 'recall':
-        d.innerHTML = `<details class="recall"><summary>Review questions</summary><ol class="recall-list">${b.questions.map(q => `<li>${inline(q.q)}</li>`).join('')}</ol><p>These come back for review after you pass the quick check.</p></details>`;
-        break;
+        break; // recall questions live in Review, not on the page
       case 'visual': {
+        d.innerHTML = band('Try it', b.caption, '');
         const v = document.createElement('figure');
         v.className = 'visual';
-        v.style.margin = '1.3rem 0 1.6rem';
-        d.appendChild(v);
-        mountVisual(v, b.name, b.opts, b.caption);
+        d.querySelector('.band-body').appendChild(v);
+        mountVisual(v, b.name, b.opts, '');
         break;
       }
       case 'code':
@@ -87,6 +98,14 @@ export function renderBlocks(el, blocks, ctx) {
   // Stagger the draw-in of the first formula's parts.
   el.querySelectorAll('.formula.draw .katex-html > .base').forEach((b, i) => { b.style.animationDelay = `${80 + i * 110}ms`; });
 }
+
+export function band(tag, title, inner) {
+  const id = title ? ` id="sec-${slugify(title)}"` : '';
+  return `<section class="band band-${slugify(tag)}"${id} data-toc="${esc(title ? title.replace(/\$[^$]*\$/g, m => m) : tag)}" tabindex="-1">
+    <div class="band-tag">${esc(tag)}</div>
+    <div class="band-body">${title ? `<h3 class="band-title">${inline(title)}</h3>` : ''}${inner}</div></section>`;
+}
+const slugify = t => String(t).toLowerCase().replace(/\$[^$]*\$/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'band';
 
 function breakdown(b) {
   const wrap = document.createElement('div');

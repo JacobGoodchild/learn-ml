@@ -52,19 +52,19 @@ Try making $\sigma$ bigger. The curve gets wider *and* lower, because the area m
 
 ## Two numbers are enough {#two-numbers}
 
-Every normal distribution is the same shape, slid sideways and stretched. Sliding is the mean, $\mu$. Stretching is the standard deviation, $\sigma$. Once you know those two numbers, you know everything about the distribution. This is why the diffusion slides can describe a whole noisy picture with just "a mean" and "a variance".
+Every normal distribution is the same shape, slid sideways and stretched. Sliding is the mean, $\mu$. Stretching is the standard deviation, $\sigma$. Once you know those two numbers, you know everything about the distribution. This is why diffusion models can describe a whole noisy picture with just "a mean" and "a variance".
 
 For the curious, the curve itself is
 
 $$f(x) = \frac{1}{\sigma\sqrt{2\pi}}\,\p{exponential-function}{e^{-\frac{(x-\mu)^2}{2\sigma^2}}}$$
 
-You will not need to use this formula on the slides. What matters is the shape: the $e^{-(\dots)^2}$ part is what makes it fall away so quickly, and the front part, $\frac{1}{\sigma\sqrt{2\pi}}$, is just whatever makes the area come to 1.
+You will not need to use this formula directly. What matters is the shape: the $e^{-(\dots)^2}$ part is what makes it fall away so quickly, and the front part, $\frac{1}{\sigma\sqrt{2\pi}}$, is just whatever makes the area come to 1.
 
 ## Why the second number is squared {#squared}
 
 Writing $\mathcal N(\mu, \sigma^2)$ with the variance rather than the standard deviation looks odd at first. The reason is that variances are what *add up* nicely. If you add two independent normal amounts of noise, their variances add, not their standard deviations. Diffusion models add noise again and again, so the variance is the number worth keeping track of. You will see this in action in [why the spread stays at 1](c:variance-preserving).
 
-So: on these slides, the second slot of $\mathcal N(\cdot, \cdot)$ is **always a variance**. When the slide writes $\mathcal N(\dots, \beta_n I)$, the noise has variance $\beta_n$ and standard deviation $\sqrt{\beta_n}$.
+So: in diffusion, the second slot of $\mathcal N(\cdot, \cdot)$ is **always a variance**. When a formula says $\mathcal N(\dots, \beta_n I)$, the noise has variance $\beta_n$ and standard deviation $\sqrt{\beta_n}$.
 
 ## Example {#example}
 
@@ -95,7 +95,7 @@ answer: About 95%. This is true for every normal distribution, whatever its mean
 ```recall
 ? In $\mathcal N(\mu, \sigma^2)$, which number moves the curve and which one stretches it?
 $\mu$, the mean, slides it left and right. $\sigma^2$, the variance, sets the spread; the standard deviation $\sigma$ is its square root.
-? Why do the diffusion slides write the variance, not the standard deviation, inside $\mathcal N$?
+? Why do diffusion formulas write the variance, not the standard deviation, inside $\mathcal N$?
 Because when you add independent noise, variances add. Diffusion adds noise many times, so the variance is the quantity that is easy to keep track of.
 ? Why does a wider bell curve have to be lower?
 The total area under a probability density is always 1, so spreading it out sideways must squash it down.

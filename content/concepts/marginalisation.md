@@ -26,7 +26,7 @@ For continuous variables the sum is an integral, $q(y) = \int q(x, y)\,\mathrm{d
 
 A table of weather and umbrella-carrying: $P(\text{rain}, \text{umbrella}) = 0.25$, $P(\text{rain}, \text{no umbrella}) = 0.05$, $P(\text{dry}, \text{umbrella}) = 0.1$, $P(\text{dry}, \text{no umbrella}) = 0.6$. The marginal chance of carrying an umbrella is $0.25 + 0.1 = 0.35$, whatever the weather.
 
-On slide 31, $q_n(x_n)$ is a marginal: all noisy pictures at step $n$, with the clean picture they came from summed out.
+In diffusion, $q_n(x_n)$ is a marginal: all noisy pictures at step $n$, with the clean picture they came from summed out.
 
 ## Check yourself {#check}
 
@@ -47,6 +47,6 @@ answer: It removes that variable: adding over all its values leaves the distribu
 ```recall
 ? How do you get a marginal distribution from a joint one?
 Add up (or integrate) the joint distribution over every value of the variables you want to forget.
-? On slide 31, why is $q_n(x_n)$ a marginal?
+? Why is $q_n(x_n)$, the distribution of noisy pictures at step $n$, a marginal?
 It is the distribution of noisy pictures at step $n$ with the original clean picture summed out.
 ```

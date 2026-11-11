@@ -23,7 +23,7 @@ The noise added to a picture is chosen so that:
 - the noise in each step is independent of the picture and of all earlier noise, and
 - the noise on each pixel is independent of the noise on every other pixel.
 
-Independence is what lets the slides add variances together and describe the noise on a million pixels with a single number.
+Independence is what lets us add variances together and describe the noise on a million pixels with a single number.
 
 ## Check yourself {#check}
 

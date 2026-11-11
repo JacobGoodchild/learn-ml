@@ -35,7 +35,7 @@ The "$\approx$" is honest: a tiny trace of the picture is still there. It is far
 
 This is the whole point of the forward process. The end of the chain no longer depends on which picture you started with. Every picture, a dog, a car, a face, ends up as the same kind of static.
 
-So to *make* a new picture, you can run the process backwards from a fresh sample of $\mathcal N(0, I)$, which a computer can draw instantly. Slide 25 writes this starting point as $x_T \sim \mathcal N(0, \tilde\sigma^2 I)$.
+So to *make* a new picture, you can run the process backwards from a fresh sample of $\mathcal N(0, I)$, which a computer can draw instantly. 
 
 ## Check yourself {#check}
 

@@ -29,13 +29,13 @@ If you ran the experiment a huge number of times and averaged the results, you w
 
 $\mathbb{E}$ (a blackboard-bold E) stands for "expected value". The Greek letter $\mu$ ("mu", for mean) is the same thing; people use $\mu$ when they want a short name for it. For continuous variables the sum becomes an integral, $\mathbb{E}[X] = \int x\,f(x)\,\mathrm{d}x$, but the meaning is unchanged.
 
-Watch out: on slides 31 and 42, $\mu_n(\cdot)$ is the mean of the model's step, and on slide 119 $\mu$ is not a mean at all. Each slide page says which applies.
+Watch out: later, $\mu_n(\cdot)$ is the mean of the model's denoising step, and in some papers $\mu$ is not a mean at all. Each formula says which meaning it uses.
 
 ## Example {#example}
 
 A fair dice: $\mathbb{E}[X] = \frac{1 + 2 + 3 + 4 + 5 + 6}{6} = 3.5$. You can never roll 3.5, but it is the long-run average.
 
-Noise on the slides always has mean 0: it pushes pixels up as often as down, so on average it does not move them at all.
+The noise in diffusion models always has mean 0: it pushes pixels up as often as down, so on average it does not move them at all.
 
 ## Check yourself {#check}
 

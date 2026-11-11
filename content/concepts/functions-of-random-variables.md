@@ -29,7 +29,7 @@ You have already seen one: [variance](c:variance) is $\mathbb{E}[(X - \mu)^2]$, 
 
 ## The subscript under $\mathbb{E}$ {#subscript}
 
-When several distributions are around, the slides write which one to average over underneath: $\mathbb{E}_{q}$ means "with $X$ drawn from $q$". $\mathbb{E}_{q_n(x_n)}$ means "with $x_n$ drawn from the distribution of noisy pictures at step $n$". And $\mathbb{E}_n$ means "with the step $n$ itself chosen at random", usually uniformly from 1 to $N$.
+When several distributions are around, people write which one to average over underneath: $\mathbb{E}_{q}$ means "with $X$ drawn from $q$". $\mathbb{E}_{q_n(x_n)}$ means "with $x_n$ drawn from the distribution of noisy pictures at step $n$". And $\mathbb{E}_n$ means "with the step $n$ itself chosen at random", usually uniformly from 1 to $N$.
 
 Several in a row, as in $\mathbb{E}_n\,\mathbb{E}_{q_n(x_n)}[\dots]$, means: pick a random step, then a random noisy picture at that step, and average over both.
 
