@@ -1,0 +1,28 @@
+{
+  "title": "Diffusion models: the Tsinghua summer school lecture",
+  "short": "Tsinghua diffusion lecture",
+  "description": "A three-hour postgraduate lecture from the Tsinghua University International Summer School on Generative AI, July 2025, on how diffusion models work and the lab's own work on making them faster and better. Each slide is rebuilt here so that every symbol can be opened, all the way down to A-level maths.",
+  "slides": ["slide-19"],
+  "outline": [
+    { "id": "slide-a", "number": "A", "title": "Variational auto-encoders", "part": "Deep generative models" },
+    { "id": "slide-b", "number": "B", "title": "Auto-regressive models", "part": "Deep generative models" },
+    { "id": "slide-19", "number": "19", "title": "Diffusion probabilistic models: adding noise", "part": "Diffusion basics" },
+    { "id": "slide-25", "number": "25", "title": "Diffusion SDEs and diffusion ODEs", "part": "Diffusion basics" },
+    { "id": "slide-31", "number": "31", "title": "Training a diffusion model", "part": "Diffusion basics" },
+    { "id": "slide-42", "number": "42", "title": "The optimal variance (Analytic-DPM)", "part": "Analytic-DPM" },
+    { "id": "slide-43", "number": "43", "title": "Analytic-DPM extensions: results", "part": "Analytic-DPM" },
+    { "id": "slide-54", "number": "54", "title": "Simplifying with log-SNR", "part": "DPM-Solver" },
+    { "id": "slide-56", "number": "56", "title": "High-order solvers for diffusion ODEs", "part": "DPM-Solver" },
+    { "id": "slide-78", "number": "78", "title": "DPM-Solver in the Diffusers library", "part": "DPM-Solver" },
+    { "id": "slide-119", "number": "119", "title": "Variational score distillation", "part": "ProlificDreamer" },
+    { "id": "slide-eegsde", "number": "~125", "title": "Equivariant energy-guided SDE", "part": "Molecules" },
+    { "id": "slide-154", "number": "154", "title": "Summary", "part": "Summary" }
+  ],
+  "concepts": [
+    "probability-basics", "conditional-probability", "vectors", "matrices", "identity-matrix", "integration", "exponential-function", "subscripts",
+    "random-variable", "probability-distribution", "probability-density", "expectation", "variance", "standard-deviation",
+    "independence", "scaling-and-adding", "normal-distribution", "standard-normal", "image-as-vector", "isotropic-gaussian",
+    "conditional-distribution", "joint-distribution", "product-notation", "chain-rule-of-probability", "markov-chain",
+    "x-n-ddpm", "beta-n-ddpm", "alpha-n-ddpm", "diffusion-step", "variance-preserving", "alpha-bar-n", "forward-process", "pure-noise-endpoint"
+  ]
+}

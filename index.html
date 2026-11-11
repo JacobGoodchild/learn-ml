@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Learn ML</title>
+<meta name="description" content="A personal map of the ideas behind diffusion models, from A-level maths upwards.">
+<link rel="stylesheet" href="vendor/katex/katex.min.css">
+<link rel="stylesheet" href="css/site.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%232b4c7e'/%3E%3Cpath d='M8 23 L16 9 L24 23' stroke='%23fff' stroke-width='3' fill='none'/%3E%3C/svg%3E">
+<script>
+  // Apply saved theme / text size before first paint, so there is no flash.
+  try {
+    var s = JSON.parse(localStorage.getItem('learnml.v1') || '{}').settings || {};
+    if (s.theme && s.theme !== 'system') document.documentElement.dataset.theme = s.theme;
+    if (s.motion && s.motion !== 'system') document.documentElement.dataset.motion = s.motion;
+    if (s.textSize) document.documentElement.dataset.text = s.textSize;
+  } catch (e) {}
+</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header">
+  <a class="wordmark" href="#/">Learn ML</a>
+  <nav class="site-nav" aria-label="Main">
+    <a href="#/" data-nav="home">Slides</a>
+    <a href="#/ladder" data-nav="ladder">Ladder</a>
+    <a href="#/review" data-nav="review">Review <span class="due-count" hidden></span></a>
+    <a href="#/progress" data-nav="progress">Progress</a>
+  </nav>
+  <a class="header-progress" href="#/progress"></a>
+  <div class="settings">
+    <button class="cog" aria-label="Settings" aria-expanded="false" aria-controls="settings-menu">
+      <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M19.4 13a7.5 7.5 0 0 0 0-2l2.1-1.6-2-3.5-2.5 1a7.6 7.6 0 0 0-1.7-1L15 3h-4l-.4 2.9a7.6 7.6 0 0 0-1.7 1l-2.5-1-2 3.5L6.6 11a7.5 7.5 0 0 0 0 2l-2.1 1.6 2 3.5 2.5-1a7.6 7.6 0 0 0 1.7 1L11 21h4l.4-2.9a7.6 7.6 0 0 0 1.7-1l2.5 1 2-3.5zM13 15.5a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7z" transform="translate(-1 0)"/></svg>
+    </button>
+    <div class="settings-menu" id="settings-menu" hidden></div>
+  </div>
+</header>
+<main id="main" tabindex="-1"></main>
+<div class="preview" role="dialog" aria-modal="false" hidden></div>
+<script type="module" src="js/app.js"></script>
+</body>
+</html>
