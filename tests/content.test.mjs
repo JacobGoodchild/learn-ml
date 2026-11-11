@@ -38,7 +38,9 @@ for (const [id, n] of nodes) {
     if (r === id && n.kind === 'concept') continue;
     if (!nodes.has(r)) (planned.includes(`| ${r} |`) ? warn : fail)(`${id}: links to "${r}", which is ${planned.includes(`| ${r} |`) ? 'planned but not written' : 'not in the concept map'}`);
   }
+  const bandSlug = t => String(t).toLowerCase().replace(/\$[^$]*\$/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
   const headings = new Set(blocks.filter(b => b.type === 'heading').map(b => b.id));
+  for (const b of blocks) { const t = b.label || b.title || b.caption; if (t) headings.add(bandSlug(t)); }
   for (const e of meta.entryPoints || []) if (!headings.has(e.section)) fail(`${id}: entry point "${e.label}" points at missing section #${e.section}`);
   if (n.kind === 'concept' && meta.level !== 0) {
     const checks = blocks.filter(b => b.type === 'check').flatMap(b => b.questions);

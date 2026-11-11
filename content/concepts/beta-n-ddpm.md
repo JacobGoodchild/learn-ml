@@ -1,40 +1,31 @@
 ---
 id: beta-n-ddpm
 title: $\beta_n$: the noise schedule
-summary: $\beta_n$ is the variance of the fresh noise added at step $n$. The list $\beta_1, \dots, \beta_N$ is called the noise schedule.
+summary: $\beta_n$ is how much noise step $n$ adds. The list $\beta_1, \dots, \beta_N$ is the noise schedule.
 colour: diffusion
 level: 3
 needs: [variance, subscripts]
 related: [alpha-n-ddpm]
 entryPoints:
-  - label: how much noise each step adds
-    section: idea
-  - label: the schedule in the original paper
-    section: schedule
+  - label: a typical schedule
+    section: a-typical-schedule
 sources:
   - title: Denoising Diffusion Probabilistic Models
     authors: Ho, Jain and Abbeel, NeurIPS 2020
     url: https://arxiv.org/abs/2006.11239
-    note: Section 4 and Appendix B give the linear schedule from 0.0001 to 0.02 over 1000 steps
 ---
 
-## The idea {#idea}
+```notation What $\beta_n$ is
+$\beta_n$ :: the **variance** of the noise added at step $n$
+$\sqrt{\beta_n}$ :: its standard deviation: the typical size of the push each pixel gets
+$\beta_1, \dots, \beta_N$ :: one value per step: the noise schedule, chosen by hand, never learned
+```
 
-At step $n$, fresh noise is added to the picture. $\beta_n$ (Greek "beta") is the **variance** of that noise on each pixel. Its square root, $\sqrt{\beta_n}$, is the standard deviation: the typical size of the push each pixel gets.
+```keypoint A typical schedule
+$N = 1000$ steps, with $\beta_n$ rising in a straight line from $0.0001$ to $0.02$. Early steps push each pixel by about $0.01$; late steps by about $0.14$.
 
-There is one $\beta$ for each step: $\beta_1, \beta_2, \dots, \beta_N$. Together they are the **noise schedule**. Each one is a number between 0 and 1, and in practice they are small.
-
-Nothing here is learned. The schedule is chosen by hand before training starts.
-
-## The schedule in the original paper {#schedule}
-
-The DDPM paper used $N = 1000$ steps, with $\beta_n$ rising in a straight line from $\beta_1 = 0.0001$ to $\beta_{1000} = 0.02$. So early steps add very little noise (standard deviation $0.01$) and late steps add more (standard deviation about $0.14$).
-
-Why start gently? Early on the picture is still detailed, and small steps keep each change easy for the model to learn to undo. Later, when the picture is mostly noise anyway, bigger steps lose nothing.
-
-## Example {#example}
-
-With the straight-line schedule, step 500 has $\beta_{500} \approx 0.01004$. So the noise added at that step has standard deviation $\sqrt{0.01004} \approx 0.1$: each pixel is pushed by roughly $0.1$, up or down.
+Start gentle, because early on the picture is detailed and small changes are easier to undo. Later the picture is mostly noise, so bigger steps lose nothing.
+```
 
 ## Check yourself {#check}
 
@@ -45,15 +36,15 @@ wrong: $\beta_n$ is a variance. Take its square root.
 hint: $\sqrt{0.0004}$.
 answer: $\sqrt{0.0004} = 0.02$.
 ? Is the noise schedule learned during training?
-- [ ] Yes, the network learns the best $\beta_n$ :: In the noising process the schedule is fixed in advance.
-- [x] No, it is chosen by hand before training :: Right. The noising process has nothing to learn.
+- [ ] Yes, the network learns the best $\beta_n$ :: The schedule is fixed before training starts.
+- [x] No, it is chosen by hand :: Right. Adding noise has nothing to learn.
 hint: Is there a model anywhere in the noising process?
-answer: No. It is a fixed design choice. The forward process $q$ has nothing learned in it.
+answer: No. It is a fixed design choice.
 ```
 
 ```recall
 ? What does $\beta_n$ mean in the noising process, and is it a variance or a standard deviation?
 It is the variance of the fresh noise added at step $n$. Its square root is the standard deviation.
-? Why does the DDPM schedule start with tiny $\beta$ and grow?
+? Why does a typical schedule start with tiny $\beta$ and grow?
 Early steps act on detailed pictures, so small changes are easier to undo; once the picture is mostly noise, bigger steps cost nothing.
 ```

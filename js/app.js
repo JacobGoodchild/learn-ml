@@ -376,8 +376,9 @@ function appendAuto(body, n, stack, withSources = true) {
       return `<li><a href="${href}">${inline(u.title)}</a></li>`;
     }).join('')}</ul>`);
   }
-  if (n.related.length) {
-    html.push(`<h2 id="sec-related" tabindex="-1">Compare with</h2><ul class="link-list">${n.related.map(id => {
+  const compare = n.related.filter(id => !n.needs.includes(id) && !(n.usedBy || []).includes(id));
+  if (compare.length) {
+    html.push(`<h2 id="sec-related" tabindex="-1">Compare with</h2><ul class="link-list">${compare.map(id => {
       const t = node(id);
       return `<li><a class="concept-link" href="#" data-c="${id}">${t ? inline(t.title) : esc(id)}</a></li>`;
     }).join('')}</ul>`);

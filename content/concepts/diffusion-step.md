@@ -1,78 +1,68 @@
 ---
 id: diffusion-step
 title: One noising step, $q(x_n \mid x_{n-1})$
-summary: Take the previous picture, shrink it by $\sqrt{\alpha_n}$, and add fresh noise with variance $\beta_n$ on every pixel.
+summary: Shrink the picture by $\sqrt{\alpha_n}$, then add fresh noise of variance $\beta_n$ to every pixel.
 colour: diffusion
 level: 4
 needs: [conditional-distribution, isotropic-gaussian, alpha-n-ddpm, beta-n-ddpm, standard-normal, x-n-ddpm]
 related: [variance-preserving, forward-process]
 entryPoints:
   - label: as a recipe
-    section: recipe
-  - label: as a distribution
-    section: aloud
+    section: as-a-recipe
+  - label: an example
+    section: one-pixel-one-step
 sources:
   - title: Denoising Diffusion Probabilistic Models
     authors: Ho, Jain and Abbeel, NeurIPS 2020
     url: https://arxiv.org/abs/2006.11239
-    note: Equation 2 (with T, t in place of N, n)
 ---
 
-```formula
+```formula The step as a distribution
 \p{conditional-distribution}{q(x_n \mid x_{n-1})} = \p{isotropic-gaussian}{\mathcal N}\big(\p{alpha-n-ddpm}{\sqrt{\alpha_n}}\,\p{x-n-ddpm}{x_{n-1}},\ \p{beta-n-ddpm}{\beta_n}\,\p{identity-matrix}{I}\big)
-```
-
-## In words {#aloud}
-
-"Given the previous picture $x_{n-1}$, the next picture $x_n$ is normally distributed, centred on $\sqrt{\alpha_n}$ times the previous picture, with variance $\beta_n$ on every pixel, independently."
-
-## Piece by piece {#breakdown}
-
-```breakdown
-q(x_n \mid x_{n-1}) = \mathcal N\big(\p{alpha-n-ddpm}{\sqrt{\alpha_n}}\,\p{x-n-ddpm}{x_{n-1}},\ \p{beta-n-ddpm}{\beta_n}\,\p{identity-matrix}{I}\big)
 ---
-x-n-ddpm | x_{n-1} | The picture so far. It is *given*: we already have it.
-alpha-n-ddpm | \sqrt{\alpha_n} | Shrink it very slightly. This is the centre of the new bell curve.
-beta-n-ddpm | \beta_n | The variance of the fresh noise.
-identity-matrix | I | Same amount of noise on every pixel, and each pixel's noise independent of the others.
+In words: the next picture is a bell curve centred on the slightly shrunk current picture.
+$\p{x-n-ddpm}{x_{n-1}}$ :: the picture so far (known)
+$\p{alpha-n-ddpm}{\sqrt{\alpha_n}}$ :: shrinks it very slightly; this is the centre
+$\p{beta-n-ddpm}{\beta_n}$ :: variance of the new noise
+$\p{identity-matrix}{I}$ :: every pixel gets its own, independent noise
 ```
 
-## As a recipe {#recipe}
+```formula As a recipe
+x_n = \sqrt{\alpha_n}\,x_{n-1} + \sqrt{\beta_n}\,\epsilon_n, \qquad \p{standard-normal}{\epsilon_n \sim \mathcal N(0, I)}
+---
+In words: draw standard noise, scale it to variance $\beta_n$, add it on.
+$\p{standard-normal}{\epsilon_n}$ :: fresh standard normal noise, one number per pixel
+$\sqrt{\beta_n}$ :: turns variance 1 into variance $\beta_n$
+```
 
-The same thing, written as instructions for a computer:
+Both say the same thing. The recipe makes one sample; the $\mathcal N(\dots)$ form describes all the samples it could make.
 
-$$x_n = \sqrt{\alpha_n}\,x_{n-1} + \sqrt{\beta_n}\,\epsilon_n, \qquad \epsilon_n \sim \mathcal N(0, I)$$
-
-Draw a fresh [standard normal](c:standard-normal) number $\epsilon_n$ for every pixel, scale it by $\sqrt{\beta_n}$ so its variance is $\beta_n$, and add it to the slightly shrunk picture. The two forms say exactly the same thing: the recipe makes a sample, the $\mathcal N(\dots)$ form describes all the samples it could make.
-
-## Example {#example}
-
-One pixel has value $x_{n-1} = 0.8$, and $\beta_n = 0.01$, so $\alpha_n = 0.99$. The computer draws $\epsilon_n = -1.2$. Then
+```example One pixel, one step
+A pixel is $x_{n-1} = 0.8$. Take $\beta_n = 0.01$, so $\alpha_n = 0.99$. The computer draws $\epsilon_n = -1.2$:
 
 $$x_n = \sqrt{0.99} \times 0.8 + \sqrt{0.01} \times (-1.2) \approx 0.796 - 0.12 = 0.676$$
-
-A different draw of $\epsilon_n$ would give a different $x_n$. On average (since $\epsilon_n$ has mean 0), $x_n$ would be $0.796$.
+```
 
 ## Check yourself {#check}
 
 ```check
-? A pixel has $x_{n-1} = 0.5$, $\beta_n = 0.04$, and the noise draw is $\epsilon_n = 1$. What is $x_n$? (Give 3 decimal places.)
+? A pixel has $x_{n-1} = 0.5$, $\beta_n = 0.04$, and the noise draw is $\epsilon_n = 1$. What is $x_n$? (3 decimal places)
 = 0.690 ± 0.002
-wrong: Use $x_n = \sqrt{1 - \beta_n}\,x_{n-1} + \sqrt{\beta_n}\,\epsilon_n$. Both $\beta_n$ and $\alpha_n$ need square roots.
+wrong: Use $x_n = \sqrt{1 - \beta_n}\,x_{n-1} + \sqrt{\beta_n}\,\epsilon_n$. Both need square roots.
 hint: $\sqrt{0.96} \times 0.5 + \sqrt{0.04} \times 1$.
-answer: $\sqrt{0.96} \approx 0.980$, so $0.980 \times 0.5 + 0.2 \times 1 \approx 0.490 + 0.2 = 0.690$.
-? In $q(x_n \mid x_{n-1}) = \mathcal N(\sqrt{\alpha_n}\,x_{n-1}, \beta_n I)$, what is the *mean* of $x_n$?
-- [x] $\sqrt{\alpha_n}\,x_{n-1}$ :: Right: the first slot of $\mathcal N$ is always the mean.
-- [ ] $x_{n-1}$ :: Close, but the old picture is shrunk by $\sqrt{\alpha_n}$ first.
-- [ ] $\beta_n$ :: That is in the second slot: the variance.
+answer: $\sqrt{0.96} \approx 0.980$, so $0.490 + 0.2 = 0.690$.
+? What is the *mean* of $x_n$, given $x_{n-1}$?
+- [x] $\sqrt{\alpha_n}\,x_{n-1}$ :: Right: the first slot of $\mathcal N$ is the mean.
+- [ ] $x_{n-1}$ :: Close, but it is shrunk by $\sqrt{\alpha_n}$ first.
+- [ ] $\beta_n$ :: That is the second slot: the variance.
 hint: First slot of $\mathcal N$: mean. Second: variance.
-answer: $\sqrt{\alpha_n}\,x_{n-1}$: the slightly shrunk previous picture.
-? Why does the recipe use $\sqrt{\beta_n}\,\epsilon_n$ rather than $\beta_n\,\epsilon_n$?
-- [x] Because $\epsilon_n$ has variance 1, and multiplying by $\sqrt{\beta_n}$ gives variance $\beta_n$ :: Right: the variance gets multiplied by the square of the scale.
-- [ ] To make the noise bigger :: For $\beta_n < 1$, $\sqrt{\beta_n} > \beta_n$, but that is a side effect, not the reason.
-- [ ] It is a typo :: It is correct; the formula puts the variance $\beta_n$ inside $\mathcal N$.
-hint: Scaling rule for variances.
-answer: The formula asks for noise with *variance* $\beta_n$. Since $\epsilon_n$ has variance 1, scaling by $\sqrt{\beta_n}$ gives variance $(\sqrt{\beta_n})^2 = \beta_n$.
+answer: $\sqrt{\alpha_n}\,x_{n-1}$.
+? Why $\sqrt{\beta_n}\,\epsilon_n$ and not $\beta_n\,\epsilon_n$?
+- [x] $\epsilon_n$ has variance 1, and scaling by $\sqrt{\beta_n}$ gives variance $\beta_n$ :: Right: scaling multiplies the variance by the square.
+- [ ] To make the noise bigger :: That is a side effect, not the reason.
+- [ ] It is a typo :: It is correct; the formula asks for variance $\beta_n$.
+hint: Scaling by $a$ multiplies the variance by $a^2$.
+answer: We want variance $\beta_n$. Scaling variance-1 noise by $\sqrt{\beta_n}$ gives $(\sqrt{\beta_n})^2 = \beta_n$.
 ```
 
 ```recall

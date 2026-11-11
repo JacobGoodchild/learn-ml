@@ -135,7 +135,7 @@ function checkBlock(b, ctx) {
     const idx = base + qi;
     const box = document.createElement('div');
     box.className = 'check';
-    box.innerHTML = `<div class="qn">${idx + 1}.</div><div class="q">${inline(q.q)}</div>`;
+    box.innerHTML = `<div class="q"><span class="qn">${idx + 1}.</span> ${inline(q.q)}</div>`;
     const fb = document.createElement('div');
     const tools = document.createElement('div');
     tools.className = 'check-tools';
