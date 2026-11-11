@@ -103,6 +103,8 @@ transcriptions are in `slides.md`; the papers are in `papers.md`.
 
 ### Phase 1 — Path 1 polish (Fable)
 - [ ] Text-cutting pass on all 33 Path 1 concept pages under Jacob's design rule 2 (half the words; titled formula bands)
+      Done so far (use these as the model): `diffusion-step`, `beta-n-ddpm`, `alpha-n-ddpm`, `x-n-ddpm`,
+      `forward-process`, `pure-noise-endpoint`, `isotropic-gaussian`, `markov-chain`. The other 25 still need it.
 - [ ] Re-read every Path 1 page against DDPM paper once; fix anything off
 - [ ] Big visual V1 (noising real images) and V2 (bell curve / sampling) built to spec in `docs/visuals.md`
 - [ ] Jacob's feedback round on slide 19 (see Ask Jacob)
