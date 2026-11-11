@@ -263,6 +263,7 @@ function renderDive(stack) {
     return;
   }
   if (n.kind === 'slide') P.setLastSlide(n.id);
+  document.title = `${plain(n.kind === 'slide' ? 'Slide ' + n.meta.number : n.title)} · Learn ML`;
   P.markSeen(n.id);
 
   const art = document.createElement('article');
@@ -306,6 +307,8 @@ function renderDive(stack) {
   wirePieces(art, stack);
   renderRail(rail, stack);
 }
+
+function plain(s) { return String(s).replace(/\$([^$]*)\$/g, (_, m) => m.replace(/\\(mathcal|mathbb|bar|sqrt)\b/g, '').replace(/[\\{}]/g, '')); }
 
 function courseTitle(cid) { const c = site.courses.find(c => c.id === cid); return c ? c.short || c.title : ''; }
 
@@ -366,7 +369,7 @@ function wirePieces(art, stack) {
     el.dataset.i = i;
     if (!t) el.classList.add('missing');
     if (el.tagName !== 'A') { el.tabIndex = 0; el.setAttribute('role', 'link'); }
-    el.setAttribute('aria-label', `${t ? t.title.replace(/\$/g, '') : id}${t ? '' : ' (not written yet)'}. Press Enter to open this layer.`);
+    el.setAttribute('aria-label', `${t ? plain(t.title) : id}${t ? '' : ' (not written yet)'}. Press Enter to open this layer.`);
     if (el.tagName === 'A') el.href = diveHash([...stack.map(l => ({ ...l, section: null })), { id, from: i }]);
   });
   art.addEventListener('click', e => {
@@ -389,7 +392,7 @@ function wirePieces(art, stack) {
   });
   art.addEventListener('mouseout', e => {
     const el = e.target.closest('.layer-body [data-c]');
-    if (!el) return;
+    if (!el || lastPointer === 'touch') return; // taps fire mouse events too; ignore them
     clearTimeout(hoverT);
     scheduleHide();
   });
@@ -470,6 +473,7 @@ preview.addEventListener('mouseleave', () => { if (lastPointer !== 'touch') sche
 
 function showPreview(el, stack) {
   clearTimeout(hideT);
+  if (!el.isConnected) return; // a hover timer can outlive the page it was set on
   const id = el.dataset.c;
   const n = node(id);
   const st = !n ? null : isFloor(n) ? 'floor' : P.status(n);

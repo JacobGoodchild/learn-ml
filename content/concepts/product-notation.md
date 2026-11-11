@@ -1,6 +1,6 @@
 ---
 id: product-notation
-title: Product notation, ∏
+title: Product notation, $\prod$
 summary: Capital pi means "multiply all of these together", just as capital sigma means "add them all up".
 colour: notation
 level: 1

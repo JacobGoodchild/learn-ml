@@ -1,7 +1,7 @@
 ---
 id: pure-noise-endpoint
-title: Why x_N ends as pure noise, N(0, I)
-summary: After enough steps the surviving share of the picture, ᾱ_N, is almost zero, so x_N is just standard normal noise, whatever picture you started with.
+title: Why $x_N$ ends as pure noise
+summary: After enough steps the surviving share of the picture, $\bar\alpha_N$, is almost zero, so $x_N$ is just standard normal noise, whatever picture you started with.
 colour: diffusion
 level: 6
 needs: [alpha-bar-n, standard-normal, isotropic-gaussian, variance-preserving]

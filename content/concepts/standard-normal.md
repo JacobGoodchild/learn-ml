@@ -1,6 +1,6 @@
 ---
 id: standard-normal
-title: The standard normal, N(0, 1)
+title: The standard normal, $\mathcal N(0, 1)$
 summary: The bell curve with mean 0 and variance 1. Every other normal distribution is a stretched and shifted copy of it.
 colour: probability
 level: 3

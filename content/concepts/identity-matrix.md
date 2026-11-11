@@ -1,6 +1,6 @@
 ---
 id: identity-matrix
-title: The identity matrix, I
+title: The identity matrix, $I$
 summary: The matrix with 1s down the diagonal and 0s elsewhere. Multiplying by it changes nothing.
 colour: linalg
 level: 0

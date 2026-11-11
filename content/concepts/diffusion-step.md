@@ -1,7 +1,7 @@
 ---
 id: diffusion-step
-title: One noising step, q(xₙ | xₙ₋₁)
-summary: Take the previous picture, shrink it by √α_n, and add fresh noise with variance β_n on every pixel.
+title: One noising step, $q(x_n \mid x_{n-1})$
+summary: Take the previous picture, shrink it by $\sqrt{\alpha_n}$, and add fresh noise with variance $\beta_n$ on every pixel.
 colour: diffusion
 level: 4
 needs: [conditional-distribution, isotropic-gaussian, alpha-n-ddpm, beta-n-ddpm, standard-normal, x-n-ddpm]

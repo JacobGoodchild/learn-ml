@@ -334,3 +334,10 @@ a.bar-link { text-decoration: none; display: block; }
 .ladder li.floor .t .s { display: none; }
 .legend > span { display: inline-flex; align-items: center; gap: .1rem; }
 .legend .dot { margin-right: .4rem; }
+h2, h3 { scroll-margin-top: 4.5rem; }
+.notation td:first-child { width: auto; white-space: nowrap; padding-right: 1rem; }
+@media (max-width: 760px) {
+  .site-header { position: static; }
+  h2, h3 { scroll-margin-top: 1rem; }
+  .notation td:first-child { white-space: normal; min-width: 4.5rem; }
+}

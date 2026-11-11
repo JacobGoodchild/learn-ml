@@ -1,7 +1,7 @@
 ---
 id: alpha-n-ddpm
-title: αₙ = 1 − βₙ: how much of the picture one step keeps
-summary: α_n is one minus β_n. The step multiplies the old picture by √α_n, which keeps a fraction α_n of its variance.
+title: $\alpha_n = 1 - \beta_n$: how much one step keeps
+summary: $\alpha_n$ is one minus $\beta_n$. The step multiplies the old picture by $\sqrt{\alpha_n}$, which keeps a share $\alpha_n$ of its variance.
 colour: diffusion
 level: 3
 needs: [beta-n-ddpm, standard-deviation]

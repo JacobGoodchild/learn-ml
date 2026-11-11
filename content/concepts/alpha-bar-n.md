@@ -1,7 +1,7 @@
 ---
 id: alpha-bar-n
-title: ᾱₙ: how much of the picture survives n steps
-summary: Multiply all the α's up to step n. That product says how much of the clean picture is left, and lets you jump straight from x₀ to x_n.
+title: $\bar\alpha_n$: how much of the picture survives
+summary: Multiply all the $\alpha$'s up to step $n$. That product says how much of the clean picture is left, and lets you jump straight from $x_0$ to $x_n$.
 colour: diffusion
 level: 5
 needs: [alpha-n-ddpm, product-notation, diffusion-step, variance-preserving]

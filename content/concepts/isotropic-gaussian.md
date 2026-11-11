@@ -1,6 +1,6 @@
 ---
 id: isotropic-gaussian
-title: N(μ, σ²I): a bell curve on every pixel
+title: $\mathcal N(\mu, \sigma^2 I)$: a bell curve on every pixel
 summary: A normal distribution for a whole vector, where every entry gets its own independent noise of the same size.
 colour: probability
 level: 4

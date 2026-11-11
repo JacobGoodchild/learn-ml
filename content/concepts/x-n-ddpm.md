@@ -1,7 +1,7 @@
 ---
 id: x-n-ddpm
-title: x₀ to x_N: the picture at each step
-summary: x₀ is a clean picture from the data. x_n is the same picture after n steps of noise. x_N is the last one.
+title: $x_0$ to $x_N$: the picture at each step
+summary: $x_0$ is a clean picture from the data. $x_n$ is the same picture after $n$ steps of noise. $x_N$ is the last one.
 colour: diffusion
 level: 2
 needs: [image-as-vector, subscripts, random-variable]

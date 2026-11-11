@@ -1,7 +1,7 @@
 ---
 id: variance-preserving
 title: Why the spread stays at 1
-summary: Each step keeps α_n of the old variance and adds β_n of new noise. Since α_n + β_n = 1, a picture with spread 1 keeps spread 1.
+summary: Each step keeps $\alpha_n$ of the old variance and adds $\beta_n$ of new noise. Since $\alpha_n + \beta_n = 1$, a picture with spread 1 keeps spread 1.
 colour: diffusion
 level: 4
 needs: [diffusion-step, scaling-and-adding]

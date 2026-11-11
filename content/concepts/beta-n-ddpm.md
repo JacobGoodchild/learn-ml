@@ -1,7 +1,7 @@
 ---
 id: beta-n-ddpm
-title: βₙ: the noise schedule
-summary: β_n is the variance of the fresh noise added at step n. The list β₁, …, β_N is called the noise schedule.
+title: $\beta_n$: the noise schedule
+summary: $\beta_n$ is the variance of the fresh noise added at step $n$. The list $\beta_1, \dots, \beta_N$ is called the noise schedule.
 colour: diffusion
 level: 3
 needs: [variance, subscripts]

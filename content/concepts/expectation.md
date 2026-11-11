@@ -1,7 +1,7 @@
 ---
 id: expectation
 title: The mean (expected value)
-summary: The long-run average of a random variable, written E[X] or μ. Where the balance point of its distribution sits.
+summary: The long-run average of a random variable, written $\mathbb{E}[X]$ or $\mu$. The balance point of its distribution.
 colour: spread
 level: 2
 needs: [random-variable, probability-distribution]
