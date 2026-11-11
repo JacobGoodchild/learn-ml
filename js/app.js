@@ -465,7 +465,10 @@ function renderRail(rail, stack) {
       ? `<div class="rail-card current" style="--cc:${colour}" aria-current="location">${inner}</div>`
       : `<a class="rail-card" style="--cc:${colour}; text-decoration:none" href="${diveHash(stack.slice(0, k + 1))}">${inner}</a>`}</li>`;
   });
-  rail.innerHTML = `<p class="rail-title">Your path</p><ol>${cards.join('')}</ol>`;
+  const heads = [...main.querySelectorAll('.layer-body h2[id]')];
+  const toc = heads.length ? `<p class="rail-title">On this page</p><ul class="toc">${heads.map(h =>
+    `<li><a href="${diveHash([...stack.slice(0, -1), { ...stack.at(-1), section: h.id.replace(/^sec-/, '') }])}">${h.innerHTML}</a></li>`).join('')}</ul>` : '';
+  rail.innerHTML = (stack.length > 1 ? `<p class="rail-title">Your path</p><ol>${cards.join('')}</ol>` : '') + toc;
   rail.querySelectorAll('.f[data-hl]').forEach(f => {
     const p = f.querySelectorAll('[data-c]')[Number(f.dataset.hl)];
     f.querySelectorAll('[data-c]').forEach(x => { x.style.cursor = 'inherit'; });

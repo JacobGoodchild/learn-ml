@@ -419,3 +419,14 @@ details > summary { font-size: .95rem; }
   .rail-card .t { font-size: .88rem; }
   .crumbs { display: none; } /* the rail strip already shows the path on phones */
 }
+.layer-head .bar-link { margin-top: 1rem; }
+a.concept-link { color: var(--accent); text-decoration-color: color-mix(in srgb, var(--accent) 40%, transparent); }
+.rail ol { margin-bottom: 1.6rem; }
+.toc { list-style: none; margin: 0; padding: 0 0 0 .9rem; border-left: 2px solid var(--rule); }
+.toc li { margin: 0 0 .45rem; line-height: 1.35; }
+.toc a { text-decoration: none; color: var(--accent); }
+.toc a:hover { text-decoration: underline; }
+.toc .katex { font-size: 1em; }
+@media (max-width: 760px) { .toc, .toc + *, .rail-title { display: none; } .rail:not(:has(ol)) { display: none; } }
+.breakdown li { grid-template-columns: 6rem 1fr; }
+@media (max-width: 760px) { .breakdown li { grid-template-columns: 1fr; } }
