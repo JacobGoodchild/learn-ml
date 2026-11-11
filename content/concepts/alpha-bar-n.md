@@ -22,15 +22,13 @@ sources:
     note: Writes β̄_n = 1 − ᾱ_n, the notation slide 31 uses
 ---
 
-## The key formulas {#formula}
-
 ```formula
 \bar\alpha_n = \p{product-notation}{\prod_{i=1}^{n}} \p{alpha-n-ddpm}{\alpha_i}, \qquad q(x_n \mid x_0) = \p{isotropic-gaussian}{\mathcal N}\big(\sqrt{\bar\alpha_n}\,x_0,\ (1-\bar\alpha_n)\,I\big)
 ```
 
 This does not appear on slide 19 itself, but it is the key to understanding why $x_N \approx \mathcal N(0, I)$, and slides 31 and 42 use it constantly.
 
-## Read it aloud {#aloud}
+## In words {#aloud}
 
 "Alpha-bar $n$ is the product of all the alphas up to $n$. Given the clean picture, the picture after $n$ steps is centred on $\sqrt{\bar\alpha_n}$ times the clean picture, with variance $1 - \bar\alpha_n$ on each pixel."
 
@@ -66,7 +64,7 @@ $n = 1000$ :: $\bar\alpha_n \approx 0.00004$: about 0.6% left. Pure noise, for a
 ```visual noising
 ```
 
-## Quick check {#check}
+## Check yourself {#check}
 
 ```check
 ? $\alpha_1 = 0.9$, $\alpha_2 = 0.8$. What is $\bar\alpha_2$?

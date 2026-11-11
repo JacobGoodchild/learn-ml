@@ -18,8 +18,6 @@ sources:
     note: Defines α_t := 1 − β_t
 ---
 
-## The key formula {#formula}
-
 ```formula
 \alpha_n = 1 - \p{beta-n-ddpm}{\beta_n}
 ```
@@ -36,11 +34,11 @@ Each step does two things: it shrinks the old picture a little, and it adds a li
 
 The slide multiplies the old picture by $\sqrt{\alpha_n}$, not $\alpha_n$. Multiplying a random variable by $a$ multiplies its variance by $a^2$ ([scaling rule](c:scaling-and-adding)). So multiplying by $\sqrt{\alpha_n}$ multiplies the variance by exactly $\alpha_n$.
 
-## A worked example {#example}
+## Example {#example}
 
 At step 1 of the DDPM schedule, $\beta_1 = 0.0001$, so $\alpha_1 = 0.9999$ and $\sqrt{\alpha_1} \approx 0.99995$. The picture is scaled down by just 0.005%. At the last step, $\beta_{1000} = 0.02$, so $\alpha_{1000} = 0.98$ and $\sqrt{0.98} \approx 0.99$.
 
-## Quick check {#check}
+## Check yourself {#check}
 
 ```check
 ? $\beta_n = 0.19$. What does the step multiply the old picture by?

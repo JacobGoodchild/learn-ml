@@ -13,17 +13,15 @@ entryPoints:
     section: why-square
 ---
 
-## The key formula {#formula}
-
 ```formula
 \mathrm{Var}(X) = \p{expectation}{\mathbb{E}}\big[(X - \p{expectation}{\mu})^2\big]
 ```
 
-## Read it aloud {#aloud}
+## In words {#aloud}
 
 "The variance of $X$ is the expected value of the squared distance between $X$ and its mean $\mu$." It is written $\mathrm{Var}(X)$, or $\sigma^2$ for short.
 
-## The breakdown {#breakdown}
+## Piece by piece {#breakdown}
 
 ```breakdown
 \mathrm{Var}(X) = \p{expectation}{\mathbb{E}}\big[(X - \p{expectation}{\mu})^2\big]
@@ -43,13 +41,13 @@ If we just averaged $X - \mu$, the values above and below the mean would cancel 
 
 The downside is units: if $X$ is in centimetres, the variance is in centimetres squared. Taking the square root fixes this, giving the [standard deviation](c:standard-deviation).
 
-## A worked example {#example}
+## Example {#example}
 
 $X$ is $-1$ or $+1$, each with probability $\frac12$. The mean is 0. Each value is distance 1 from the mean, squared is 1, so $\mathrm{Var}(X) = 1$.
 
 Now $Y$ is $-3$ or $+3$. Same mean, but $\mathrm{Var}(Y) = 9$: three times as far, nine times the variance.
 
-## Quick check {#check}
+## Check yourself {#check}
 
 ```check
 ? $X$ is 2 or 6, each with probability $\frac12$. What is $\mathrm{Var}(X)$?

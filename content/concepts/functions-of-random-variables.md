@@ -13,13 +13,11 @@ entryPoints:
     section: subscript
 ---
 
-## The key formula {#formula}
-
 ```formula
 \p{expectation}{\mathbb{E}}_{\p{probability-distribution}{q}}\big[f(X)\big] = \sum_x f(x)\, q(x)
 ```
 
-## Read it aloud {#aloud}
+## In words {#aloud}
 
 "The expected value, under $q$, of $f$ of $X$": the long-run average of $f(X)$ when $X$ is drawn from $q$.
 
@@ -35,11 +33,11 @@ When several distributions are around, the slides write which one to average ove
 
 Several in a row, as in $\mathbb{E}_n\,\mathbb{E}_{q_n(x_n)}[\dots]$, means: pick a random step, then a random noisy picture at that step, and average over both.
 
-## A worked example {#example}
+## Example {#example}
 
 A fair dice, $f(x) = x^2$. $\mathbb{E}[X^2] = \frac{1 + 4 + 9 + 16 + 25 + 36}{6} = \frac{91}{6} \approx 15.17$. Notice this is not $(\mathbb{E}[X])^2 = 3.5^2 = 12.25$: averaging and then squaring is not the same as squaring and then averaging.
 
-## Quick check {#check}
+## Check yourself {#check}
 
 ```check
 ? $X$ is 1 or 3, each with probability $\frac12$. What is $\mathbb{E}[X^2]$?

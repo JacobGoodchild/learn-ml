@@ -13,13 +13,11 @@ sources:
     note: Section 4 chooses the schedule so that the signal-to-noise ratio at x_T is as small as possible
 ---
 
-## The key formula {#formula}
-
 ```formula
 \p{x-n-ddpm}{x_N} \approx \p{isotropic-gaussian}{\mathcal N}(\p{standard-normal}{0},\ \p{identity-matrix}{I})
 ```
 
-## Read it aloud {#aloud}
+## In words {#aloud}
 
 "After all $N$ steps, the picture is approximately a standard normal sample on every pixel: mean 0, variance 1, independent."
 
@@ -39,7 +37,7 @@ This is the whole point of the forward process. The end of the chain no longer d
 
 So to *make* a new picture, you can run the process backwards from a fresh sample of $\mathcal N(0, I)$, which a computer can draw instantly. Slide 25 writes this starting point as $x_T \sim \mathcal N(0, \tilde\sigma^2 I)$.
 
-## Quick check {#check}
+## Check yourself {#check}
 
 ```check
 ? If $\bar\alpha_N = 0.0001$, by what factor is the clean picture scaled inside $x_N$?

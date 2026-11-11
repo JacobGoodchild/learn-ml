@@ -13,13 +13,11 @@ entryPoints:
     section: recipe
 ---
 
-## The key formula {#formula}
-
 ```formula
 q(\,y \p{conditional-probability}{\mid} x\,)
 ```
 
-## Read it aloud {#aloud}
+## In words {#aloud}
 
 "$q$ of $y$ given $x$": the distribution of $y$, when $x$ is already known.
 
@@ -33,11 +31,11 @@ A helpful way to read $q(y \mid x)$: it is a **recipe** for producing a random $
 
 On slide 19, $q(x_n \mid x_{n-1})$ is the recipe "given the picture after $n-1$ steps, here is how to make the picture after $n$ steps": shrink it slightly and add a little noise.
 
-## A worked example {#example}
+## Example {#example}
 
 Let $y = x + \text{noise}$, with noise from $\mathcal N(0, 1)$. Then $q(y \mid x) = \mathcal N(x, 1)$: once you know $x$, $y$ is a bell curve centred on $x$. If $x = 4$, $y$ is centred on 4; if $x = -2$, it is centred on $-2$.
 
-## Quick check {#check}
+## Check yourself {#check}
 
 ```check
 ? $y = 2x + \epsilon$ with $\epsilon \sim \mathcal N(0, 1)$. You are told $x = 3$. What is the mean of $y$ given $x = 3$?

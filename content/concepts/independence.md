@@ -8,8 +8,6 @@ needs: [conditional-probability, random-variable]
 related: [scaling-and-adding]
 ---
 
-## The key formula {#formula}
-
 ```formula
 P(A \cap B) = P(A)\,P(B) \quad\Longleftrightarrow\quad \p{conditional-probability}{P(A \mid B)} = P(A)
 ```
@@ -27,7 +25,7 @@ The noise added to a picture is chosen so that:
 
 Independence is what lets the slides add variances together and describe the noise on a million pixels with a single number.
 
-## Quick check {#check}
+## Check yourself {#check}
 
 ```check
 ? Two fair coins are flipped. What is the probability both are heads?

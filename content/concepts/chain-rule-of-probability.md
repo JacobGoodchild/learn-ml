@@ -8,13 +8,11 @@ needs: [joint-distribution, conditional-distribution, product-notation]
 related: [markov-chain]
 ---
 
-## The key formula {#formula}
-
 ```formula
 \p{joint-distribution}{q(x_0, x_1, x_2)} = q(x_0)\;\p{conditional-distribution}{q(x_1 \mid x_0)}\;\p{conditional-distribution}{q(x_2 \mid x_0, x_1)}
 ```
 
-## Read it aloud {#aloud}
+## In words {#aloud}
 
 "The chance of the whole combination is the chance of the first, times the chance of the second given the first, times the chance of the third given the first two."
 
@@ -26,13 +24,13 @@ $$q(x_0, \dots, x_N) = q(x_0) \prod_{n=1}^{N} q(x_n \mid x_0, \dots, x_{n-1})$$
 
 This rule is *always* true. It does not depend on anything special about the variables.
 
-## A worked example {#example}
+## Example {#example}
 
 Draw two cards without replacement. $P(\text{both aces}) = P(\text{first ace}) \times P(\text{second ace} \mid \text{first ace}) = \frac{4}{52} \times \frac{3}{51} = \frac{1}{221}$.
 
 The auto-regressive slide (slide B) uses exactly this rule to write the probability of a sentence word by word.
 
-## Quick check {#check}
+## Check yourself {#check}
 
 ```check
 ? $q(a) = 0.5$ and $q(b \mid a) = 0.4$. What is $q(a, b)$?

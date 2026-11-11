@@ -8,8 +8,6 @@ needs: [variance]
 related: [normal-distribution]
 ---
 
-## The key formula {#formula}
-
 ```formula
 \sigma = \sqrt{\p{variance}{\sigma^2}}
 ```
@@ -24,11 +22,11 @@ On a bell curve, one standard deviation either side of the mean catches about 68
 
 Variances are easier to calculate with; standard deviations are easier to picture. The slides write variances inside $\mathcal N(\cdot,\cdot)$ and standard deviations as *multipliers*. For example a noising step keeps $\sqrt{\alpha_n}$ of the old picture: that square root is turning a variance into a standard deviation.
 
-## A worked example {#example}
+## Example {#example}
 
 Heights with variance 49 cm² have standard deviation 7 cm. Noise with variance $\beta = 0.01$ has standard deviation $\sqrt{0.01} = 0.1$, so a typical pixel gets pushed by about $0.1$.
 
-## Quick check {#check}
+## Check yourself {#check}
 
 ```check
 ? Noise has variance $0.04$. What is its standard deviation?

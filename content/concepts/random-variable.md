@@ -25,11 +25,11 @@ Statistics books write the random variable in capitals, $X$, and a particular va
 
 The diffusion slides drop this habit: they write $x_n$ both for the random noisy picture and for one particular noisy picture. The meaning is always clear from context. When you see $x_n \sim \dots$ or $q(x_n)$, it is being treated as random.
 
-## A worked example {#example}
+## Example {#example}
 
 Flip two coins and let $X$ be the number of heads. $X$ can be 0, 1 or 2, with probabilities $\frac14$, $\frac12$ and $\frac14$. Each run of the experiment gives one value; run it many times and the values come out in roughly those proportions.
 
-## Quick check {#check}
+## Check yourself {#check}
 
 ```check
 ? Which of these is a random variable?

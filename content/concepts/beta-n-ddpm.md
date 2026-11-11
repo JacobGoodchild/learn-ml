@@ -32,11 +32,11 @@ The DDPM paper used $N = 1000$ steps, with $\beta_n$ rising in a straight line f
 
 Why start gently? Early on the picture is still detailed, and small steps keep each change easy for the model to learn to undo. Later, when the picture is mostly noise anyway, bigger steps lose nothing.
 
-## A worked example {#example}
+## Example {#example}
 
 With the straight-line schedule, step 500 has $\beta_{500} \approx 0.01004$. So the noise added at that step has standard deviation $\sqrt{0.01004} \approx 0.1$: each pixel is pushed by roughly $0.1$, up or down.
 
-## Quick check {#check}
+## Check yourself {#check}
 
 ```check
 ? $\beta_n = 0.0004$. What is the standard deviation of the noise added at step $n$?

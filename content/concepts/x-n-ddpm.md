@@ -33,7 +33,7 @@ In the original paper, $N = 1000$. That sounds like a lot, but each step is tiny
 ```visual noising
 ```
 
-## Quick check {#check}
+## Check yourself {#check}
 
 ```check
 ? On slide 19, what is $x_{n-1}$?

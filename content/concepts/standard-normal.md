@@ -8,13 +8,11 @@ needs: [normal-distribution, scaling-and-adding]
 related: [isotropic-gaussian]
 ---
 
-## The key formula {#formula}
-
 ```formula
 \epsilon \sim \p{normal-distribution}{\mathcal N}(0, 1) \quad\Longrightarrow\quad \mu + \sigma\,\epsilon \sim \mathcal N(\mu, \sigma^2)
 ```
 
-## Read it aloud {#aloud}
+## In words {#aloud}
 
 "If $\epsilon$ is a standard normal, then $\mu$ plus $\sigma$ times $\epsilon$ is normal with mean $\mu$ and variance $\sigma^2$."
 
@@ -24,11 +22,11 @@ The **standard normal** is the simplest bell curve: centred at 0, with spread 1.
 
 This is how computers make noise. They produce standard normal numbers, then scale and shift them. The slides always call these raw noise numbers $\epsilon$ (Greek "epsilon"), and later slides train a network to guess $\epsilon$.
 
-## A worked example {#example}
+## Example {#example}
 
 A computer draws $\epsilon = -0.5$. To turn it into a sample from $\mathcal N(10, 4)$, multiply by $\sigma = 2$ and add $\mu = 10$: $10 + 2 \times (-0.5) = 9$.
 
-## Quick check {#check}
+## Check yourself {#check}
 
 ```check
 ? $\epsilon = 1.5$ is a standard normal draw. What is the matching draw from $\mathcal N(3, 0.25)$?

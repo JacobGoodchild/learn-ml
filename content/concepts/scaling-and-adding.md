@@ -13,8 +13,6 @@ entryPoints:
     section: adding
 ---
 
-## The key formulas {#formula}
-
 ```formula
 \mathrm{Var}(aX) = a^2\,\p{variance}{\mathrm{Var}(X)}, \qquad \mathrm{Var}(X + Y) = \mathrm{Var}(X) + \mathrm{Var}(Y)\ \ \text{if } X, Y \text{ are } \p{independence}{\text{independent}}
 ```
@@ -38,11 +36,11 @@ Means are simpler: $\mathbb{E}[aX + Y] = a\,\mathbb{E}[X] + \mathbb{E}[Y]$ alway
 ```visual spread-keeper
 ```
 
-## A worked example {#example}
+## Example {#example}
 
 $X$ has variance 1. Make $Y = \sqrt{0.9}\,X + \sqrt{0.1}\,\epsilon$, where $\epsilon$ is independent noise with variance 1. Then $\mathrm{Var}(Y) = 0.9 \times 1 + 0.1 \times 1 = 1$. The spread is unchanged, even though $Y$ is now part picture and part noise.
 
-## Quick check {#check}
+## Check yourself {#check}
 
 ```check
 ? $\mathrm{Var}(X) = 2$. What is $\mathrm{Var}(3X)$?

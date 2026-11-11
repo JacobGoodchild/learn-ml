@@ -7,17 +7,15 @@ level: 1
 needs: [subscripts]
 ---
 
-## The key formula {#formula}
-
 ```formula
 \prod_{i=1}^{n} a_i = a_1 \times a_2 \times \cdots \times a_n
 ```
 
-## Read it aloud {#aloud}
+## In words {#aloud}
 
 "The product of $a_i$ for $i$ from 1 to $n$." It works exactly like $\sum$ from A-level, but multiplying instead of adding.
 
-## A worked example {#example}
+## Example {#example}
 
 $$\prod_{i=1}^{4} i = 1 \times 2 \times 3 \times 4 = 24 = 4!$$
 
@@ -25,7 +23,7 @@ $$\prod_{i=1}^{3} 0.9 = 0.9^3 = 0.729$$
 
 The second one matters for diffusion. Multiply lots of numbers that are each a little less than 1, and the result shrinks towards 0. That is exactly how $\bar\alpha_n$ works: see [how much of the picture survives](c:alpha-bar-n).
 
-## Quick check {#check}
+## Check yourself {#check}
 
 ```check
 ? Work out $\displaystyle\prod_{i=1}^{3} (i + 1)$.

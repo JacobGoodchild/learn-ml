@@ -165,5 +165,9 @@ transcriptions are in `slides.md`; the papers are in `papers.md`.
 - 14:00–14:10: tests (`sh tests/run-all.sh`: visual maths, progress/spaced-repetition rules, content lint, all passing),
   manim-web tested and rejected for formulas, keyboard previews fixed, slide 31 checked against Analytic-DPM,
   six Path 2 groundwork pages written (see Phase 2). Session ended at 14:30 (Jacob's actual deadline was half two).
+- 14:15–14:30: Jacob's review: site looked AI-made (tiny grey text, cream background, slide numbers, unpolished
+  recursion). Redesigned: white page, darker/larger secondary text, no eyebrows/pills/stripes, formulas unboxed,
+  Wikipedia-style breadcrumb above titles, plain "Your path" rail, minimal preview card, no slide numbers, plainer
+  headings, home lists finished slides first. Rules recorded in `docs/design.md` ("Lessons from Jacob's first review").
 - **Next session:** start Phase 1 (Path 1 polish), then Phase 2 from "Write slide 31 file". Run `sh tests/run-all.sh`
   before every push. To preview locally: `python3 -m http.server` in the repo root, open http://localhost:8000.

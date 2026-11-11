@@ -8,13 +8,11 @@ needs: [joint-distribution, integration]
 related: [marginal-q-n]
 ---
 
-## The key formula {#formula}
-
 ```formula
 \p{probability-distribution}{q(y)} = \sum_{x} \p{joint-distribution}{q(x, y)}
 ```
 
-## Read it aloud {#aloud}
+## In words {#aloud}
 
 "The chance of $y$ on its own is the chance of $y$ together with $x$, added up over every possible $x$."
 
@@ -24,13 +22,13 @@ A joint distribution tells you about combinations. Sometimes you only care about
 
 For continuous variables the sum is an integral, $q(y) = \int q(x, y)\,\mathrm{d}x$.
 
-## A worked example {#example}
+## Example {#example}
 
 A table of weather and umbrella-carrying: $P(\text{rain}, \text{umbrella}) = 0.25$, $P(\text{rain}, \text{no umbrella}) = 0.05$, $P(\text{dry}, \text{umbrella}) = 0.1$, $P(\text{dry}, \text{no umbrella}) = 0.6$. The marginal chance of carrying an umbrella is $0.25 + 0.1 = 0.35$, whatever the weather.
 
 On slide 31, $q_n(x_n)$ is a marginal: all noisy pictures at step $n$, with the clean picture they came from summed out.
 
-## Quick check {#check}
+## Check yourself {#check}
 
 ```check
 ? Using the table above, what is the marginal probability of rain?

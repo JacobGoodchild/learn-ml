@@ -13,13 +13,11 @@ entryPoints:
     section: without
 ---
 
-## The key formula {#formula}
-
 ```formula
 \mathrm{Var}(x_n) = \p{alpha-n-ddpm}{\alpha_n}\,\mathrm{Var}(x_{n-1}) + \p{beta-n-ddpm}{\beta_n} \;=\; \alpha_n + \beta_n = 1 \quad\text{if } \mathrm{Var}(x_{n-1}) = 1
 ```
 
-## Read it aloud {#aloud}
+## In words {#aloud}
 
 "The variance after the step is $\alpha_n$ times the variance before, plus $\beta_n$. If the variance before was 1, the variance after is $\alpha_n + \beta_n$, which is 1."
 
@@ -40,7 +38,7 @@ Suppose someone wrote $x_n = \alpha_n x_{n-1} + \beta_n \epsilon_n$ instead. The
 ```visual spread-keeper
 ```
 
-## Quick check {#check}
+## Check yourself {#check}
 
 ```check
 ? A pixel's value has variance 1. After one step with $\beta_n = 0.3$, what is its variance?

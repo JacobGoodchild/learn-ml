@@ -13,13 +13,11 @@ entryPoints:
     section: identity
 ---
 
-## The key formula {#formula}
-
 ```formula
 x \sim \p{normal-distribution}{\mathcal N}\big(\p{expectation}{\mu},\ \p{variance}{\sigma^2}\,\p{identity-matrix}{I}\big)
 ```
 
-## Read it aloud {#aloud}
+## In words {#aloud}
 
 "The vector $x$ is normally distributed with mean vector $\mu$ and covariance $\sigma^2$ times the identity." In plain terms: every entry $x_i$ of the vector is drawn from its own bell curve $\mathcal N(\mu_i, \sigma^2)$, all independently.
 
@@ -38,11 +36,11 @@ For a vector, the spread is described by a matrix called the **covariance matrix
 
 The covariance matrix gets its own page in Path 2 (slide 42 uses a more general one). For slide 19 you only need the $\sigma^2 I$ case.
 
-## A worked example {#example}
+## Example {#example}
 
 A tiny 3-pixel "picture" with mean $\mu = (0.5, -0.2, 0.9)$ and $\sigma^2 I$ with $\sigma^2 = 0.01$. One draw might be $(0.57, -0.26, 0.88)$: each pixel nudged by roughly $\sigma = 0.1$, each in its own random direction.
 
-## Quick check {#check}
+## Check yourself {#check}
 
 ```check
 ? $x \sim \mathcal N(\mu, 0.04\,I)$ for a picture. What is the standard deviation of the noise on any one pixel?

@@ -10,7 +10,7 @@ entryPoints:
   - label: as a recipe
     section: recipe
   - label: as a distribution
-    section: formula
+    section: aloud
 sources:
   - title: Denoising Diffusion Probabilistic Models
     authors: Ho, Jain and Abbeel, NeurIPS 2020
@@ -18,17 +18,15 @@ sources:
     note: Equation 2 (with T, t in place of N, n)
 ---
 
-## The key formula {#formula}
-
 ```formula
 \p{conditional-distribution}{q(x_n \mid x_{n-1})} = \p{isotropic-gaussian}{\mathcal N}\big(\p{alpha-n-ddpm}{\sqrt{\alpha_n}}\,\p{x-n-ddpm}{x_{n-1}},\ \p{beta-n-ddpm}{\beta_n}\,\p{identity-matrix}{I}\big)
 ```
 
-## Read it aloud {#aloud}
+## In words {#aloud}
 
 "Given the previous picture $x_{n-1}$, the next picture $x_n$ is normally distributed, centred on $\sqrt{\alpha_n}$ times the previous picture, with variance $\beta_n$ on every pixel, independently."
 
-## The breakdown {#breakdown}
+## Piece by piece {#breakdown}
 
 ```breakdown
 q(x_n \mid x_{n-1}) = \mathcal N\big(\p{alpha-n-ddpm}{\sqrt{\alpha_n}}\,\p{x-n-ddpm}{x_{n-1}},\ \p{beta-n-ddpm}{\beta_n}\,\p{identity-matrix}{I}\big)
@@ -47,7 +45,7 @@ $$x_n = \sqrt{\alpha_n}\,x_{n-1} + \sqrt{\beta_n}\,\epsilon_n, \qquad \epsilon_n
 
 Draw a fresh [standard normal](c:standard-normal) number $\epsilon_n$ for every pixel, scale it by $\sqrt{\beta_n}$ so its variance is $\beta_n$, and add it to the slightly shrunk picture. The two forms say exactly the same thing: the recipe makes a sample, the $\mathcal N(\dots)$ form describes all the samples it could make.
 
-## A worked example {#example}
+## Example {#example}
 
 One pixel has value $x_{n-1} = 0.8$, and $\beta_n = 0.01$, so $\alpha_n = 0.99$. The computer draws $\epsilon_n = -1.2$. Then
 
@@ -55,7 +53,7 @@ $$x_n = \sqrt{0.99} \times 0.8 + \sqrt{0.01} \times (-1.2) \approx 0.796 - 0.12 
 
 A different draw of $\epsilon_n$ would give a different $x_n$. On average (since $\epsilon_n$ has mean 0), $x_n$ would be $0.796$.
 
-## Quick check {#check}
+## Check yourself {#check}
 
 ```check
 ? A pixel has $x_{n-1} = 0.5$, $\beta_n = 0.04$, and the noise draw is $\epsilon_n = 1$. What is $x_n$? (Give 3 decimal places.)

@@ -25,11 +25,11 @@ The total area under the curve is 1, because $X$ has to land somewhere.
 
 What is the probability that someone is *exactly* 170.000000… cm tall? The area of a strip of zero width is zero, so the answer is 0. That is not a problem: it just means we always ask about ranges. The height of the curve, $f(x)$, is not a probability; it says how *crowded* values are near $x$. A density can even be bigger than 1, as long as the total area is 1.
 
-## A worked example {#example}
+## Example {#example}
 
 A spinner lands on any angle from 0 to 360 degrees, all equally likely. Its density is flat: $f(x) = \frac{1}{360}$ on that range, so the area is $360 \times \frac{1}{360} = 1$. The probability of landing between 0 and 90 degrees is the area $90 \times \frac{1}{360} = \frac14$.
 
-## Quick check {#check}
+## Check yourself {#check}
 
 ```check
 ? A density is flat at height $\frac{1}{4}$ between 0 and 4. What is the probability of landing between 1 and 3?

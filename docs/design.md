@@ -9,11 +9,27 @@ Purple, violet or blue-to-purple; gradients on UI; gradient text; glow, neon, fr
 icons anywhere; a big centred headline over three feature cards; filler copy ("Unlock your potential");
 Tailwind, shadcn or any UI framework; decorative shimmer or bounce. No badges, confetti, points or streaks.
 
+## Lessons from Jacob's first review (2026-11-11): what read as AI-made
+
+Avoid all of these. They were in the first build and were removed:
+- Small grey UPPERCASE letter-spaced "eyebrow" labels above titles ("PROBABILITY · LAYER 3").
+- Tiny, low-contrast helper text explaining the UI ("Esc backs up one layer", "or click the symbol", "see the ladder").
+  If the UI needs explaining, the UI is wrong. Minimum text size 0.875rem; secondary text uses `--ink-2`, not lighter.
+- Pill-shaped chips, coloured left-stripe callout boxes, every formula in its own bordered card.
+- A cream/beige page background. The page is white.
+- The same template headings on every page ("The key formula", "Read it aloud", "The breakdown").
+  Headings now are plain ("In words", "Piece by piece", "Example", "Check yourself") and pages can drop any of them.
+- Slide numbers as the main label. Slides are named by their titles.
+- Cluttered preview cards. A preview is title, one-line summary, and "Open", like Wikipedia's page previews.
+
+The recursion should feel like an encyclopaedia: a breadcrumb trail above the title, plain blue links,
+formula pieces that look like links, and a plain "Your path" list in the left rail.
+
 ## Colour
 
 | Token | Light | Dark | Use |
 |---|---|---|---|
-| `--bg` | `#f6f4ef` off-white | `#17191c` | page |
+| `--bg` | `#ffffff` white | `#17191c` | page (white, as Jacob asked; tinted backgrounds only inside big 3D visuals) |
 | `--panel` | `#ffffff` | `#1f2226` | formula panels, cards, menus |
 | `--ink` / `--ink-2` / `--ink-3` | near-black / grey / light grey | reversed | text, secondary text, captions |
 | `--rule` | `#e2ded5` | `#33373d` | hairlines |

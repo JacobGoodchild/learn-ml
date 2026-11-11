@@ -20,17 +20,15 @@ sources:
     note: Uses normal distributions for every noising step
 ---
 
-## The key formula {#formula}
-
 ```formula
 X \sim \p{normal-distribution}{\mathcal N}(\p{expectation}{\mu},\ \p{variance}{\sigma^2})
 ```
 
-## Read it aloud {#aloud}
+## In words {#aloud}
 
 "$X$ follows a normal distribution with mean $\mu$ and variance $\sigma^2$." The squiggle $\sim$ means "is drawn from" or "follows". The curly $\mathcal N$ stands for *normal*. People also call it a **Gaussian**, after Gauss; the two words mean the same thing.
 
-## The breakdown {#breakdown}
+## Piece by piece {#breakdown}
 
 ```breakdown
 X \sim \mathcal N(\p{expectation}{\mu},\ \p{variance}{\sigma^2})
@@ -68,11 +66,11 @@ Writing $\mathcal N(\mu, \sigma^2)$ with the variance rather than the standard d
 
 So: on these slides, the second slot of $\mathcal N(\cdot, \cdot)$ is **always a variance**. When the slide writes $\mathcal N(\dots, \beta_n I)$, the noise has variance $\beta_n$ and standard deviation $\sqrt{\beta_n}$.
 
-## A worked example {#example}
+## Example {#example}
 
 Adult heights in one country are roughly $\mathcal N(170, 49)$, in centimetres. The mean is 170 cm. The variance is 49, so the standard deviation is $\sqrt{49} = 7$ cm. About 68% of people are between $170 - 7 = 163$ cm and $170 + 7 = 177$ cm, and about 95% between 156 cm and 184 cm.
 
-## Quick check {#check}
+## Check yourself {#check}
 
 ```check
 ? A variable follows $\mathcal N(5, 16)$. What is its standard deviation?

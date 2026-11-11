@@ -273,22 +273,25 @@ function renderDive(stack) {
   art.style.setProperty('--cc', n.kind === 'slide' ? 'var(--accent)' : colourOf(n));
   const depth = stack.length;
   const parent = depth > 1 ? node(stack[depth - 2].id) : null;
-  const eyebrow = n.kind === 'slide'
-    ? `Slide ${esc(n.meta.number ?? '')} · ${esc(courseTitle(n.course))}`
-    : `${FAMILY_LABEL[n.colour] || 'Concept'}${depth > 1 ? ` · layer ${depth}` : ''}${isFloor(n) ? ' · already on your A-level floor' : ''}`;
   const st = isFloor(n) ? 'floor' : P.status(n);
+  const crumbs = depth > 1 ? `<nav class="crumbs" aria-label="Where you are"><ol>${stack.map((l, k) => {
+      const t = node(l.id);
+      const label = t ? inline(t.title) : esc(l.id);
+      return k === depth - 1 ? `<li aria-current="page">${label}</li>` : `<li><a href="${diveHash(stack.slice(0, k + 1))}">${label}</a></li>`;
+    }).join('')}</ol></nav>` : '';
+  const meta = n.kind === 'slide' ? slideProgress(n)
+    : isFloor(n) ? '<p class="meta">A reminder of something from A-level.</p>'
+    : `<p class="meta" data-status>${statusDot(st, n)} ${statusSentence(st)}</p>`;
+  const contents = n.entryPoints.length ? `<p class="contents">Jump to: ${n.entryPoints.map(e =>
+      `<a href="${diveHash([...stack.slice(0, -1), { ...top, section: e.section }])}">${inline(e.label)}</a>`).join(', ')}</p>` : '';
   art.innerHTML = `
+    ${crumbs}
     <div class="layer-head">
-      <p class="eyebrow">${eyebrow}</p>
       <h1 tabindex="-1">${inline(n.title)}</h1>
       ${n.summary ? `<p class="summary">${inline(n.summary)}</p>` : ''}
-      <div class="layer-tools">
-        ${n.kind === 'concept' ? `<span class="status-pill" data-status>${statusDot(st, n)} ${P.STATUS_LABEL[st]}</span>` : slideProgress(n)}
-        ${parent ? `<a class="btn back-up" href="${diveHash(stack.slice(0, -1))}">Back up to ${inline(parent.title)}</a>` : ''}
-      </div>
+      ${meta}
+      ${contents}
     </div>
-    ${n.entryPoints.length ? `<nav class="entry-points" aria-label="Ways in">${n.entryPoints.map(e =>
-      `<a href="${diveHash([...stack.slice(0, -1), { ...top, section: e.section }])}">${inline(e.label)}</a>`).join('')}</nav>` : ''}
     <div class="layer-body"></div>`;
   mainCol.appendChild(art);
   const body = art.querySelector('.layer-body');
@@ -296,10 +299,10 @@ function renderDive(stack) {
     node: n, nodes: site.nodes,
     onUnderstood: () => {
       const pill = art.querySelector('[data-status]');
-      if (pill) pill.innerHTML = `${statusDot('understood', n)} understood`;
+      if (pill) pill.innerHTML = `${statusDot('understood', n)} Understood`;
       const note = document.createElement('p');
       note.className = 'check-summary';
-      note.textContent = 'All questions answered. This concept now counts as understood, and its review questions will come back tomorrow.';
+      note.textContent = 'All correct. You will see review questions on this tomorrow.';
       art.querySelector('.checks:last-of-type')?.appendChild(note);
       renderRail(rail, stack);
     },
@@ -312,6 +315,10 @@ function renderDive(stack) {
 
 function plain(s) { return String(s).replace(/\$([^$]*)\$/g, (_, m) => m.replace(/\\(mathcal|mathbb|bar|sqrt)\b/g, '').replace(/[\\{}]/g, '')); }
 
+function statusSentence(st) {
+  return { new: 'Not started', seen: 'Opened, quiz not passed yet', understood: 'Understood', remembered: 'Remembered' }[st] || '';
+}
+
 function courseTitle(cid) { const c = site.courses.find(c => c.id === cid); return c ? c.short || c.title : ''; }
 
 function statusDot(st, n) {
@@ -320,7 +327,7 @@ function statusDot(st, n) {
 
 function slideProgress(n) {
   const c = counts(site.nodes, treeOf(site.nodes, n.id));
-  return `<a class="bar-link" href="#/ladder/${n.id}" style="min-width:14rem" title="See this slide's tree">${bar(c)}<span class="bar-label">${c.understood} of ${c.total} concepts underneath understood · ${c.remembered} remembered · see the ladder</span></a>`;
+  return `<a class="bar-link" href="#/ladder/${n.id}" style="min-width:14rem" title="See this slide's tree">${bar(c)}<span class="bar-label">${c.understood} of ${c.total} ideas behind this slide understood</span></a>`;
 }
 
 function bar(c) {
@@ -333,17 +340,17 @@ function appendAuto(body, n, stack) {
   const html = [];
   const needs = n.needs.filter(id => id);
   if (needs.length) {
-    html.push(`<h2 id="sec-built-on" tabindex="-1">Built on</h2><p class="muted small">The ideas one layer down. Open any of them to go deeper.</p><ul>${needs.map(id => {
+    html.push(`<h2 id="sec-built-on" tabindex="-1">Built on</h2><ul>${needs.map(id => {
       const t = node(id);
       return `<li><a class="concept-link" href="#" data-c="${id}">${t ? inline(t.title) : esc(id)}</a>${t && t.summary ? ` <span class="muted">— ${inline(t.summary)}</span>` : ''}</li>`;
     }).join('')}</ul>`);
   }
   const ups = (n.usedBy || []).map(node).filter(Boolean);
   if (ups.length) {
-    html.push(`<h2 id="sec-unlocks" tabindex="-1">What this unlocks</h2><ul>${ups.map(u => {
+    html.push(`<h2 id="sec-unlocks" tabindex="-1">Used in</h2><ul>${ups.map(u => {
       const k = stack.findIndex(l => l.id === u.id);
       const href = k >= 0 ? diveHash(stack.slice(0, k + 1)) : diveHash([{ id: u.id, from: null }]);
-      return `<li><a href="${href}">${u.kind === 'slide' ? `Slide ${u.meta.number}: ` : ''}${inline(u.title)}</a>${k >= 0 ? ' <span class="muted small">(back up the stack)</span>' : ''}</li>`;
+      return `<li><a href="${href}">${inline(u.title)}</a></li>`;
     }).join('')}</ul>`);
   }
   if (n.related.length) {
@@ -451,16 +458,14 @@ function renderRail(rail, stack) {
       const sn = snippetFor(l.id, stack[k + 1].from);
       const hl = node(stack[k + 1].id);
       if (sn && sn.latex) f = `<span class="f" data-hl="${sn.local}" style="--hl:${colourOf(hl)}">${tex(sn.latex, false)}</span>`;
-      else if (sn) f = `<span class="via">via “${esc(sn.text)}”</span>`;
     }
-    const st = n && n.kind === 'concept' ? (isFloor(n) ? 'floor' : P.status(n)) : null;
-    const title = n ? (n.kind === 'slide' ? `Slide ${n.meta.number}` : n.title) : l.id;
-    const inner = `<span class="t"><span>${inline(title)}</span>${st ? `<span class="m">${statusDot(st, n)}</span>` : ''}</span>${f}`;
+    const title = n ? n.title : l.id;
+    const inner = `<span class="t">${inline(title)}</span>${f}`;
     return `<li>${isCur
       ? `<div class="rail-card current" style="--cc:${colour}" aria-current="location">${inner}</div>`
       : `<a class="rail-card" style="--cc:${colour}; text-decoration:none" href="${diveHash(stack.slice(0, k + 1))}">${inner}</a>`}</li>`;
   });
-  rail.innerHTML = `<p class="rail-title">Layers</p><ol>${cards.join('')}</ol>${stack.length > 1 ? '<p class="small muted" style="margin-top:.8rem">Esc backs up one layer.</p>' : ''}`;
+  rail.innerHTML = `<p class="rail-title">Your path</p><ol>${cards.join('')}</ol>`;
   rail.querySelectorAll('.f[data-hl]').forEach(f => {
     const p = f.querySelectorAll('[data-c]')[Number(f.dataset.hl)];
     f.querySelectorAll('[data-c]').forEach(x => { x.style.cursor = 'inherit'; });
@@ -485,14 +490,12 @@ function showPreview(el, stack) {
   const base = stack.map(l => ({ ...l, section: null }));
   const here = { id, from: Number(el.dataset.i) };
   if (!n) {
-    preview.innerHTML = `<div class="pt">${esc(id)}</div><p class="ps">This concept is in the plan but has not been written yet.</p>`;
+    preview.innerHTML = `<div class="pt">${esc(id)}</div><p class="ps">Not written yet.</p>`;
   } else {
     preview.innerHTML = `
-      <div class="pt"><span>${inline(n.title)}</span><span class="st">${P.STATUS_LABEL[st]}</span></div>
+      <div class="pt">${inline(n.title)}</div>
       <p class="ps">${inline(n.summary)}</p>
-      ${n.entryPoints.length ? `<p class="pe">Ways in: ${n.entryPoints.map(e => `<a href="${diveHash([...base, { ...here, section: e.section }])}">${inline(e.label)}</a>`).join('')}</p>` : ''}
-      ${n.related.length ? `<p class="pr">Compare: ${n.related.map(r => node(r)).filter(Boolean).map(r => `<a href="${diveHash([...base, { id: r.id, from: here.from }])}">${inline(r.title)}</a>`).join('')}</p>` : ''}
-      <div class="pa"><a class="btn primary" href="${diveHash([...base, here])}">Dive in</a><span class="hint">${lastPointer === 'touch' ? 'or tap the symbol again' : 'or click the symbol'}</span></div>`;
+      <a class="popen" href="${diveHash([...base, here])}">Open</a>`;
   }
   preview.hidden = false;
   const r = el.getBoundingClientRect();
@@ -519,23 +522,22 @@ function renderHome() {
     const slideId = P.lastSlide() && site.nodes.get(P.lastSlide())?.course === course.id ? P.lastSlide() : course.slides[0];
     const nu = nextUp(site.nodes, slideId);
     const sl = node(slideId);
-    const rows = course.outline.map(o => {
+    const ordered = [...course.outline.filter(o => node(o.id)), ...course.outline.filter(o => !node(o.id))];
+    const rows = ordered.map(o => {
       const n = node(o.id);
       const built = !!n;
       const c = built ? counts(site.nodes, treeOf(site.nodes, o.id)) : null;
       return `<li class="slide-row ${built ? '' : 'planned'}">
-        <span class="num">${esc(o.number)}</span>
-        <span class="title">${built ? `<a href="${diveHash([{ id: o.id, from: null }])}">${inline(o.title)}</a>` : inline(o.title)}<span class="sub">${inline(o.part || '')}${built ? '' : ' · not built yet'}</span></span>
-        <span class="prog">${built ? `<a class="bar-link" href="#/ladder/${o.id}">${bar(c)}<span class="bar-label">${c.understood}/${c.total} understood</span></a>` : ''}</span>
+        <span class="title">${built ? `<a href="${diveHash([{ id: o.id, from: null }])}">${inline(o.title)}</a>` : inline(o.title)}<span class="sub">${inline(o.part || '')}${built ? '' : ', coming later'}</span></span>
+        <span class="prog">${built ? `<a class="bar-link" href="#/ladder/${o.id}">${bar(c)}<span class="bar-label">${c.understood} of ${c.total}</span></a>` : ''}</span>
       </li>`;
     }).join('');
     return `<section>
-      <p class="eyebrow">Course</p>
       <h1>${inline(course.title)}</h1>
       <p class="lede">${inline(course.description)}</p>
       ${nu ? nextUpBox(nu, sl) : ''}
       <h2>The slides</h2>
-      <p class="muted">Open a slide and click any part of a formula to go one layer down. Keep going until you reach something you already know.</p>
+      <p>Click any part of a formula to open the idea behind it.</p>
       <ul class="slide-list">${rows}</ul>
     </section>`;
   }).join('');
@@ -543,8 +545,8 @@ function renderHome() {
 }
 
 function nextUpBox(n, slide) {
-  return `<div class="next-up" style="--cc:${colourOf(n)}"><p class="eyebrow">Next up${slide ? ` on the way to slide ${esc(slide.meta.number)}` : ''}</p>
-    <a href="${diveHash([{ id: n.id, from: null }])}">${inline(n.title)}</a><div class="muted">${inline(n.summary)}</div></div>`;
+  return `<div class="next-up" style="--cc:${colourOf(n)}"><p class="label">Next up</p>
+    <a href="${diveHash([{ id: n.id, from: null }])}">${inline(n.title)}</a><div>${inline(n.summary)}</div></div>`;
 }
 
 // ---------- Ladder ----------
@@ -564,11 +566,10 @@ function renderLadder(slideId) {
   }).join('');
   const nu = nextUp(site.nodes, sl.id);
   main.innerHTML = `<div class="page">
-    <p class="eyebrow">Ladder</p>
-    <h1>From the floor to slide ${esc(sl.meta.number)}</h1>
-    <p class="lede">Every idea underneath “${inline(sl.title)}”, in an order where each one only uses ideas above it in the list.</p>
-    ${slides.length > 1 ? `<p class="small">Other slides: ${slides.filter(s => s !== sl).map(s => `<a href="#/ladder/${s.id}">${esc(s.meta.number)}</a>`).join(' · ')}</p>` : ''}
-    ${bar(c)}<span class="bar-label">${c.understood} of ${c.total} understood · ${c.remembered} remembered</span>
+    <h1>${inline(sl.title)}: every idea behind it</h1>
+    <p class="lede">From what you already know at the top to the slide at the bottom. Each idea only uses the ones above it.</p>
+    ${slides.length > 1 ? `<p>Other slides: ${slides.filter(s => s !== sl).map(s => `<a href="#/ladder/${s.id}">${inline(s.title)}</a>`).join(', ')}</p>` : ''}
+    ${bar(c)}<span class="bar-label">${c.understood} of ${c.total} understood, ${c.remembered} remembered</span>
     ${nu ? nextUpBox(nu, sl) : '<p>Everything under this slide is understood.</p>'}
     <div class="legend"><span><span class="dot" style="--cc:var(--ink-3)"></span>not started</span><span><span class="dot seen" style="--cc:var(--ink-3)"></span>seen</span><span><span class="dot understood" style="--cc:var(--ink-3)"></span>understood</span><span><span class="dot remembered" style="--cc:var(--ink-3)"></span>remembered</span><span><span class="dot understood" style="--cc:var(--rule-2)"></span>floor (already known)</span></div>
     <ol class="ladder">${rows}</ol></div>`;
@@ -612,7 +613,7 @@ function renderProgress() {
     const cc = counts(site.nodes, course.concepts);
     const slideRows = course.slides.map(node).filter(Boolean).map(s => {
       const sc = counts(site.nodes, treeOf(site.nodes, s.id));
-      return `<tr><td>Slide ${esc(s.meta.number)}: <a href="${diveHash([{ id: s.id, from: null }])}">${inline(s.title)}</a></td><td class="barcell"><a class="bar-link" href="#/ladder/${s.id}">${bar(sc)}</a></td><td class="small">${sc.understood}/${sc.total} · ${sc.remembered} remembered</td></tr>`;
+      return `<tr><td><a href="${diveHash([{ id: s.id, from: null }])}">${inline(s.title)}</a></td><td class="barcell"><a class="bar-link" href="#/ladder/${s.id}">${bar(sc)}</a></td><td class="small">${sc.understood}/${sc.total} · ${sc.remembered} remembered</td></tr>`;
     }).join('');
     return `<h2>${inline(course.short || course.title)}</h2>
       <table class="prog-table"><tr><th>Whole course</th><th class="barcell">${''}</th><th></th></tr>
@@ -623,13 +624,12 @@ function renderProgress() {
     ? `<p>${due.length} question${due.length === 1 ? '' : 's'} due, from ${new Set(due.map(d => d.node.id)).size} concept${new Set(due.map(d => d.node.id)).size === 1 ? '' : 's'}. <a class="btn primary" href="#/review">Start review</a></p>`
     : `<p class="muted">Nothing is due for review today.${upcoming()}</p>`;
   main.innerHTML = `<div class="page">
-    <p class="eyebrow">Progress</p>
     <h1>${c.understood} of ${c.total} concepts understood</h1>
     <p class="lede">${c.remembered} remembered, ${due.length} review${due.length === 1 ? '' : 's'} due. A concept counts as understood when you have answered its quick check, and as remembered when you still get its review questions right a week or more later.</p>
     ${nu ? nextUpBox(nu, sl) : ''}
     <h2>Reviews</h2>${dueList}
     ${courseRows}
-    <p class="small muted" style="margin-top:2rem">Floor concepts (things you already know from A-level) are not counted. Progress is saved in this browser only; use the settings menu to export it to a file and import it on another device.</p>
+    <p style="margin-top:2rem">A-level reminders are not counted. Progress is saved in this browser; to move it to another device, use Export and Import in the settings menu.</p>
   </div>`;
 }
 function upcoming() {
@@ -641,7 +641,7 @@ function upcoming() {
 function renderReview() {
   const due = P.dueRecall(site.nodes);
   if (!due.length) {
-    main.innerHTML = `<div class="page"><p class="eyebrow">Review</p><h1>Nothing due today</h1>
+    main.innerHTML = `<div class="page"><h1>Nothing to review today</h1>
       <p class="lede">Questions appear here about a day, three days, a week, two weeks and a month after you understand a concept. Getting one wrong sends it back to the start.</p>
       <p><a href="#/progress">See your progress</a></p></div>`;
     return;
@@ -649,11 +649,10 @@ function renderReview() {
   const item = due[0];
   const n = item.node;
   main.innerHTML = `<div class="page">
-    <p class="eyebrow">Review · ${due.length} due</p>
+    <h1>Review</h1><p>${due.length} question${due.length === 1 ? '' : 's'} left today.</p>
     <div class="review-card" style="--cc:${colourOf(n)}">
       <p class="from">${inline(n.title)}</p>
       <p style="font-size:1.1em">${inline(item.q.q)}</p>
-      <p class="muted small">Answer it in your head, or on paper, before you look.</p>
       <div class="review-actions"><button class="btn primary" data-show>Show the answer</button></div>
       <div class="answer" hidden><p>${inline(item.q.a)}</p>
         <div class="review-actions"><button class="btn" data-ok="1">I had it</button><button class="btn" data-ok="0">I didn't</button>

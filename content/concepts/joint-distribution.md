@@ -8,13 +8,11 @@ needs: [probability-distribution, random-variable]
 related: [conditional-distribution, chain-rule-of-probability]
 ---
 
-## The key formula {#formula}
-
 ```formula
 q(x_0, x_1, \dots, x_N)
 ```
 
-## Read it aloud {#aloud}
+## In words {#aloud}
 
 "$q$ of $x_0$, $x_1$, up to $x_N$": how likely each possible *combination* of all of them is.
 
@@ -28,7 +26,7 @@ On slide 19, $q(x_0, \dots, x_N)$ is the whole noising story in one object: a cl
 
 Later slides shorten $x_0, x_1, \dots, x_N$ to $x_{0:N}$ ("$x$ from 0 to $N$"). It means the same list.
 
-## Quick check {#check}
+## Check yourself {#check}
 
 ```check
 ? Two fair dice are rolled. Under their joint distribution, what is the probability of the pair (6, 6)?

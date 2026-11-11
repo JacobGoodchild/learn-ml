@@ -7,14 +7,14 @@
 
 /* ---------- Tokens: light (default) ---------- */
 :root {
-  --bg: #f6f4ef;          /* off-white page */
+  --bg: #ffffff;          /* white page */
   --panel: #ffffff;
-  --panel-2: #fbfaf7;
+  --panel-2: #f6f7f8;
   --ink: #1d1f22;
-  --ink-2: #4a4f57;       /* secondary text */
-  --ink-3: #767c85;       /* captions, labels */
-  --rule: #e2ded5;
-  --rule-2: #cfc9bd;
+  --ink-2: #3b4048;       /* secondary text */
+  --ink-3: #5b626b;       /* captions, labels */
+  --rule: #e4e6e9;
+  --rule-2: #c9cdd2;
   --accent: #2b4c7e;      /* the one accent: ink blue */
   --accent-soft: #e3e9f2;
   --good: #3f7a3a;
@@ -44,7 +44,7 @@
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     --bg: #17191c; --panel: #1f2226; --panel-2: #24282d;
-    --ink: #e7e5e0; --ink-2: #b9b6ae; --ink-3: #8d8a83;
+    --ink: #e7e5e0; --ink-2: #b9b6ae; --ink-3: #a3a7ad;
     --rule: #33373d; --rule-2: #464b52;
     --accent: #8fb0dd; --accent-soft: #263243; --good: #8cc283; --bad: #e08a73; --focus: #8fb0dd;
     --c-probability: #6fc0b5; --c-spread: #9cc46b; --c-linalg: #84aee6; --c-calculus: #deaa5f;
@@ -55,7 +55,7 @@
 }
 :root[data-theme="dark"] {
   --bg: #17191c; --panel: #1f2226; --panel-2: #24282d;
-  --ink: #e7e5e0; --ink-2: #b9b6ae; --ink-3: #8d8a83;
+  --ink: #e7e5e0; --ink-2: #b9b6ae; --ink-3: #a3a7ad;
   --rule: #33373d; --rule-2: #464b52;
   --accent: #8fb0dd; --accent-soft: #263243; --good: #8cc283; --bad: #e08a73; --focus: #8fb0dd;
   --c-probability: #6fc0b5; --c-spread: #9cc46b; --c-linalg: #84aee6; --c-calculus: #deaa5f;
@@ -340,4 +340,82 @@ h2, h3 { scroll-margin-top: 4.5rem; }
   .site-header { position: static; }
   h2, h3 { scroll-margin-top: 1rem; }
   .notation td:first-child { white-space: normal; min-width: 4.5rem; }
+}
+
+
+/* ===== Revision 2: plainer, more legible, Wikipedia-like layers ===== */
+.small { font-size: .9rem; }
+.site-header { font-size: .95rem; background: var(--bg); }
+.header-progress { font-size: .9rem; color: var(--ink-2); }
+.eyebrow, .label { font-family: var(--sans); font-size: .9rem; letter-spacing: 0; text-transform: none; color: var(--ink-2); margin: 0 0 .3rem; font-weight: 600; }
+.lede { color: var(--ink); }
+.muted { color: var(--ink-2); }
+
+/* Breadcrumb trail above the title, like an encyclopaedia */
+.crumbs { font-family: var(--sans); font-size: .95rem; margin: 0 0 .8rem; color: var(--ink-2); }
+.crumbs ol { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; align-items: baseline; }
+.crumbs li { margin: 0; }
+.crumbs li + li::before { content: "›"; margin: 0 .5em; color: var(--ink-3); }
+.crumbs a { color: var(--accent); text-decoration: none; }
+.crumbs a:hover { text-decoration: underline; }
+.crumbs [aria-current] { color: var(--ink); }
+.crumbs .katex { font-size: 1em; }
+
+.layer-head { border-bottom: 1px solid var(--rule); padding-bottom: 1rem; margin-bottom: 1.4rem; }
+.layer-head h1 { margin-bottom: .4rem; }
+.layer-head .summary { font-size: 1.1em; color: var(--ink); }
+.meta { font-family: var(--sans); font-size: .95rem; color: var(--ink-2); margin: .8rem 0 0; display: flex; align-items: center; gap: .45rem; }
+.contents { font-family: var(--sans); font-size: .95rem; margin: .5rem 0 0; color: var(--ink-2); }
+
+/* Formulas sit on the page, not in boxes */
+.formula { background: none; border: 0; border-radius: 0; padding: .4rem 0; margin: 1.1rem 0 1.4rem; }
+.formula-label { font-size: .9rem; color: var(--ink-2); margin-bottom: 0; }
+.katex { font-size: 1.18em; }
+
+/* Rail: a plain list of where you have been */
+.rail { font-size: .92rem; padding-top: 2.4rem; }
+.rail-title { text-transform: none; letter-spacing: 0; font-size: .9rem; font-weight: 600; color: var(--ink-2); }
+.rail ol { border-left: 2px solid var(--rule); padding-left: .9rem; }
+.rail-card, .rail-card.current { background: none; border: 0; border-radius: 0; padding: .2rem 0 .5rem; }
+.rail-card .t { font-weight: 400; font-size: .92rem; color: var(--accent); display: block; }
+.rail-card:hover .t { text-decoration: underline; }
+.rail-card.current .t { color: var(--ink); font-weight: 600; }
+.rail-card .f { font-size: 1rem; color: var(--ink); margin-top: .15rem; }
+.rail-card .f .katex { font-size: .95em; }
+.rail-card .via { color: var(--ink-2); font-style: italic; }
+
+/* Preview: title, summary, one link */
+.preview { border-top: 1px solid var(--rule); font-size: 1rem; padding: .9rem 1.1rem; }
+.preview .pt { display: block; font-size: 1.05rem; }
+.preview .ps { color: var(--ink); margin: .35rem 0 .5rem; }
+.preview .popen { font-family: var(--sans); font-size: .95rem; font-weight: 600; }
+
+/* Plain callouts: no coloured stripes */
+.next-up { border: 1px solid var(--rule); border-radius: var(--radius); background: var(--panel-2); }
+.notation { border-left: 0; background: none; padding: 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); border-radius: 0; }
+.notation td { padding: .45rem .8rem .45rem 0; border-bottom: 1px solid var(--rule); }
+.notation tr:last-child td { border-bottom: 0; }
+.review-card { border-left: 1px solid var(--rule); }
+
+/* Checks and lists: bigger, plainer */
+.check { background: var(--panel-2); border-color: var(--rule); }
+.check .qn { font-size: .95rem; text-transform: none; letter-spacing: 0; color: var(--ink); font-weight: 600; float: left; margin-right: .4rem; }
+.check .q { margin-top: 0; }
+.option { background: var(--panel); }
+.bar-label { font-size: .9rem; color: var(--ink-2); }
+.slide-row { grid-template-columns: minmax(0, 1fr) 10rem; }
+.slide-row .sub { color: var(--ink-2); font-size: .9em; }
+.slide-row.planned .title { color: var(--ink-2); }
+.ladder .t .s { color: var(--ink-2); }
+.ladder .st { font-size: .85rem; color: var(--ink-2); }
+.legend { font-size: .88rem; color: var(--ink-2); }
+details > summary { font-size: .95rem; }
+.visual .controls { font-size: .92rem; }
+.visual .caption { color: var(--ink); }
+@media (max-width: 760px) {
+  .slide-row { grid-template-columns: 1fr; }
+  .slide-row .prog { grid-column: 1; }
+  .rail ol { border-left: 0; padding-left: 0; }
+  .rail-card .t { font-size: .88rem; }
+  .crumbs { display: none; } /* the rail strip already shows the path on phones */
 }

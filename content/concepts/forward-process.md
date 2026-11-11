@@ -13,13 +13,11 @@ sources:
     note: Section 2, the "forward process or diffusion process"
 ---
 
-## The key formula {#formula}
-
 ```formula
 \p{joint-distribution}{q(x_0,\dots,x_N)} = \p{probability-distribution}{q(x_0)}\,\p{diffusion-step}{q(x_1\mid x_0)}\cdots \p{diffusion-step}{q(x_N\mid x_{N-1})}
 ```
 
-## Read it aloud {#aloud}
+## In words {#aloud}
 
 "The chance of a clean picture together with a particular run of noisy versions is: the chance of the clean picture, times the chance of each noising step given the one before."
 
@@ -35,7 +33,7 @@ This is called the **forward process** because it runs from data to noise. Every
 
 The reason for using so many tiny steps is that each tiny step is easy to reverse. One giant leap from picture to static would be impossible to undo; a thousand small nudges can each be undone one at a time.
 
-## Quick check {#check}
+## Check yourself {#check}
 
 ```check
 ? How many noising-step factors $q(x_n \mid x_{n-1})$ are in the product when $N = 1000$?

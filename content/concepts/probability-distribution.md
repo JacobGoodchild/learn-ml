@@ -26,11 +26,11 @@ The slides name distributions with lower-case letters. $q(x)$ means "the distrib
 
 So $q(x_0)$ is "the distribution of real, clean pictures", that is, how likely each possible picture is to turn up in the data.
 
-## A worked example {#example}
+## Example {#example}
 
 Roll two dice and add them. The total can be 2 to 12. There are 36 equally likely outcomes, and 6 of them give 7, so the probability of 7 is $\frac{6}{36} = \frac16$. Listing every total with its probability gives the whole distribution.
 
-## Quick check {#check}
+## Check yourself {#check}
 
 ```check
 ? A distribution gives probabilities $0.2$, $0.5$ and $p$ to the only three possible values. What is $p$?

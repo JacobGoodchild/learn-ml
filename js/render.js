@@ -67,7 +67,7 @@ export function renderBlocks(el, blocks, ctx) {
         break;
       case 'check': d.appendChild(checkBlock(b, ctx)); break;
       case 'recall':
-        d.innerHTML = `<details class="recall"><summary>Questions that will come back in review (${b.questions.length})</summary><ol class="recall-list">${b.questions.map(q => `<li>${inline(q.q)}</li>`).join('')}</ol><p class="small muted">These are scheduled once you pass the quick check: after about 1 day, 3 days, 1 week, 2 weeks and 1 month.</p></details>`;
+        d.innerHTML = `<details class="recall"><summary>Review questions</summary><ol class="recall-list">${b.questions.map(q => `<li>${inline(q.q)}</li>`).join('')}</ol><p>These come back for review after you pass the quick check.</p></details>`;
         break;
       case 'visual': {
         const v = document.createElement('figure');
@@ -116,7 +116,7 @@ function checkBlock(b, ctx) {
     const idx = base + qi;
     const box = document.createElement('div');
     box.className = 'check';
-    box.innerHTML = `<div class="qn">Question ${idx + 1} of ${node.checks.length}${done[idx] ? ' · answered' : ''}</div><div class="q">${inline(q.q)}</div>`;
+    box.innerHTML = `<div class="qn">${idx + 1}.</div><div class="q">${inline(q.q)}</div>`;
     const fb = document.createElement('div');
     const tools = document.createElement('div');
     tools.className = 'check-tools';

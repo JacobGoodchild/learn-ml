@@ -13,13 +13,11 @@ entryPoints:
     section: shortens
 ---
 
-## The key formula {#formula}
-
 ```formula
 \p{conditional-distribution}{q(x_n \mid x_0, \dots, x_{n-1})} = q(x_n \mid x_{n-1})
 ```
 
-## Read it aloud {#aloud}
+## In words {#aloud}
 
 "Given everything so far, the next step only depends on the last one."
 
@@ -41,7 +39,7 @@ $$q(x_0, \dots, x_N) = q(x_0)\, q(x_1 \mid x_0)\, q(x_2 \mid x_1) \cdots q(x_N \
 
 That is the first line of slide 19. Each factor is one small step, so the whole process is described by one simple recipe used $N$ times.
 
-## Quick check {#check}
+## Check yourself {#check}
 
 ```check
 ? Which of these is a Markov chain?

@@ -23,7 +23,7 @@ Diffusion models usually rescale each pixel value from the range 0–255 to the 
 
 Once a picture is a vector, everything you know about vectors works on it. "Add noise to the picture" is just "add a random vector". "Scale the picture by $0.9$" is just multiplying the vector by $0.9$. The formulas on slide 19 are written for whole pictures at once, but they act on every entry separately.
 
-## Quick check {#check}
+## Check yourself {#check}
 
 ```check
 ? A greyscale picture (one number per pixel) is 28 pixels by 28 pixels. What is its dimension $d$?

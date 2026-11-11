@@ -13,13 +13,11 @@ entryPoints:
     section: letters
 ---
 
-## The key formula {#formula}
-
 ```formula
 \mathbb{E}[X] = \sum_{x} x \, \p{probability-distribution}{P(X = x)}
 ```
 
-## Read it aloud {#aloud}
+## In words {#aloud}
 
 "The expected value of $X$ is each possible value times its probability, all added up."
 
@@ -33,13 +31,13 @@ $\mathbb{E}$ (a blackboard-bold E) stands for "expected value". The Greek letter
 
 Watch out: on slides 31 and 42, $\mu_n(\cdot)$ is the mean of the model's step, and on slide 119 $\mu$ is not a mean at all. Each slide page says which applies.
 
-## A worked example {#example}
+## Example {#example}
 
 A fair dice: $\mathbb{E}[X] = \frac{1 + 2 + 3 + 4 + 5 + 6}{6} = 3.5$. You can never roll 3.5, but it is the long-run average.
 
 Noise on the slides always has mean 0: it pushes pixels up as often as down, so on average it does not move them at all.
 
-## Quick check {#check}
+## Check yourself {#check}
 
 ```check
 ? $X$ is 0 with probability $0.5$, 2 with probability $0.25$ and 4 with probability $0.25$. What is $\mathbb{E}[X]$?
