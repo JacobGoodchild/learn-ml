@@ -52,4 +52,6 @@ answer: $1000 + 1 = 1001$: the clean picture plus one for each step.
 ```recall
 ? On slide 19, what are $x_0$, $x_n$ and $x_N$?
 $x_0$ is a clean picture from the data; $x_n$ is it after $n$ noising steps; $x_N$ is the final picture after all $N$ steps, which is essentially pure noise.
+? Each step of noise is tiny. Why does the picture still disappear completely by $x_N$?
+Because there are many steps ($N = 1000$ in the paper). Each one shrinks the picture a little and adds a little noise, and the effect builds up until nothing of the picture is left.
 ```

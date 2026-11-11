@@ -40,9 +40,12 @@ transcriptions are in `slides.md`; the papers are in `papers.md`.
 - **URL state:** `#/dive/<root>/<id>@<pieceIndex>/<id>@<pieceIndex>...` — each layer records which
   piece (by order on the parent page) it was opened from, so the rail can highlight it and the
   browser back button works. Optional `:section` suffix opens an entry point.
-- **Formula animation:** `manim-web` exists on npm (v0.41) but is a large, young dependency and was
-  not tested this session for time. Draw-in and highlight effects are KaTeX + CSS (staggered fade/rise
-  of top-level formula parts). A Fable session may try manim-web for one big visual; record result here.
+- **Formula animation:** tested `manim-web` 0.41.0 on 2026-11-11. Its self-contained browser bundle
+  (`dist/manim-web.browser.js`, 2.8 MB; the npm package is 25 MB) rendered slide 19's transition formula with a
+  `Write` animation in ~1.4 s, no errors, in headless Chromium. **Not adopted for formulas**: it draws to a canvas,
+  so formula pieces cannot be clickable DOM elements (the core of the site), and 2.8 MB per page is heavy on a phone.
+  Formula draw-in and highlights are KaTeX + CSS (staggered fade/rise of the first formula's parts). manim-web
+  stays an option for one standalone big visual, loaded only on that page and vendored into `vendor/` if used.
 - **Progress levels:** seen (opened), understood (every quick-check question answered correctly),
   remembered (every recall question answered correctly at least 7 days after "understood", and none
   overdue). Spaced repetition boxes: 1, 3, 7, 14, 30 days; wrong answer → back to box 1.
@@ -55,21 +58,21 @@ transcriptions are in `slides.md`; the papers are in `papers.md`.
 
 ### Phase 0 — Foundations (Opus session 1)
 - [x] Look at repo; write CLAUDE.md
-- [ ] Concept map plan for all 13 slides (`docs/concept-map.md`)
-- [ ] Content format doc (`docs/content-format.md`)
-- [ ] Engine: content loader + Markdown/front-matter parser
-- [ ] Engine: slide mode with clickable formula pieces
-- [ ] Engine: diving with zoom transition, layer rail, back-up with scroll restore, URL state
-- [ ] Engine: preview cards (hover on desktop, tap-tap on phone)
-- [ ] Engine: ladder mode (topological order of a slide's tree)
-- [ ] Engine: quick checks with marking, hints, worked answers
-- [ ] Engine: progress saving, export/import, reset
-- [ ] Engine: review mode with spaced repetition + "due" count in header
-- [ ] Engine: progress tracking (per concept, per slide bar, header line, Progress page, Next up)
-- [ ] Design system: themes, concept colours, typography, settings cog (`docs/design.md`)
-- [ ] Path 1: slide 19 fully clickable, every concept under it written down to the floor
-- [ ] Path 1 visuals: bell curve with sliders; noising slider (real, numerically checked)
-- [ ] Spec every big visual (`docs/visuals.md`)
+- [x] Concept map plan for all 13 slides (`docs/concept-map.md`)
+- [x] Content format doc (`docs/content-format.md`)
+- [x] Engine: content loader + Markdown/front-matter parser
+- [x] Engine: slide mode with clickable formula pieces
+- [x] Engine: diving with zoom transition, layer rail, back-up with scroll restore, URL state
+- [x] Engine: preview cards (hover on desktop, tap-tap on phone)
+- [x] Engine: ladder mode (topological order of a slide's tree)
+- [x] Engine: quick checks with marking, hints, worked answers
+- [x] Engine: progress saving, export/import, reset
+- [x] Engine: review mode with spaced repetition + "due" count in header
+- [x] Engine: progress tracking (per concept, per slide bar, header line, Progress page, Next up)
+- [x] Design system: themes, concept colours, typography, settings cog (`docs/design.md`)
+- [x] Path 1: slide 19 fully clickable, every concept under it written down to the floor
+- [x] Path 1 visuals: bell curve with sliders; noising slider (real, numerically checked)
+- [x] Spec every big visual (`docs/visuals.md`)
 - [ ] Tests: maths checks for visuals (`tests/`), headless screenshots desktop + phone, both themes
 - [ ] Update CLAUDE.md for a cold start; summary for Jacob
 
@@ -143,4 +146,8 @@ transcriptions are in `slides.md`; the papers are in `papers.md`.
 
 ## Progress log
 
-- 2026-11-11 (Opus, session 1): started. Repo was empty. Vendored KaTeX 0.16.11 and Source Serif 4.
+- 2026-11-11 (Opus, session 1): started 13:35 UTC. Repo was empty. Vendored KaTeX 0.16.11 and Source Serif 4.
+  Deadline for this session: 16:30 (Jacob moved it from 15:30 mid-session).
+- 13:40–14:00: engine, design system, slide 19 and all 33 concept pages under it, three real visuals, maths tests,
+  docs (concept map, content format, design, visuals). GitHub Pages is live at https://jacobgoodchild.github.io/learn-ml/
+  (deploys from `main`, root). Fixed: tap-to-preview on phones (mouse-compat events were hiding the card).

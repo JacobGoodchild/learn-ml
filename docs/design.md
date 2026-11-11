@@ -74,7 +74,7 @@ Add a family only if a whole group of new concepts needs one; keep it muted and 
 - First formula on a page draws itself in (staggered fade-and-rise, ~0.5s).
 - Big visuals may animate. Nothing else moves.
 - `prefers-reduced-motion` (or Motion: Reduced in settings) turns all of this off; "Full" forces it on.
-- `manim-web` was not used (decision in CLAUDE.md). Draw-in is KaTeX + CSS.
+- `manim-web` was tested and not used for formulas (it draws to a canvas, so pieces cannot be clicked; details in CLAUDE.md). Draw-in is KaTeX + CSS.
 
 ## Visuals
 
