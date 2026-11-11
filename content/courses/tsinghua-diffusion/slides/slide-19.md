@@ -14,10 +14,10 @@ sources:
     note: The slide's demo images come from this paper; they are not reproduced here
 ---
 
-The slide makes one claim: the **diffusion process** gradually adds noise to data, and it is described by a **Markov chain**. Click any part of a formula to open the idea behind it.
+The slide makes one claim: the [diffusion process](c:forward-process) gradually adds noise to data, and it is described by a [Markov chain](c:markov-chain). Click any part of a formula to open the idea behind it.
 
 ```formula The whole noising process, as one chain
-\p{joint-distribution}{q(x_0,\dots,x_N)} = \p{x-n-ddpm}{q(x_0)}\,\p{diffusion-step}{q(x_1\mid x_0)}\cdots \p{diffusion-step}{q(x_N\mid x_{N-1})}
+\p{forward-process}{q(x_0,\dots,x_N)} = \p{probability-distribution}{q(x_0)}\,\p{diffusion-step}{q(x_1\mid x_0)}\cdots \p{diffusion-step}{q(x_N\mid x_{N-1})}
 ```
 
 ```formula One step of noise (the "transition")
