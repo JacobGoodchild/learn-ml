@@ -73,8 +73,8 @@ transcriptions are in `slides.md`; the papers are in `papers.md`.
 - [x] Path 1: slide 19 fully clickable, every concept under it written down to the floor
 - [x] Path 1 visuals: bell curve with sliders; noising slider (real, numerically checked)
 - [x] Spec every big visual (`docs/visuals.md`)
-- [ ] Tests: maths checks for visuals (`tests/`), headless screenshots desktop + phone, both themes
-- [ ] Update CLAUDE.md for a cold start; summary for Jacob
+- [x] Tests: maths checks for visuals (`tests/`), headless screenshots desktop + phone, both themes
+- [x] Update CLAUDE.md for a cold start; summary for Jacob
 
 ### Phase 1 — Path 1 polish (Fable)
 - [ ] Re-read every Path 1 page against DDPM paper once; fix anything off
@@ -82,6 +82,10 @@ transcriptions are in `slides.md`; the papers are in `papers.md`.
 - [ ] Jacob's feedback round on slide 19 (see Ask Jacob)
 
 ### Phase 2 — Path 2: slides 31, 25, 42 ("how diffusion is trained, and why the variance matters")
+- [x] Slide 31 formulas checked against Analytic-DPM (see Correctness log)
+- [x] Already written but NOT yet listed in `course.json` (add them when slide 31 lands): `logarithm`, `functions`,
+      `derivative`, `proof-symbols` (floor), `functions-of-random-variables`, `marginalisation`.
+      They pass `tests/content.test.mjs` apart from the "not listed in any course yet" notes.
 - [ ] Write slide 31 file with tagged pieces; concepts: log, expectation of a function, KL divergence, ELBO,
       min/max, ⇔ vs ⇒, gradient, score function, norm, MSE, score matching, weighting by β̄ₙ, reverse step
       p(x_{n-1}|x_n), μₙ parameterisation, noise prediction ε̂ₙ, score ↔ noise relation
@@ -139,6 +143,13 @@ transcriptions are in `slides.md`; the papers are in `papers.md`.
   the average over the M atoms. Subtracting it keeps x_t in the zero-CoM subspace as time runs backwards.
   The slide's transcription is correct on both points.
 
+- 2026-11-11, slide 31 vs Analytic-DPM (Bao et al. 2022, arXiv 2201.06503, `pdftotext`): eq. 4 is
+  min L_vb ⇔ min KL(q(x_{0:N})‖p(x_{0:N})) over {μ_n, σ_n²}; −L_vb is the slide's E_q log p(x_{0:N})/q(x_{1:N}|x_0).
+  Eq. 5 is the reweighted objective min E_n β̄_n E_{q_n(x_n)} ‖s_n(x_n) − ∇log q_n(x_n)‖² (= E‖ε + √β̄_n s_n(x_n)‖² + c),
+  matching the slide. The paper's eq. 3 writes μ_n(x_n) = μ̃_n(x_n, (x_n + β̄_n s_n(x_n))/√ᾱ_n) for a general forward
+  process; for the DDPM forward process this simplifies (checked by hand) to the slide's (x_n + β_n s_n(x_n))/√α_n.
+  Footnote 1 confirms s_n(x_n) = −ε̂_n(x_n)/√β̄_n. Handcrafted choices in the paper: σ_n² = β_n or β̃_n = β̄_{n−1}β_n/β̄_n.
+
 ## Ask Jacob
 
 - Speaker credit: the summer-school programme should be checked before naming the lecturer anywhere.
@@ -147,7 +158,12 @@ transcriptions are in `slides.md`; the papers are in `papers.md`.
 ## Progress log
 
 - 2026-11-11 (Opus, session 1): started 13:35 UTC. Repo was empty. Vendored KaTeX 0.16.11 and Source Serif 4.
-  Deadline for this session: 16:30 (Jacob moved it from 15:30 mid-session).
+  Deadline for this session: 14:30 ("half two"; earlier messages said 15:30 and then half four by mistake).
 - 13:40–14:00: engine, design system, slide 19 and all 33 concept pages under it, three real visuals, maths tests,
   docs (concept map, content format, design, visuals). GitHub Pages is live at https://jacobgoodchild.github.io/learn-ml/
   (deploys from `main`, root). Fixed: tap-to-preview on phones (mouse-compat events were hiding the card).
+- 14:00–14:10: tests (`sh tests/run-all.sh`: visual maths, progress/spaced-repetition rules, content lint, all passing),
+  manim-web tested and rejected for formulas, keyboard previews fixed, slide 31 checked against Analytic-DPM,
+  six Path 2 groundwork pages written (see Phase 2). Session ended at 14:30 (Jacob's actual deadline was half two).
+- **Next session:** start Phase 1 (Path 1 polish), then Phase 2 from "Write slide 31 file". Run `sh tests/run-all.sh`
+  before every push. To preview locally: `python3 -m http.server` in the repo root, open http://localhost:8000.
