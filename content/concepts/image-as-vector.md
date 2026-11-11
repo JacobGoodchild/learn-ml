@@ -1,46 +1,45 @@
 ---
 id: image-as-vector
-title: An image as a vector
-summary: A picture is a long list of numbers, one for each colour of each pixel, so it can be treated as a single vector.
+title: A picture as a vector
+summary: A picture is a long list of numbers, one per colour per pixel, so it can be treated as one vector.
 colour: linalg
 level: 1
 needs: [vectors]
 ---
 
-## The idea {#idea}
+```formula A picture, written as one column
+x_0 = \begin{pmatrix} \text{red of pixel 1} \\ \text{green of pixel 1} \\ \text{blue of pixel 1} \\ \vdots \\ \text{blue of the last pixel} \end{pmatrix}
+---
+In words: list every colour value of every pixel in one long column.
+$d$ :: the number of entries (the **dimension**): width × height × 3
+```
 
-A colour picture that is 64 pixels wide and 64 tall has $64 \times 64 = 4096$ pixels, and each pixel has three numbers (red, green, blue). Write all of them in one long column and the picture becomes a vector with $4096 \times 3 = 12288$ entries.
+```keypoint Why bother
+Once a picture is a vector, "add noise" is just "add a random vector", and "fade the picture" is just multiplying by a number. Pixel values are usually rescaled from 0–255 to $-1$ to $1$, the same scale as standard noise.
+```
 
-$$x_0 = \begin{pmatrix} \text{red of pixel 1} \\ \text{green of pixel 1} \\ \text{blue of pixel 1} \\ \vdots \\ \text{blue of pixel 4096} \end{pmatrix}$$
-
-The number of entries is called the **dimension**, $d$.
-
-## Scaling the numbers {#scale}
-
-Diffusion models usually rescale each pixel value from the range 0–255 to the range $-1$ to $1$. That way a clean picture and pure noise (which mostly lands between about $-2$ and $2$) live on a similar scale.
-
-## Why bother? {#why}
-
-Once a picture is a vector, everything you know about vectors works on it. "Add noise to the picture" is just "add a random vector". "Scale the picture by $0.9$" is just multiplying the vector by $0.9$.
+```example A 64 × 64 colour picture
+$64 \times 64 = 4096$ pixels, times 3 colours: $d = 12288$.
+```
 
 ## Check yourself {#check}
 
 ```check
-? A greyscale picture (one number per pixel) is 28 pixels by 28 pixels. What is its dimension $d$?
+? A greyscale picture (one number per pixel) is 28 by 28. What is $d$?
 = 784 ± 0.1
-wrong: Count one number per pixel: width times height.
+wrong: One number per pixel: width times height.
 hint: $28 \times 28$.
-answer: $28 \times 28 = 784$.
-? A pixel's red value is 255 on the 0–255 scale. What is it on the $-1$ to $1$ scale?
+answer: $784$.
+? A red value is 255 on the 0–255 scale. What is it on the $-1$ to $1$ scale?
 = 1 ± 0.001
 wrong: The scale maps 0 to $-1$ and 255 to $1$.
-hint: Use $v/127.5 - 1$.
-answer: $255/127.5 - 1 = 1$.
+hint: $v/127.5 - 1$.
+answer: $1$.
 ```
 
 ```recall
 ? How does a colour picture become a vector, and what is its dimension?
-List the red, green and blue values of every pixel in one long column. The dimension is width × height × 3.
-? Why are pixel values rescaled to the range $-1$ to $1$?
-So that clean pictures and standard normal noise live on a similar scale.
+List the red, green and blue value of every pixel in one column; dimension = width × height × 3.
+? Why are pixel values rescaled to $-1$ to $1$?
+So clean pictures and standard noise live on a similar scale.
 ```

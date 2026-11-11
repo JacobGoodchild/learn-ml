@@ -103,12 +103,10 @@ transcriptions are in `slides.md`; the papers are in `papers.md`.
 
 ### Phase 1 — Path 1 polish (Fable)
 - [ ] Text-cutting pass on all 33 Path 1 concept pages under Jacob's design rule 2 (half the words; titled formula bands)
-      Done so far (use these as the model): `diffusion-step`, `beta-n-ddpm`, `alpha-n-ddpm`, `x-n-ddpm`,
-      `forward-process`, `pure-noise-endpoint`, `isotropic-gaussian`, `markov-chain`, `normal-distribution`,
-      `variance-preserving`, `alpha-bar-n`, `variance`, `expectation`, `standard-deviation`, `scaling-and-adding`,
-      `standard-normal` (16 done). Still to do: `random-variable`, `probability-distribution`, `probability-density`,
-      `independence`, `image-as-vector`, `conditional-distribution`, `joint-distribution`, `product-notation`,
-      `chain-rule-of-probability`, the 8 floor pages, and the 6 unlisted Path 2 pages.
+      All 25 non-floor Path 1 pages are done (use them as the model: titled formula bands with "In words" and a
+      symbol list, a key point, a short example, compact practice). Still to do: the 8 floor pages (already short)
+      and the 6 unlisted Path 2 pages (`logarithm`, `functions`, `derivative`, `proof-symbols`,
+      `functions-of-random-variables`, `marginalisation`) before they go live.
 - [ ] Re-read every Path 1 page against DDPM paper once; fix anything off
 - [ ] Big visual V1 (noising real images) and V2 (bell curve / sampling) built to spec in `docs/visuals.md`
 - [ ] Jacob's feedback round on slide 19 (see Ask Jacob)

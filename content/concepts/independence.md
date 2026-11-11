@@ -8,42 +8,35 @@ needs: [conditional-probability, random-variable]
 related: [scaling-and-adding]
 ---
 
-```formula
+```formula Knowing B changes nothing about A
 P(A \cap B) = P(A)\,P(B) \quad\Longleftrightarrow\quad \p{conditional-probability}{P(A \mid B)} = P(A)
+---
+In words: for independent events, multiply the probabilities.
 ```
 
-## The idea {#idea}
-
-You met independent events at A-level: two coin flips do not affect each other, so you multiply their probabilities. Random variables work the same way. $X$ and $Y$ are **independent** if learning the value of $Y$ does not change the distribution of $X$ at all.
-
-## Why it matters here {#why}
-
-The noise added to a picture is chosen so that:
-
-- the noise in each step is independent of the picture and of all earlier noise, and
-- the noise on each pixel is independent of the noise on every other pixel.
-
-Independence is what lets us add variances together and describe the noise on a million pixels with a single number.
+```keypoint Where diffusion relies on it
+Each step's noise is independent of the picture and of all earlier noise, and each pixel's noise is independent of every other pixel's. That is what lets variances add, and one number describe the noise on a million pixels.
+```
 
 ## Check yourself {#check}
 
 ```check
 ? Two fair coins are flipped. What is the probability both are heads?
 = 0.25 ± 0.0001
-wrong: For independent events, multiply the probabilities.
+wrong: Multiply the probabilities.
 hint: $\frac12 \times \frac12$.
-answer: $\frac12 \times \frac12 = \frac14$.
+answer: $\frac14$.
 ? Which pair is *not* independent?
-- [ ] Two separate dice rolls :: One roll does not affect the other.
-- [x] Today's temperature and tomorrow's temperature :: Right: a hot day today makes a hot day tomorrow more likely.
-- [ ] Fresh random noise on two different pixels :: The noise generator is designed so that these are independent.
+- [ ] Two separate dice rolls :: One does not affect the other.
+- [x] Today's and tomorrow's temperature :: Right: a hot day makes another more likely.
+- [ ] Fresh noise on two different pixels :: Designed to be independent.
 hint: Does knowing one change your guess about the other?
-answer: Today's and tomorrow's temperatures. Knowing one changes what you expect for the other.
+answer: The temperatures.
 ```
 
 ```recall
 ? What does it mean for two random variables to be independent?
-Knowing the value of one tells you nothing about the other; the distribution of one does not change when you learn the other.
-? Name two places where the diffusion forward process relies on independence.
-Each step's noise is independent of the picture and of earlier noise; and the noise on different pixels is independent.
+Knowing one tells you nothing about the other.
+? Name two places where adding noise relies on independence.
+Each step's noise is independent of the picture and earlier noise; different pixels' noise is independent.
 ```

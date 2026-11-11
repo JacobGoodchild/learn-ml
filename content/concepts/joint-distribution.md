@@ -1,50 +1,45 @@
 ---
 id: joint-distribution
 title: Joint distributions
-summary: The distribution of several random variables together, written q(x, y): how likely each combination is.
+summary: The distribution of several random variables together: how likely each combination is.
 colour: probability
 level: 2
 needs: [probability-distribution, random-variable]
 related: [conditional-distribution, chain-rule-of-probability]
 ---
 
-```formula
+```formula Several at once
 q(x_0, x_1, \dots, x_N)
+---
+In words: how likely this exact combination of values is, all together.
+$x_{0:N}$ :: shorthand for the list $x_0, \dots, x_N$
 ```
 
-## In words {#aloud}
+```example Two dice
+The joint distribution gives a probability to every pair. $P(6, 6) = \frac{1}{36}$.
+```
 
-"$q$ of $x_0$, $x_1$, up to $x_N$": how likely each possible *combination* of all of them is.
-
-## The idea {#idea}
-
-A single distribution tells you about one random variable. A **joint** distribution tells you about several at once, including how they relate. Rolling two dice, the joint distribution gives a probability to every pair, such as (3, 5).
-
-In the noising process, $q(x_0, \dots, x_N)$ is the whole noising story in one object: a clean picture *and* every noisy version of it, together. It answers "how likely is this clean picture, followed by exactly these noisy versions?"
-
-## Shorthand {#shorthand}
-
-People often shorten $x_0, x_1, \dots, x_N$ to $x_{0:N}$ ("$x$ from 0 to $N$"). It means the same list.
+For adding noise, $q(x_0, \dots, x_N)$ is the whole story in one object: a clean picture and every noisy version of it.
 
 ## Check yourself {#check}
 
 ```check
-? Two fair dice are rolled. Under their joint distribution, what is the probability of the pair (6, 6)?
+? Two fair dice. What is the probability of the pair (6, 6)?
 = 0.027778 ± 0.0005
 wrong: There are 36 equally likely pairs.
 hint: $\frac{1}{36}$.
-answer: $\frac{1}{6} \times \frac{1}{6} = \frac{1}{36} \approx 0.0278$.
+answer: $\approx 0.0278$.
 ? In the noising process, what does $q(x_0, \dots, x_N)$ describe?
-- [x] A clean picture together with all its noisy versions :: Right: the whole chain, as one combined random object.
+- [x] A clean picture together with all its noisy versions :: Right.
 - [ ] Only the final noisy picture :: That would be $q(x_N)$.
 - [ ] The model's prediction :: The model is always called $p$.
 hint: It has every $x$ in it.
-answer: The joint distribution of the clean picture and every noisy version of it: the whole forward process at once.
+answer: The whole run at once.
 ```
 
 ```recall
 ? What is a joint distribution?
-The distribution of several random variables together: how likely each combination of values is.
+The distribution of several random variables together: how likely each combination is.
 ? What does the shorthand $x_{0:N}$ mean?
 The whole list $x_0, x_1, \dots, x_N$.
 ```
