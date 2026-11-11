@@ -105,7 +105,7 @@ transcriptions are in `slides.md`; the papers are in `papers.md`.
 - [ ] Visuals: latent space explorer, auto-regressive next-token demo
 
 ### Phase 5 — ProlificDreamer and EEGSDE (slide 119, EEGSDE slide)
-- [ ] Resolve CHECK items for the EEGSDE slide against arXiv 2209.15408 (β vs β̄, overline meaning) — record here
+- [x] Resolve CHECK items for the EEGSDE slide against arXiv 2209.15408 (done 2026-11-11, see Correctness log)
 - [ ] Slide 119: particles, Wasserstein gradient flow (as "moving a cloud downhill"), rendering g(θ,c),
       NeRF, partial derivatives, VSD update
 - [ ] EEGSDE: energy function, rotation matrices, invariance vs equivariance, centre of mass, guidance
@@ -124,9 +124,17 @@ transcriptions are in `slides.md`; the papers are in `papers.md`.
 
 ## Correctness log
 
-- Slide 19 formulas checked against DDPM (Ho et al. 2020, arXiv 2006.11239): forward transition
-  q(x_t|x_{t-1}) = N(√(1−β_t) x_{t−1}, β_t I), ᾱ_t = ∏ α_s, q(x_t|x_0) = N(√ᾱ_t x_0, (1−ᾱ_t) I),
-  linear schedule β from 10⁻⁴ to 0.02 over T = 1000. The slide writes N for steps and n for the index.
+- 2026-11-11, slide 19 vs DDPM (Ho et al. 2020, arXiv 2006.11239), checked against text extracted
+  from the arXiv PDF with `pdftotext`: confirmed α_t := 1 − β_t, ᾱ_t := ∏_{s=1}^t α_s,
+  q(x_t|x_0) = N(x_t; √ᾱ_t x_0, (1 − ᾱ_t) I) (eq. 4), and T = 1000 with β rising linearly from
+  β_1 = 10⁻⁴ to β_T = 0.02 (Sec. 4 and Appendix B). The forward step q(x_t|x_{t−1}) = N(x_t; √(1−β_t) x_{t−1}, β_t I)
+  is eq. 2. Text extraction drops the square-root sign on that line, so the √ is read from context and
+  matches the slide. The slide uses N for the number of steps and n for the step index; DDPM uses T and t.
+- 2026-11-11, EEGSDE CHECK items (Bao, Zhao et al., arXiv 2209.15408, eq. 4 and the text below it, from `pdftotext`):
+  the coefficient is 1/√β_{t|0}, **no bar**. β_{t|0} is the noise variance of q(z_t|z_0), since
+  ε_t = (z_t − √α_{t|0} z_0)/√β_{t|0}. The overline is the **centre of mass**, (1/M) Σ_{i=1}^M ∇_{x_i}(·),
+  the average over the M atoms. Subtracting it keeps x_t in the zero-CoM subspace as time runs backwards.
+  The slide's transcription is correct on both points.
 
 ## Ask Jacob
 
