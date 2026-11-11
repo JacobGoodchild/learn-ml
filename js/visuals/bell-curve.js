@@ -30,7 +30,7 @@ export default function bellCurve(el, opts) {
       <line x1="${sx(mu)}" x2="${sx(mu)}" y1="${sy(0)}" y2="${sy(peak)}" stroke="var(--cc)" stroke-dasharray="2 3"/>
       <line x1="${sx(mu - sigma)}" x2="${sx(mu + sigma)}" y1="${sy(0) - 8}" y2="${sy(0) - 8}" stroke="var(--ink)" stroke-width="1.2" marker-start="url(#a)" marker-end="url(#a)"/>
       <defs><marker id="a" viewBox="0 0 6 6" refX="3" refY="3" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L6,3 L0,6" fill="var(--ink)"/></marker></defs>`;
-    cap.innerHTML = `Mean ${tex('\\mu=' + mu.toFixed(1))}, standard deviation ${tex('\\sigma=' + sigma.toFixed(2))}, so variance ${tex('\\sigma^2=' + (sigma * sigma).toFixed(2))}. The shaded band is one standard deviation either side of the mean; about 68% of values land in it.${showRef ? ' The dashed curve is the standard normal, ' + tex('\\mathcal N(0,1)') + ', for comparison.' : ''} Peak height ${peak.toFixed(3)}: a wider curve has to be lower, because the total area is always 1.`;
+    cap.innerHTML = `Variance ${tex('\\sigma^2=' + (sigma * sigma).toFixed(2))}. About 68% of values land in the shaded band.${showRef ? ' Dashed: ' + tex('\\mathcal N(0,1)') + '.' : ''}`;
   };
   const a = slider(tex('\\mu'), -3, 3, 0.1, mu, v => v.toFixed(1), v => { mu = v; draw(); });
   const b = slider(tex('\\sigma'), 0.5, 2.5, 0.05, sigma, v => v.toFixed(2), v => { sigma = v; draw(); });

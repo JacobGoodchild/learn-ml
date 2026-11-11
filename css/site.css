@@ -476,3 +476,4 @@ a.concept-link { color: var(--accent); text-decoration-color: color-mix(in srgb,
 .check .qn { float: none; margin-right: .15rem; }
 @media (max-width: 760px) { .where { column-gap: .7rem; } }
 @media (max-width: 760px) { .crumbs { display: block; font-size: .9rem; } }
+.band:focus, h2:focus, h1:focus { outline: none; }
