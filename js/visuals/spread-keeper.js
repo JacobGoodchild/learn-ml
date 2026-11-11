@@ -15,7 +15,7 @@ export default function spreadKeeper(el) {
     <p class="caption"></p>`;
   const svg = el.querySelector('svg'), cap = el.querySelector('.caption');
   const sx = v => PAD + (v - X0) / (X1 - X0) * (W - 2 * PAD);
-  const sy = d => H - PAD - d / 0.75 * (H - 2 * PAD);
+  const sy = d => H - PAD - d / 0.6 * (H - 2 * PAD); // tallest possible peak here is 0.564 (variance 0.5)
   const draw = () => {
     const a = roots ? Math.sqrt(1 - beta) : 1 - beta, b = roots ? Math.sqrt(beta) : beta;
     const y = x.map((v, i) => a * v + b * eps[i]);

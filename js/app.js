@@ -72,9 +72,11 @@ async function boot() {
   updateHeader();
   window.addEventListener('hashchange', route);
   document.addEventListener('pointerdown', e => { lastPointer = e.pointerType || 'mouse'; }, true);
+  document.addEventListener('pointermove', e => { if (e.pointerType === 'mouse') lastPointer = 'mouse'; }, { passive: true });
   document.addEventListener('keydown', onKey);
+  document.addEventListener('keydown', e => { if (e.key === 'Tab') lastPointer = 'keyboard'; }, true);
   document.addEventListener('click', e => { if (!preview.contains(e.target) && !e.target.closest('[data-c]')) hidePreview(); });
-  window.addEventListener('scroll', () => { if (!preview.hidden && lastPointer !== 'touch') hidePreview(); }, { passive: true });
+  window.addEventListener('scroll', () => { if (!preview.hidden && lastPointer === 'mouse') hidePreview(); }, { passive: true });
   if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
   route();
 }
@@ -386,7 +388,7 @@ function wirePieces(art, stack) {
   let hoverT = null;
   art.addEventListener('mouseover', e => {
     const el = e.target.closest('.layer-body [data-c]');
-    if (!el || lastPointer === 'touch') return;
+    if (!el || lastPointer !== 'mouse') return;
     clearTimeout(hoverT); clearTimeout(hideT);
     hoverT = setTimeout(() => showPreview(el, stack), 280);
   });
@@ -398,7 +400,8 @@ function wirePieces(art, stack) {
   });
   art.addEventListener('focusin', e => {
     const el = e.target.closest('.layer-body [data-c]');
-    if (el && e.target.matches(':focus-visible')) showPreview(el, stack);
+    // Wait for the browser to scroll the piece into view before placing the card.
+    if (el && e.target.matches(':focus-visible')) requestAnimationFrame(() => requestAnimationFrame(() => { if (document.activeElement === el) showPreview(el, stack); }));
   });
 }
 
