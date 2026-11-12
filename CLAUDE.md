@@ -208,3 +208,10 @@ transcriptions are in `slides.md`; the papers are in `papers.md`.
 - **Next session:** first, a text-cutting pass over every concept page under rule 2 (most are still too long:
   aim for half the words, give every formula band a title). Then Phase 1 (Path 1 polish), then Phase 2 from
   "Write slide 31 file". Run `sh tests/run-all.sh` before every push. To preview locally: `python3 -m http.server` in the repo root, open http://localhost:8000.
+- 2026-11-12: Jacob asked for a plain **Database** section, separate from the concept map and with no recursion:
+  `database/` (static pages, linked from the header nav) with two big buttons, Slides (all 12 slides rebuilt as HTML
+  with KaTeX, slideshow on the button or a double-click, arrow keys, Esc) and Data (every formula, one per box).
+  This is the one place slides are shown as slides, at Jacob's request. No photos are used: diagrams are redrawn as SVG
+  (`tools/*.py` generate the contour plot and molecule diagram) and the noise strip is the house picture noised with
+  the DDPM schedule at steps 0–1000 (`database/slides/slides.js`, using `js/visuals/maths.js`). EEGSDE uses 1/√β_{t|0}
+  (no bar), per the Correctness log. Built first in the groundwork repo by mistake and moved here.
